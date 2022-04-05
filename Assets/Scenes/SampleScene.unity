@@ -301,6 +301,7 @@ GameObject:
   - component: {fileID: 612793788}
   - component: {fileID: 612793791}
   - component: {fileID: 612793792}
+  - component: {fileID: 612793793}
   m_Layer: 0
   m_Name: Magma
   m_TagString: Untagged
@@ -423,5 +424,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f67ef101ce024d4798f45aa29a087f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &612793793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 612793787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391ebbeecc07a6840b452a3b880ae579, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
