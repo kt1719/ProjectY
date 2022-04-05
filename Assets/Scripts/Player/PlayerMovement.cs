@@ -114,7 +114,7 @@ namespace PlayerUI
         public void Attack()
         {
             // TODO: all the collider shit
-            animator.SetTrigger("isAttacking2");
+            animator.SetTrigger("isAttacking");
         }
     }
 }
