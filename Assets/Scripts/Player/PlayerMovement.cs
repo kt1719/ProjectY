@@ -8,7 +8,6 @@ namespace PlayerUI
     {
         // Variables for movement
         private float speed = 3f;
-
         private float dashingspeed = 4.5f;
 
         // Variables for dashing
@@ -16,12 +15,11 @@ namespace PlayerUI
 
         // Movement State tracker
         private States movementState = States.NoMovement;
-
         private Vector2 currSpeed = Vector2.zero;
 
-        private Rigidbody2D rigidInstance;
+        private PlayerAnimation animatorScript;
 
-        private Animator animator;
+        private Rigidbody2D rigidInstance;
 
         enum States
         {
@@ -33,25 +31,12 @@ namespace PlayerUI
         private void Start()
         {
             rigidInstance = GetComponent<Rigidbody2D>();
-            animator = GetComponent<Animator>();
+            animatorScript = GetComponent<PlayerAnimation>();
         }
-
         public void CheckDash()
         {
             // Have to check the condition for moving
-            bool dash =
-                (
-                Input.GetKeyDown(KeyCode.LeftShift) ||
-                Input.GetKeyDown(KeyCode.RightShift)
-                ) &&
-                movementState != States.Dashing;
-
-            bool attack =
-                Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Z);
-            if (attack)
-            {
-                Attack();
-            }
+            bool dash = (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift)) && movementState != States.Dashing;
 
             if (dash && movementState == States.Moving)
             {
@@ -62,7 +47,7 @@ namespace PlayerUI
             Dash();
         }
 
-        private void Dash()
+        public void Dash()
         {
             if (movementState == States.Dashing && dashingTime > 0)
             {
@@ -76,8 +61,7 @@ namespace PlayerUI
                 rigidInstance.velocity = new Vector2(0, 0);
                 return;
             }
-            else
-                return;
+            else return;
         }
 
         public void MovePlayer()
@@ -95,26 +79,23 @@ namespace PlayerUI
 
             if (Mathf.Abs(x) != 0 || Mathf.Abs(y) != 0)
             {
+                animatorScript.ChangeStateRunning();
                 movementState = States.Moving;
-                animator.SetBool("isRunning", true);
             }
-            else
+            else 
             {
+                animatorScript.ChangeStateNotRunning();
                 movementState = States.NoMovement;
-                animator.SetBool("isRunning", false);
             }
 
             // To change where the characater is facing depending on input
-            float newAngle = (x < 0) ? 180 : 0;
-            transform.localEulerAngles = new Vector3(0, (newAngle), 0);
+            if (x != 0)
+            {
+                float newAngle = (x < 0) ? 180 : 0;
+                transform.localEulerAngles = new Vector3(0, (newAngle), 0);
+            }
 
             rigidInstance.velocity = new Vector2(x, y);
-        }
-
-        public void Attack()
-        {
-            // TODO: all the collider shit
-            animator.SetTrigger("isAttacking");
         }
     }
 }
