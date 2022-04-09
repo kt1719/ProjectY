@@ -2,8 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PlayerAtt;
+using PlayerUI;
 
-namespace PlayerUI
+namespace PlayerCore
 {
     public class PlayerController : MonoBehaviour
     {
