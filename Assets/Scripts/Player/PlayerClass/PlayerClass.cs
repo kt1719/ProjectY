@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace PlayerClasses
 {
-    public class PlayerClass
+    public abstract class PlayerClass : MonoBehaviour
     {
         public struct BasicStats
         {
@@ -15,16 +15,18 @@ namespace PlayerClasses
 
         protected BasicStats stats;
 
-        public virtual void InstantiateClass()
+        public PlayerClass() 
         {
             stats = new BasicStats { HP = 100, Attack = 5, Level = 1 };
         }
 
-        public void LevelUp()
+        public virtual void LevelUp()
         {
             stats.Level += 1;
             stats.Attack += 1;
             stats.HP += 30;
         }
+
+        public abstract void CheckAbility();
     }
 }

@@ -6,6 +6,9 @@ namespace PlayerUI
 {
     public class PlayerAnimation : MonoBehaviour
     {
+        // TODO: separate ability animations into separate class animations
+        // WarriorAnimation, RangedAnimation...
+
         // Start is called before the first frame update
         Animator animator;
         void Start()
@@ -13,12 +16,17 @@ namespace PlayerUI
             animator = GetComponent<Animator>();
         }
 
-        public void ChangeStateToAttack()
+        public void ChangeStateToWarriorAttack()
         {
             if (!animator.GetCurrentAnimatorStateInfo(0).IsName("attack") || !animator.GetCurrentAnimatorStateInfo(0).IsName("attack1"))
             {
-                animator.SetTrigger("isAttacking");
+                animator.SetTrigger("isAttacking"); // sword slash
             }
+        }
+
+        public void ChangeStateToRangedAttack()
+        {
+            // fire an arrow
         }
 
         public void ChangeStateRunning()

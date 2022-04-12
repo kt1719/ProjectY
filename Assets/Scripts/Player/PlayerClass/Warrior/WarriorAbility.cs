@@ -2,17 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WarriorAbility : MonoBehaviour
+namespace PlayerClasses
 {
-    // Start is called before the first frame update
-    void Start()
+    /* Class to define all the abilities for a warrior */
+    public class WarriorAbility : MonoBehaviour
     {
-        
-    }
+        // warrior warrior
+        public void LightAttack() 
+        {
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        }
+
+        public void HeavyAttack() 
+        {
+
+        }
     }
 }

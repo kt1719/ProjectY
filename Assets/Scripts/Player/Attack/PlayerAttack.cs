@@ -17,17 +17,14 @@ namespace PlayerAtt
         // Update is called once per frame
         void Update()
         {
-            bool attack = Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.M);
+            bool attack =  || Input.GetKeyDown(KeyCode.M);
 
-            if (attack)
-            {
-                Attack();
-            }
+            if (Input.GetMouseButtonDown(0)) animatorScript.ChangeStateToAttack();
         }
 
         private void Attack()
         {
-            animatorScript.ChangeStateToAttack();
+            
         }
 
         
