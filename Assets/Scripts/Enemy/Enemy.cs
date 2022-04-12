@@ -26,12 +26,13 @@ public class Enemy : MonoBehaviour
         health -= damage;
         if (health <= 0) 
         {
-            DestroyEnemy();
+            animatorScript.ChangeStateToDie();
         }
     }
+
+    // DO NOT CALL, this should be called from the animation timeline and not programmatically
     public void DestroyEnemy()
     {
-        animatorScript.ChangeStateToDie();
         Destroy(gameObject);
     }
 }
