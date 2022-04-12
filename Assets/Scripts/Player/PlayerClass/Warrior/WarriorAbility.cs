@@ -62,7 +62,7 @@ namespace PlayerClasses
             // check for keyboard press
             foreach (KeyCode key in keycodes)
             {   
-                Debug.Log(key);
+                //Debug.Log(key);
                 bool keydown = Input.GetKeyDown(key);
                 bool contain = userKeyMapping.ContainsKey(key);
                 if (contain && keydown) {
