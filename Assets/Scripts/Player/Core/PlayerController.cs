@@ -2,9 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using PlayerAtt;
 using PlayerUI;
 using PlayerClasses;
+using UI;
 
 namespace PlayerCore
 {
@@ -13,10 +13,13 @@ namespace PlayerCore
         PlayerMovement movementscript;
         PlayerAbility abilityscript;
         PlayerClass playerClass;
+
+        CharacterUI characterUI;
         
-        // TODO: imo we don't need a controller class, like we just need to call the below Update stuff in each scripts' Update() function
         private void Start()
         {
+            characterUI = GameObject.Find("GameOverlay").GetComponent<CharacterUI>();
+
             movementscript = GetComponent<PlayerMovement>();
 
             // TODO: make this dependent on user class choice
@@ -25,6 +28,7 @@ namespace PlayerCore
 
             abilityscript.initialize(playerClass); // Pass in the data class into the ability class
 
+            InitializeUI();
         }
         // Update is called once per frame
         void Update()
@@ -34,6 +38,9 @@ namespace PlayerCore
             abilityscript.CheckAbility();
         }
 
-        
+        private void InitializeUI()
+        {
+            characterUI.playerClass = playerClass;
+        }
     }
 }

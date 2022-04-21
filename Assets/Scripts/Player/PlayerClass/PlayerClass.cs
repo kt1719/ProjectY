@@ -11,6 +11,8 @@ namespace PlayerClasses
             public int HP { get; set; }
             public float Attack { get; set; }
             public int Level { get; set; }
+            public int XP { get; set; }
+            public int LevelUpXP { get; set; } // this is the xp that player has to get to level up. Should increase as the player levels up
         }
 
         protected BasicStats stats;
@@ -18,7 +20,27 @@ namespace PlayerClasses
         protected HashSet<int> unlockedAbilities;
         public virtual void Start()
         {
-            stats = new BasicStats { HP = 100, Attack = 5, Level = 1 };
+            stats = new BasicStats { HP = 100, Attack = 5, Level = 1, XP = 0, LevelUpXP = 100 };
+        }
+
+        public string readHP()
+        {
+            return stats.HP.ToString();
+        }
+
+        public string readLevel()
+        {
+            return stats.Level.ToString();
+        }
+
+        public string readXP()
+        {
+            return stats.XP.ToString();
+        }
+
+        public string readLevelUpXP()
+        {
+            return stats.LevelUpXP.ToString();
         }
 
         public virtual void LevelUp()
@@ -27,6 +49,7 @@ namespace PlayerClasses
             stats.Level += 1;
             stats.Attack += 1;
             stats.HP += 30;
+            stats.LevelUpXP += (int)(stats.LevelUpXP * 0.3); // need to tune
         }
 
         public bool hasUnlocked(int abilityId)
@@ -34,5 +57,21 @@ namespace PlayerClasses
             return unlockedAbilities.Contains(abilityId);
         }
 
+        public void damageHP(int dmg)
+        {
+            stats.HP = ((stats.HP - dmg) < 0) ? 0 : stats.HP - dmg;
+        }
+
+        public void healHP(int heal)
+        {
+            stats.HP = ((stats.HP - heal) < 100) ? 100 : stats.HP + heal;
+        }
+
+        public void gainHP(int xp)
+        {
+            int newXP = stats.XP + xp;
+            bool hasLeveled = (newXP >= stats.LevelUpXP) ? true : false;
+            stats.XP = (hasLeveled) ? (newXP) % stats.LevelUpXP : newXP;
+        }
     }
 }
