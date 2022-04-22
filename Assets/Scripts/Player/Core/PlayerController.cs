@@ -16,9 +16,9 @@ namespace PlayerCore
 
         CharacterUI characterUI;
         
-        private void Start()
+        private void Awake() // Got changed from start to awake due to the swordColl script not finding the PlayerClass script. Awake means it runs earlier than start
         {
-            characterUI = GameObject.Find("GameOverlay").GetComponent<CharacterUI>();
+            characterUI = GameObject.Find("GameOverlay").GetComponent<CharacterUI>(); // Not sure if this will work in multiplayer setting. Never actually done full multiplayer so need to do more reasearch
 
             movementscript = GetComponent<PlayerMovement>();
 

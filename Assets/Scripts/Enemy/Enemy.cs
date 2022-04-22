@@ -14,20 +14,16 @@ public class Enemy : MonoBehaviour
         animatorScript = GetComponent<EnemyAnimation>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void TakeDamage(int damage) 
+    public bool TakeDamage(int damage) 
     {
         animatorScript.ChangeStateToTakeDamage();
         health -= damage;
         if (health <= 0) 
         {
             animatorScript.ChangeStateToDie();
+            return true;
         }
+        return false;
     }
 
     // DO NOT CALL, this should be called from the animation timeline and not programmatically

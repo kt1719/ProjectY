@@ -47,8 +47,6 @@ namespace PlayerClasses
         {
             // TODO: fine tune
             stats.Level += 1;
-            stats.Attack += 1;
-            stats.HP += 30;
             stats.LevelUpXP += (int)(stats.LevelUpXP * 0.3); // need to tune
         }
 
@@ -67,11 +65,12 @@ namespace PlayerClasses
             stats.HP = ((stats.HP - heal) < 100) ? 100 : stats.HP + heal;
         }
 
-        public void gainHP(int xp)
+        public void gainXP(int xp)
         {
             int newXP = stats.XP + xp;
             bool hasLeveled = (newXP >= stats.LevelUpXP) ? true : false;
             stats.XP = (hasLeveled) ? (newXP) % stats.LevelUpXP : newXP;
+            if (hasLeveled) LevelUp();
         }
     }
 }

@@ -39,12 +39,7 @@ namespace PlayerClasses
 
         /* Invoke the ability associated with the ability id */
         public void UseAbility(int abilityId) // ability id
-        {
-            /*
-            // user mapping galeforce 3 key <--- idk how to do this mapping tho, idk how unity works; we'll figure it out, doesnt sound impossible EDIT: nvm did it
-            3 => useAbility(107);
-            */
-            
+        {            
             // check that the ability is unlocked
             if (!playerClass.hasUnlocked(abilityId)) {
                 return; 

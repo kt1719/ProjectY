@@ -26,6 +26,8 @@ namespace PlayerClasses
         {
             //TODO: Implement
             base.LevelUp();
+            stats.Attack += 1;
+            stats.HP += 30;
             return;
         }
     }
