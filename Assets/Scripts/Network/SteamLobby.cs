@@ -13,7 +13,6 @@ namespace Network
         protected Callback<LobbyCreated_t> LobbyCreated;
         protected Callback<GameLobbyJoinRequested_t> JoinRequest;
         protected Callback<LobbyEnter_t> LobbyEntered;
-        protected Callback<P2PSessionConnectFail_t> LobbyDisconnected;
 
         // Variables
         public ulong CurrentLobbyID;
@@ -22,10 +21,16 @@ namespace Network
 
         // Gameobject
         public GameObject HostButton;
+        public GameObject DisconnectButton;
         public Text LobbyNameText;
+
+        bool serverOn = false;
+        bool clientOn = false;
 
         private void Start()
         {
+            DontDestroyOnLoad(this.gameObject);
+
             if(!SteamManager.Initialized) { return; }
 
             manager = GetComponent<CustomNetworkManager>();
@@ -33,7 +38,14 @@ namespace Network
             LobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
             JoinRequest = Callback<GameLobbyJoinRequested_t>.Create(OnJoinRequest);
             LobbyEntered = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
-            LobbyDisconnected = Callback<P2PSessionConnectFail_t>.Create(OnLobbyDisconnected);
+        }
+
+        private void Update()
+        {
+            if ((clientOn || serverOn) && !manager.isNetworkActive)
+            {
+                ResetMultiplayerScene();
+            }
         }
 
         public void HostLobby()
@@ -41,6 +53,27 @@ namespace Network
             SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly, manager.maxConnections);
         }
 
+        public void DisconnectLobby()
+        {
+            if (serverOn) { manager.StopHost(); }
+            if (clientOn) { manager.StopClient(); }
+        }
+
+        private void ResetMultiplayerScene()
+        {
+            Debug.Log("Disconnect from server");
+            manager.StopClient();
+            manager.Reset();
+
+            HostButton.SetActive(true);
+            DisconnectButton.SetActive(false);
+            LobbyNameText.gameObject.SetActive(false);
+            LobbyNameText.text = "";
+            serverOn = false;
+            clientOn = false;
+        }
+
+        // Callback functions for Steamworks (Listeners for events)
         private void OnLobbyCreated(LobbyCreated_t callback)
         {
             if (callback.m_eResult != EResult.k_EResultOK) { return;  }
@@ -48,6 +81,7 @@ namespace Network
             Debug.Log("Lobby created successfully");
 
             manager.StartHost();
+            serverOn = true;
 
             SteamMatchmaking.SetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), HostAddressKey, SteamUser.GetSteamID().ToString());
             SteamMatchmaking.SetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), "name", SteamFriends.GetPersonaName() + "'s Lobby");
@@ -63,6 +97,7 @@ namespace Network
         {
             // Everyone
             HostButton.SetActive(false);
+            DisconnectButton.SetActive(true);
             CurrentLobbyID = callback.m_ulSteamIDLobby;
             LobbyNameText.gameObject.SetActive(true);
             LobbyNameText.text = SteamMatchmaking.GetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), "name");
@@ -72,17 +107,8 @@ namespace Network
 
             manager.networkAddress = SteamMatchmaking.GetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), HostAddressKey);
 
+            clientOn = true;
             manager.StartClient();
-        }
-
-        private void OnLobbyDisconnected(P2PSessionConnectFail_t callback)
-        {
-            manager.StopClient();
-            manager.Reset();
-
-            HostButton.SetActive(true);
-            LobbyNameText.gameObject.SetActive(false);
-            LobbyNameText.text = "";
         }
     }
 }

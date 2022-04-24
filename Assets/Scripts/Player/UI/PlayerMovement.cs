@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
 namespace PlayerUI
 {
-    public class PlayerMovement : MonoBehaviour
+    public class PlayerMovement : NetworkBehaviour
     {
         // Variables for movement
         private float speed = 3f;
@@ -21,6 +22,8 @@ namespace PlayerUI
 
         private Rigidbody2D rigidInstance;
 
+        private SpriteRenderer rendererInstance;
+
         enum States
         {
             NoMovement,
@@ -32,6 +35,7 @@ namespace PlayerUI
         {
             rigidInstance = GetComponent<Rigidbody2D>();
             animatorScript = GetComponent<PlayerAnimation>();
+            rendererInstance = GetComponent<SpriteRenderer>();
         }
         public void CheckDash()
         {
@@ -91,8 +95,16 @@ namespace PlayerUI
             // To change where the characater is facing depending on input
             if (x != 0)
             {
-                float newAngle = (x < 0) ? 180 : 0;
-                transform.localEulerAngles = new Vector3(0, (newAngle), 0);
+                if (x < 0)
+                {
+                    rendererInstance.flipX = true;
+                    this.transform.GetChild(0).transform.localEulerAngles = new Vector3(0, 180, 0);
+                }
+                else
+                {
+                    rendererInstance.flipX = false;
+                    this.transform.GetChild(0).transform.localEulerAngles = new Vector3(0, 0, 0);
+                }
             }
 
             rigidInstance.velocity = new Vector2(x, y);
