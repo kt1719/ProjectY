@@ -86,12 +86,20 @@ namespace PlayerUI
                 animatorScript.ChangeStateRunning();
                 movementState = States.Moving;
             }
-            else 
+            else
             {
                 animatorScript.ChangeStateNotRunning();
                 movementState = States.NoMovement;
             }
 
+            FlipMovement(x);
+            FlipMovementCommand(x);
+
+            rigidInstance.velocity = new Vector2(x, y);
+        }
+
+        private void FlipMovement(float x)
+        {
             // To change where the characater is facing depending on input
             if (x != 0)
             {
@@ -106,8 +114,25 @@ namespace PlayerUI
                     this.transform.GetChild(0).transform.localEulerAngles = new Vector3(0, 0, 0);
                 }
             }
+        }
 
-            rigidInstance.velocity = new Vector2(x, y);
+        [Command]
+        private void FlipMovementCommand(float x)
+        {
+            // To change where the characater is facing depending on input
+            if (x != 0)
+            {
+                if (x < 0)
+                {
+                    rendererInstance.flipX = true;
+                    this.transform.GetChild(0).transform.localEulerAngles = new Vector3(0, 180, 0);
+                }
+                else
+                {
+                    rendererInstance.flipX = false;
+                    this.transform.GetChild(0).transform.localEulerAngles = new Vector3(0, 0, 0);
+                }
+            }
         }
     }
 }
