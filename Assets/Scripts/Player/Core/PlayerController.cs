@@ -17,6 +17,7 @@ namespace PlayerCore
         CharacterUI characterUI;
 
         Camera cam;
+        GameObject gameOverlay;
         
         private void Awake() // Got changed from start to awake due to the swordColl script not finding the PlayerClass script. Awake means it runs earlier than start
         {
@@ -33,6 +34,8 @@ namespace PlayerCore
 
             cam = GetComponentInChildren<Camera>();
 
+            gameOverlay = this.transform.GetChild(2).gameObject; // The index of the heirarchy in the prefab matters
+
             InitializeUI();
         }
         // Update is called once per frame
@@ -40,9 +43,13 @@ namespace PlayerCore
         {
             if (!hasAuthority)
             {
-                if (cam.enabled == true)
+                if (cam.enabled)
                 {
                     cam.enabled = false;
+                }
+                if (gameOverlay.activeSelf)
+                {
+                    gameOverlay.SetActive(false);
                 }
                 return;
             }

@@ -76,7 +76,7 @@ namespace Network
         // Callback functions for Steamworks (Listeners for events)
         private void OnLobbyCreated(LobbyCreated_t callback)
         {
-            if (callback.m_eResult != EResult.k_EResultOK) { return;  }
+            if (callback.m_eResult != EResult.k_EResultOK) { return; }
 
             Debug.Log("Lobby created successfully");
 

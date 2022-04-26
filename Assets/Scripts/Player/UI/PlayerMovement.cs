@@ -70,16 +70,12 @@ namespace PlayerUI
 
         public void MovePlayer()
         {
-            if (movementState == States.Dashing)
+            if (movementState == States.Dashing) // Should get rid of dashing and only make it a ninja logic
             {
                 return;
             }
-            float x = Input.GetAxisRaw("Horizontal"); //returns -1 for 'a' and returns 1 for 'd'
-            float y = Input.GetAxisRaw("Vertical"); //returns -1 for 'a' and returns 1 for 'd'
-
-            float normaliser = Mathf.Sqrt(x * x + y * y);
-            x = (x != 0) ? x / (normaliser) * speed : 0;
-            y = (y != 0) ? y / (normaliser) * speed : 0;
+            float x, y;
+            CalculateSpeeds(out x, out y);
 
             if (Mathf.Abs(x) != 0 || Mathf.Abs(y) != 0)
             {
@@ -93,12 +89,36 @@ namespace PlayerUI
             }
 
             FlipMovement(x);
-            FlipMovementCommand(x);
 
             rigidInstance.velocity = new Vector2(x, y);
         }
 
+        private void CalculateSpeeds(out float x, out float y)
+        {
+            x = Input.GetAxisRaw("Horizontal");
+            y = Input.GetAxisRaw("Vertical");
+            float normaliser = Mathf.Sqrt(x * x + y * y);
+            x = (x != 0) ? x / (normaliser) * speed : 0;
+            y = (y != 0) ? y / (normaliser) * speed : 0;
+        }
+
+        // Flip Movement Logic //////////////////////
         private void FlipMovement(float x)
+        {
+            if (isServer)
+            {
+                // This sends a command to all the clients (including the host) The own host's scene gets updated content
+                FlipMovementClientRPC(x);
+            }
+            else if (isClient)
+            {
+                // This only sends it to the host so the client also has to update it's own local version
+                FlipMovementLocal(x); // Local update
+                FlipMovementCommand(x); // Server update
+            }
+        }
+
+        private void FlipMovementLocal(float x)
         {
             // To change where the characater is facing depending on input
             if (x != 0)
@@ -134,5 +154,26 @@ namespace PlayerUI
                 }
             }
         }
+
+        [ClientRpc]
+        private void FlipMovementClientRPC(float x)
+        {
+            // To change where the characater is facing depending on input
+            if (x != 0)
+            {
+                if (x < 0)
+                {
+                    rendererInstance.flipX = true;
+                    this.transform.GetChild(0).transform.localEulerAngles = new Vector3(0, 180, 0);
+                }
+                else
+                {
+                    rendererInstance.flipX = false;
+                    this.transform.GetChild(0).transform.localEulerAngles = new Vector3(0, 0, 0);
+                }
+            }
+        }
+
+        ////////////////////////////////////////////
     }
 }
