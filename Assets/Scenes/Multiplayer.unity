@@ -215,6 +215,8 @@ MonoBehaviour:
   autoCreatePlayer: 1
   playerSpawnMethod: 0
   spawnPrefabs: []
+  mainMenuScene: MainMenu
+  multiplayerScene: Multiplayer
 --- !u!4 &59660643
 Transform:
   m_ObjectHideFlags: 0

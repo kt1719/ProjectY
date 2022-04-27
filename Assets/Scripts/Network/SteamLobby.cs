@@ -42,7 +42,7 @@ namespace Network
 
         private void Update()
         {
-            if ((clientOn || serverOn) && !manager.isNetworkActive)
+            if ((clientOn || serverOn) && !manager.isNetworkActive) // When server turns off
             {
                 ResetMultiplayerScene();
             }
@@ -63,14 +63,9 @@ namespace Network
         {
             Debug.Log("Disconnect from server");
             manager.StopClient();
-            manager.Reset();
-
-            HostButton.SetActive(true);
-            DisconnectButton.SetActive(false);
-            LobbyNameText.gameObject.SetActive(false);
-            LobbyNameText.text = "";
             serverOn = false;
             clientOn = false;
+            manager.MainMenuSceneChange();
         }
 
         // Callback functions for Steamworks (Listeners for events)
