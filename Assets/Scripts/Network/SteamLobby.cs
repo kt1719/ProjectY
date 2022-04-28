@@ -17,12 +17,11 @@ namespace Network
         // Variables
         public ulong CurrentLobbyID;
         private const string HostAddressKey = "HostAddress";
-        private CustomNetworkManager manager;
+        public CustomNetworkManager manager;
 
         // Gameobject
         public GameObject HostButton;
-        public GameObject DisconnectButton;
-        public Text LobbyNameText;
+        public Text LobbyNameText; // Need to add this to menu
 
         bool serverOn = false;
         bool clientOn = false;
@@ -92,10 +91,8 @@ namespace Network
         {
             // Everyone
             HostButton.SetActive(false);
-            DisconnectButton.SetActive(true);
             CurrentLobbyID = callback.m_ulSteamIDLobby;
-            LobbyNameText.gameObject.SetActive(true);
-            LobbyNameText.text = SteamMatchmaking.GetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), "name");
+            // LobbyNameText.text = SteamMatchmaking.GetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), "name");
 
             // Client
             if (NetworkServer.active) { return; } // This is to check if you're a client. The Network server would not be active if you're a client but would be if you're a host.

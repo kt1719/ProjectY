@@ -105,17 +105,9 @@ namespace PlayerUI
         // Flip Movement Logic //////////////////////
         private void FlipMovement(float x)
         {
-            if (isServer)
-            {
-                // This sends a command to all the clients (including the host) The own host's scene gets updated content
-                FlipMovementClientRPC(x);
-            }
-            else if (isClient)
-            {
-                // This only sends it to the host so the client also has to update it's own local version
-                FlipMovementLocal(x); // Local update
-                FlipMovementCommand(x); // Server update
-            }
+            FlipMovementClientRPC(x);
+            FlipMovementLocal(x); // Local update
+            FlipMovementCommand(x); // Server update
         }
 
         private void FlipMovementLocal(float x)

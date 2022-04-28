@@ -9,6 +9,7 @@ namespace UI
     {
         public GameObject gameSelectMenu;
         public GameObject optionsMenu;
+        public GameObject multiplayerMenu;
         public string singlePlayerScene;
         public string multiPlayerScene;
 
@@ -16,15 +17,17 @@ namespace UI
         {
             gameSelectMenu = this.transform.GetChild(1).gameObject;
             optionsMenu = this.transform.GetChild(2).gameObject;
+            multiplayerMenu = this.transform.GetChild(3).gameObject;
         }
-        public void SinglePlayerStart()
+        public void SinglePlayerPressed()
         {
             SceneManager.LoadScene(singlePlayerScene);
         }
 
-        public void MultiplayerStart()
+        public void MultiplayerPressed()
         {
-            SceneManager.LoadScene(multiPlayerScene);
+            gameSelectMenu.SetActive(!gameSelectMenu.activeSelf);
+            multiplayerMenu.SetActive(!multiplayerMenu.activeSelf);
         }
 
         public void OptionMenuPressed()
