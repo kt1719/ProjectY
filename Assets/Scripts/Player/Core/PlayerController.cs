@@ -27,8 +27,8 @@ namespace PlayerCore
             movementscript = GetComponent<PlayerMovement>();
 
             // TODO: make this dependent on user class choice
-            abilityscript = gameObject.AddComponent<WarriorAbility>();  
-            playerClass = gameObject.AddComponent<Warrior>();
+            abilityscript = gameObject.AddComponent<NinjaAbility>();  
+            playerClass = gameObject.AddComponent<Ninja>();
 
             abilityscript.initialize(playerClass); // Pass in the data class into the ability class
 
@@ -55,7 +55,7 @@ namespace PlayerCore
             }
             
             movementscript.MovePlayer();
-            movementscript.CheckDash();
+            // movementscript.CheckDash();
             abilityscript.CheckAbility();
         }
 

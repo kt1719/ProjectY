@@ -37,36 +37,6 @@ namespace PlayerUI
             animatorScript = GetComponent<PlayerAnimation>();
             rendererInstance = GetComponent<SpriteRenderer>();
         }
-        public void CheckDash()
-        {
-            // Have to check the condition for moving
-            bool dash = (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift)) && movementState != States.Dashing;
-
-            if (dash && movementState == States.Moving)
-            {
-                movementState = States.Dashing;
-                currSpeed = rigidInstance.velocity;
-            }
-
-            Dash();
-        }
-
-        public void Dash()
-        {
-            if (movementState == States.Dashing && dashingTime > 0)
-            {
-                rigidInstance.velocity = currSpeed * dashingspeed;
-                dashingTime -= 1 * Time.deltaTime;
-            }
-            else if (movementState == States.Dashing && dashingTime < 0)
-            {
-                movementState = States.NoMovement;
-                dashingTime = 0.2f;
-                rigidInstance.velocity = new Vector2(0, 0);
-                return;
-            }
-            else return;
-        }
 
         public void MovePlayer()
         {
@@ -93,6 +63,29 @@ namespace PlayerUI
             rigidInstance.velocity = new Vector2(x, y);
         }
 
+        public bool CheckDash(bool keyDown)
+        {
+            if (keyDown && movementState == States.Moving) // implies movement state != dashing
+            {
+                movementState = States.Dashing;
+                currSpeed = rigidInstance.velocity;
+            }
+
+            if (movementState == States.Dashing && dashingTime > 0)
+            {
+                rigidInstance.velocity = currSpeed * dashingspeed;
+                dashingTime -= 1 * Time.deltaTime;
+                return true;
+            }
+            else if (movementState == States.Dashing && dashingTime < 0)
+            {
+                movementState = States.NoMovement;
+                dashingTime = 0.2f;
+                rigidInstance.velocity = new Vector2(0, 0);
+                return false;
+            }
+            else return false;
+        }
         private void CalculateSpeeds(out float x, out float y)
         {
             x = Input.GetAxisRaw("Horizontal");
