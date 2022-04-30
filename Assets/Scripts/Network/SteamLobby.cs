@@ -90,7 +90,7 @@ namespace Network
         private void OnLobbyEntered(LobbyEnter_t callback)
         {
             // Everyone
-            HostButton.SetActive(false);
+            // HostButton.SetActive(false);
             CurrentLobbyID = callback.m_ulSteamIDLobby;
             // LobbyNameText.text = SteamMatchmaking.GetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), "name");
 

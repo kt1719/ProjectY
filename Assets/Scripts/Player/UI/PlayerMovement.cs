@@ -22,6 +22,7 @@ namespace PlayerUI
 
         private Rigidbody2D rigidInstance;
 
+
         private SpriteRenderer rendererInstance;
 
         enum States
@@ -96,15 +97,12 @@ namespace PlayerUI
         }
 
         // Flip Movement Logic //////////////////////
+        [Client]
         private void FlipMovement(float x)
         {
-            FlipMovementClientRPC(x);
-            FlipMovementLocal(x); // Local update
-            FlipMovementCommand(x); // Server update
-        }
+            //Only go on for the LocalPlayer
+            if (!isLocalPlayer) return;
 
-        private void FlipMovementLocal(float x)
-        {
             // To change where the characater is facing depending on input
             if (x != 0)
             {
@@ -119,44 +117,25 @@ namespace PlayerUI
                     this.transform.GetChild(0).transform.localEulerAngles = new Vector3(0, 0, 0);
                 }
             }
+            FlipMovementCommand(rendererInstance.flipX, this.transform.GetChild(0).transform.localEulerAngles);
         }
 
         [Command]
-        private void FlipMovementCommand(float x)
+        private void FlipMovementCommand(bool flipState, Vector3 eulerAngles)
         {
             // To change where the characater is facing depending on input
-            if (x != 0)
-            {
-                if (x < 0)
-                {
-                    rendererInstance.flipX = true;
-                    this.transform.GetChild(0).transform.localEulerAngles = new Vector3(0, 180, 0);
-                }
-                else
-                {
-                    rendererInstance.flipX = false;
-                    this.transform.GetChild(0).transform.localEulerAngles = new Vector3(0, 0, 0);
-                }
-            }
+            
+            rendererInstance.flipX = flipState;
+            this.transform.GetChild(0).transform.localEulerAngles = eulerAngles;
+            FlipMovementClientRPC(rendererInstance.flipX, this.transform.GetChild(0).transform.localEulerAngles);
         }
 
         [ClientRpc]
-        private void FlipMovementClientRPC(float x)
+        private void FlipMovementClientRPC(bool flipState, Vector3 eulerAngles)
         {
-            // To change where the characater is facing depending on input
-            if (x != 0)
-            {
-                if (x < 0)
-                {
-                    rendererInstance.flipX = true;
-                    this.transform.GetChild(0).transform.localEulerAngles = new Vector3(0, 180, 0);
-                }
-                else
-                {
-                    rendererInstance.flipX = false;
-                    this.transform.GetChild(0).transform.localEulerAngles = new Vector3(0, 0, 0);
-                }
-            }
+            if(isLocalPlayer) return;
+            rendererInstance.flipX = flipState;
+            this.transform.GetChild(0).transform.localEulerAngles = eulerAngles;
         }
 
         ////////////////////////////////////////////
