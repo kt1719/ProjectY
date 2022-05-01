@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using PlayerClasses;
+using Mirror;
 
 namespace PlayerAtt
 {
@@ -10,7 +11,7 @@ namespace PlayerAtt
         private int damage = 50;
         public PlayerClass playerClassScript;
 
-        private void Start()
+        private void Awake()
         {
             playerClassScript = GetComponentInParent<PlayerClass>();
         }
@@ -20,8 +21,18 @@ namespace PlayerAtt
         }
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            bool killedEnemy = collision.GetComponent<Enemy>().TakeDamage(damage);
-            if (killedEnemy) playerClassScript.gainXP(50);
+            if(!this.GetComponentInParent<NetworkBehaviour>().isLocalPlayer)
+            {
+                return;
+            }
+
+            if (collision.tag == "Enemy")
+            {
+                Debug.Log("Local player took damage");
+                bool killedEnemy = collision.GetComponent<Enemy>().TakeDamage(damage);
+                if (killedEnemy) playerClassScript.gainXP(50);
+            }
+            // if (collision.tag == "Player" && 1v1area)
         }
     }
 }

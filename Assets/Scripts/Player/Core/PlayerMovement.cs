@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using PlayerUI;
 
-namespace PlayerUI
+namespace PlayerCore
 {
     public class PlayerMovement : NetworkBehaviour
     {
@@ -133,6 +134,14 @@ namespace PlayerUI
         {
             if(isLocalPlayer) return;
             rendererInstance.flipX = flipState;
+        }
+
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (collision.transform.tag == "Player")
+            {
+                Physics2D.IgnoreCollision(collision.collider, GetComponent<Collider2D>());
+            }
         }
 
         ////////////////////////////////////////////

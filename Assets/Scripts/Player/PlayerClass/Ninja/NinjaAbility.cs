@@ -4,6 +4,7 @@ using UnityEngine;
 using PlayerUI;
 using System;
 using PlayerAtt;
+using PlayerCore;
 
 namespace PlayerClasses
 {

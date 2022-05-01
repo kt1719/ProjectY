@@ -2429,6 +2429,22 @@ PrefabInstance:
       propertyPath: transport
       value: 
       objectReference: {fileID: 1974976062}
+    - target: {fileID: 9203576189564759001, guid: 7760b343b0a12fe40ad57edf7f46aae1, type: 3}
+      propertyPath: onlineScene
+      value: Assets/Scenes/SpawnPoint.unity
+      objectReference: {fileID: 0}
+    - target: {fileID: 9203576189564759001, guid: 7760b343b0a12fe40ad57edf7f46aae1, type: 3}
+      propertyPath: serverTickRate
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 9203576189564759001, guid: 7760b343b0a12fe40ad57edf7f46aae1, type: 3}
+      propertyPath: spawnPrefabs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9203576189564759001, guid: 7760b343b0a12fe40ad57edf7f46aae1, type: 3}
+      propertyPath: spawnPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 2612599189308284357, guid: a4c908b40dd8d8c4d8fd9b1bde73e9d8, type: 3}
     - target: {fileID: 9203576189564759004, guid: 7760b343b0a12fe40ad57edf7f46aae1, type: 3}
       propertyPath: m_Name
       value: NetworkManager
@@ -2439,15 +2455,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9203576189564759005, guid: 7760b343b0a12fe40ad57edf7f46aae1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1274.6842
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9203576189564759005, guid: 7760b343b0a12fe40ad57edf7f46aae1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 746.79645
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9203576189564759005, guid: 7760b343b0a12fe40ad57edf7f46aae1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -55.159683
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9203576189564759005, guid: 7760b343b0a12fe40ad57edf7f46aae1, type: 3}
       propertyPath: m_LocalRotation.w
