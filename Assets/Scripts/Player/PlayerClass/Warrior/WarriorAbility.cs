@@ -16,7 +16,7 @@ namespace PlayerClasses
         protected Dictionary<int, int> userMouseMapping;
         protected Dictionary<KeyCode, int> userKeyMapping;
 
-        public void Start() 
+        public void Awake() 
         {   
             animatorScript = GetComponent<PlayerAnimation>();
 

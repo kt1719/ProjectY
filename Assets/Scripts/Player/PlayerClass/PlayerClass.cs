@@ -18,7 +18,7 @@ namespace PlayerClasses
         protected BasicStats stats;
 
         protected HashSet<int> unlockedAbilities;
-        public virtual void Start()
+        public virtual void Awake()
         {
             stats = new BasicStats { HP = 100, Attack = 5, Level = 1, XP = 0, LevelUpXP = 100 };
         }

@@ -1,5 +1,3 @@
-
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,7 +19,7 @@ namespace PlayerClasses
 
         private bool isDashing = false;
 
-        public void Start() 
+        public void Awake() 
         {   
             animatorScript = GetComponent<PlayerAnimation>();
             movementScript = GetComponent<PlayerMovement>();

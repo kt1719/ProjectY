@@ -12,7 +12,7 @@ namespace PlayerUI
         // Start is called before the first frame update
         Animator animator;
 
-        void Start()
+        void Awake()
         {
             animator = GetComponent<Animator>();
         }

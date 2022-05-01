@@ -22,7 +22,6 @@ namespace PlayerUI
 
         private Rigidbody2D rigidInstance;
 
-
         private SpriteRenderer rendererInstance;
 
         enum States
@@ -32,7 +31,7 @@ namespace PlayerUI
             Dashing
         }
 
-        private void Start()
+        private void Awake()
         {
             rigidInstance = GetComponent<Rigidbody2D>();
             animatorScript = GetComponent<PlayerAnimation>();
@@ -126,7 +125,6 @@ namespace PlayerUI
             // To change where the characater is facing depending on input
             
             rendererInstance.flipX = flipState;
-            this.transform.GetChild(0).transform.localEulerAngles = eulerAngles;
             FlipMovementClientRPC(rendererInstance.flipX, this.transform.GetChild(0).transform.localEulerAngles);
         }
 
@@ -135,7 +133,6 @@ namespace PlayerUI
         {
             if(isLocalPlayer) return;
             rendererInstance.flipX = flipState;
-            this.transform.GetChild(0).transform.localEulerAngles = eulerAngles;
         }
 
         ////////////////////////////////////////////

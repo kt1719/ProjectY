@@ -15,9 +15,9 @@ namespace PlayerClasses
 
         protected NinjaStats ninjaStats;
 
-        public override void Start() 
+        public override void Awake() 
         {
-            base.Start();
+            base.Awake();
 
             ninjaStats = new NinjaStats { Strength = 5 };
             unlockedAbilities = new HashSet<int>() {0, 1, 2};
