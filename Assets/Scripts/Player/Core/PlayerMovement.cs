@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
-using PlayerUI;
+using PlayerAnim;
 
 namespace PlayerCore
 {
@@ -11,6 +11,7 @@ namespace PlayerCore
         // Variables for movement
         private float speed = 3f;
         private float dashingspeed = 4.5f;
+        private bool frozen = false;
 
         // Variables for dashing
         private float dashingTime = 0.2f;
@@ -41,7 +42,7 @@ namespace PlayerCore
 
         public void MovePlayer()
         {
-            if (movementState == States.Dashing) // Should get rid of dashing and only make it a ninja logic
+            if (movementState == States.Dashing || frozen) // Should get rid of dashing and only make it a ninja logic
             {
                 return;
             }
@@ -87,6 +88,22 @@ namespace PlayerCore
             }
             else return false;
         }
+
+        public void FreezeMovement()
+        {
+            if (movementState == States.Moving)
+            {
+                rigidInstance.velocity = new Vector2(0, 0);
+                animatorScript.ChangeStateNotRunning();
+            }
+            frozen = true;
+        }
+
+        public void UnFreezeMovement()
+        {
+            frozen = false;
+        }
+
         private void CalculateSpeeds(out float x, out float y)
         {
             x = Input.GetAxisRaw("Horizontal");
@@ -141,6 +158,14 @@ namespace PlayerCore
             if (collision.transform.tag == "Player")
             {
                 Physics2D.IgnoreCollision(collision.collider, GetComponent<Collider2D>());
+            }
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.transform.tag == "Player")
+            {
+                Debug.Log("Got hit by another player");
             }
         }
 

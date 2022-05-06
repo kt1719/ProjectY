@@ -19,7 +19,7 @@ public class Enemy : NetworkBehaviour
     [Client]
     public bool TakeDamage(int damage) 
     {
-        animatorScript.ChangeStateToTakeDamage();
+        if (health <= 0) { return false; } // This is to fix the bug of the player killing the enemy multiple times after it's dead and has not despawned
         health -= damage;
         TakeDamageCommand(health);
         if (health <= 0) 
@@ -27,19 +27,19 @@ public class Enemy : NetworkBehaviour
             animatorScript.ChangeStateToDie();
             return true;
         }
+        animatorScript.ChangeStateToTakeDamage();
         return false;
     }
 
     [Command(requiresAuthority = false)] // Currently not working
     public void TakeDamageCommand(int hp)
     {
-        Debug.Log("Hp now " + hp);
         this.health = hp;
-        animatorScript.ChangeStateToTakeDamage();
         if (health <= 0)
         {
             animatorScript.ChangeStateToDie();
         }
+        animatorScript.ChangeStateToTakeDamage();
     }
 
     // DO NOT CALL, this should be called from the animation timeline and not programmatically

@@ -16,13 +16,16 @@ namespace UI
         public Text XPText;
 
         GameObject SkillTreePanel;
+
+        PlayerController playerController;
         // Start is called before the first frame update
-        void Start()
+        void Awake()
         {
             healthText = this.transform.Find("HealthText").GetComponent<Text>();
             levelText = this.transform.Find("LevelText").GetComponent<Text>();
             XPText = this.transform.Find("XPText").GetComponent<Text>();
-            SkillTreePanel = this.transform.Find("SkillTree").gameObject;
+            SkillTreePanel = this.transform.Find("TabMenu").gameObject;
+            playerController = this.GetComponentInParent<PlayerController>();
         }
 
         // Update is called once per frame
@@ -44,14 +47,17 @@ namespace UI
             bool skillTreePressed = Input.GetKeyDown(KeyCode.Tab);
             if (skillTreePressed)
             {
+                bool skillTreeEnabled = SkillTreePanel.gameObject.activeSelf;
+                SkillTreePanel.gameObject.SetActive(!skillTreeEnabled); // Set Skill tree to opposite state
                 if (SkillTreePanel.gameObject.activeSelf)
                 {
-                    SkillTreePanel.gameObject.SetActive(false);
+                    playerController.FreezeCharacter();
                 }
                 else
                 {
-                    SkillTreePanel.gameObject.SetActive(true);
+                    playerController.UnFreezeCharacter();
                 }
+                playerController.enabled = skillTreeEnabled;
             }
         }
     }

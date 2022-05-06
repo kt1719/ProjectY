@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using PlayerUI;
+using PlayerAnim;
 using PlayerClasses;
 using UI;
 using Mirror;
@@ -70,6 +70,16 @@ namespace PlayerCore
         private void InitializeUI()
         {
             characterUI.playerClass = playerClass;
+        }
+
+        public void FreezeCharacter()
+        {
+            movementscript.FreezeMovement();
+        }
+
+        public void UnFreezeCharacter()
+        {
+            movementscript.UnFreezeMovement();
         }
     }
 }

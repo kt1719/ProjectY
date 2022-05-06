@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using PlayerUI;
+using PlayerAnim;
 using System;
 using PlayerAtt;
 using PlayerCore;
@@ -103,10 +103,9 @@ namespace PlayerClasses
             isDashing = true;
         }
 
-        public void Update()
+        public void FixedUpdate()
         {
             isDashing = movementScript.CheckDash(isDashing);
         }
-
     }
 }

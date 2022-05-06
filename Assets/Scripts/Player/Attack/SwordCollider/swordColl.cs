@@ -28,7 +28,6 @@ namespace PlayerAtt
 
             if (collision.tag == "Enemy")
             {
-                Debug.Log("Local player took damage");
                 bool killedEnemy = collision.GetComponent<Enemy>().TakeDamage(damage);
                 if (killedEnemy) playerClassScript.gainXP(50);
             }

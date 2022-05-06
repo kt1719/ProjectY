@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using PlayerUI;
+using PlayerAnim;
 
 namespace PlayerAtt
 {
