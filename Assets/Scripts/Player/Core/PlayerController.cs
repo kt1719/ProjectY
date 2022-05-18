@@ -19,6 +19,8 @@ namespace PlayerCore
         Camera cam;
         GameObject gameOverlay;
 
+        public GameObject[] prefabs; // [projectile, ..]
+
         private void Awake() // Got changed from start to awake due to the swordColl script not finding the PlayerClass script. Awake means it runs earlier than start
         {
             DontDestroyOnLoad(this.gameObject);
@@ -27,8 +29,8 @@ namespace PlayerCore
             movementscript = GetComponent<PlayerMovement>();
 
             // TODO: make this dependent on user class choice
-            abilityscript = gameObject.AddComponent<NinjaAbility>();  
-            playerClass = gameObject.AddComponent<Ninja>();
+            abilityscript = gameObject.AddComponent<RangerAbility>();  
+            playerClass = gameObject.AddComponent<Ranger>();
 
             abilityscript.initialize(playerClass); // Pass in the data class into the ability class
 
