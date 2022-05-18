@@ -1471,6 +1471,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  prefabs:
+  - {fileID: 1006599647683004700, guid: 037689923506a8d428d7f6b29240413a, type: 3}
 --- !u!114 &1979913598963679838
 MonoBehaviour:
   m_ObjectHideFlags: 0
