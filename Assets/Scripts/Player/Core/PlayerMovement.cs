@@ -51,12 +51,27 @@ namespace PlayerCore
 
             if (Mathf.Abs(x) != 0 || Mathf.Abs(y) != 0)
             {
-                animatorScript.ChangeStateRunning();
+                if (y > 0)
+                {
+                    animatorScript.ChangeStateRunning("Up");
+                }
+                else if (y < 0)
+                {
+                    animatorScript.ChangeStateRunning("Down");
+                }
+                else if (x != 0)
+                {
+                    animatorScript.ChangeStateRunning("Horizontal");
+                }
+                else
+                {
+                    Debug.Log("Should never be this case");
+                }
                 movementState = States.Moving;
             }
             else
             {
-                animatorScript.ChangeStateNotRunning();
+                animatorScript.ChangeStateRunning();
                 movementState = States.NoMovement;
             }
 
@@ -65,7 +80,7 @@ namespace PlayerCore
             rigidInstance.velocity = new Vector2(x, y);
         }
 
-        public bool CheckDash(bool keyDown)
+        public bool CheckDash(bool keyDown) // Change this to be inherited by the rogue movement class
         {
             if (keyDown && movementState == States.Moving) // implies movement state != dashing
             {
@@ -94,7 +109,7 @@ namespace PlayerCore
             if (movementState == States.Moving)
             {
                 rigidInstance.velocity = new Vector2(0, 0);
-                animatorScript.ChangeStateNotRunning();
+                animatorScript.ChangeStateRunning();
             }
             frozen = true;
         }
@@ -121,7 +136,7 @@ namespace PlayerCore
             if (!isLocalPlayer) return;
 
             // To change where the characater is facing depending on input
-            if (x != 0)
+            if (x != 0 && animatorScript.CheckHorizontalAnimatorState())
             {
                 if (x < 0)
                 {

@@ -41,14 +41,17 @@ namespace PlayerAnim
             // fire an arrow
         }
 
-        public void ChangeStateRunning()
+        public void ChangeStateRunning(string direction="")
         {
-            animator.SetBool("isRunning", true);
+            animator.SetBool("isRunningHorizontal", (direction == "Horizontal") ? true : false);
+            animator.SetBool("isRunningUp", (direction == "Up") ? true : false);
+            animator.SetBool("isRunningDown", (direction == "Down") ? true : false);
         }
 
-        public void ChangeStateNotRunning()
+        public bool CheckHorizontalAnimatorState()
         {
-            animator.SetBool("isRunning", false);
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName("horizontal_running") || animator.GetCurrentAnimatorStateInfo(0).IsName("horizontal_idle")) { return true; }
+            return false;
         }
 
         public void HitEventOn()
