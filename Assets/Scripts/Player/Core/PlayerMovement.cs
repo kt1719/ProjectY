@@ -62,6 +62,7 @@ namespace PlayerCore
                 else if (x != 0)
                 {
                     animatorScript.ChangeStateRunning("Horizontal");
+                    FlipMovement(x);
                 }
                 else
                 {
@@ -74,8 +75,6 @@ namespace PlayerCore
                 animatorScript.ChangeStateRunning();
                 movementState = States.NoMovement;
             }
-
-            FlipMovement(x);
 
             rigidInstance.velocity = new Vector2(x, y);
         }
@@ -136,7 +135,7 @@ namespace PlayerCore
             if (!isLocalPlayer) return;
 
             // To change where the characater is facing depending on input
-            if (x != 0 && animatorScript.CheckHorizontalAnimatorState())
+            if (x != 0)
             {
                 if (x < 0)
                 {
