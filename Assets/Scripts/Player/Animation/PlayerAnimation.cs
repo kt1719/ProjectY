@@ -50,18 +50,10 @@ namespace PlayerAnim
 
         public bool CheckHorizontalAnimatorState()
         {
-            if (animator.GetCurrentAnimatorStateInfo(0).IsName("horizontal_running") || animator.GetCurrentAnimatorStateInfo(0).IsName("horizontal_idle")) { return true; }
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName("horizontal_running")
+                || animator.GetCurrentAnimatorStateInfo(0).IsName("horizontal_idle")
+                || animator.GetCurrentAnimatorStateInfo(0).IsName("horizontal_light_a")) { return true; }
             return false;
-        }
-
-        public void HitEventOn()
-        {
-            GetComponentInChildren<PolygonCollider2D>().enabled = true;
-        }
-
-        public void HitEventOff()
-        {
-            GetComponentInChildren<PolygonCollider2D>().enabled = false;
         }
     }
 }

@@ -54,14 +54,15 @@ MonoBehaviour:
   serverTickRate: 30
   offlineScene: 
   onlineScene: Assets/Scenes/MainOverworld.unity
-  transport: {fileID: 0}
+  transport: {fileID: 9203576189564759000}
   networkAddress: localhost
   maxConnections: 100
   authenticator: {fileID: 0}
   playerPrefab: {fileID: 1979913598963679833, guid: 2cffdbf0b45f6f646a39216ab9af9d44, type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 0
-  spawnPrefabs: []
+  spawnPrefabs:
+  - {fileID: 2612599189308284357, guid: a4c908b40dd8d8c4d8fd9b1bde73e9d8, type: 3}
   mainMenuScene: MainMenu
   multiplayerScene: Multiplayer
 --- !u!114 &8118973609848244610

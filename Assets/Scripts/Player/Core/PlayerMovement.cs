@@ -16,6 +16,9 @@ namespace PlayerCore
         // Variables for dashing
         private float dashingTime = 0.2f;
 
+        private float currentSpeedX = 0;
+        private float currentSpeedY = 0;
+
         // Movement State tracker
         private States movementState = States.NoMovement;
         private Vector2 currSpeed = Vector2.zero;
@@ -23,7 +26,6 @@ namespace PlayerCore
         private PlayerAnimation animatorScript;
 
         private Rigidbody2D rigidInstance;
-
         private SpriteRenderer rendererInstance;
 
         enum States
@@ -46,23 +48,28 @@ namespace PlayerCore
             {
                 return;
             }
-            float x, y;
-            CalculateSpeeds(out x, out y);
+            CalculateSpeeds(out currentSpeedX, out currentSpeedY);
 
-            if (Mathf.Abs(x) != 0 || Mathf.Abs(y) != 0)
+         
+
+            rigidInstance.velocity = new Vector2(currentSpeedX, currentSpeedY);
+        }
+
+        public void ChangeAnimatorAnimation()
+        {
+            if (Mathf.Abs(currentSpeedX) != 0 || Mathf.Abs(currentSpeedY) != 0)
             {
-                if (y > 0)
+                if (currentSpeedY > 0)
                 {
                     animatorScript.ChangeStateRunning("Up");
                 }
-                else if (y < 0)
+                else if (currentSpeedY < 0)
                 {
                     animatorScript.ChangeStateRunning("Down");
                 }
-                else if (x != 0)
+                else if (currentSpeedX != 0)
                 {
                     animatorScript.ChangeStateRunning("Horizontal");
-                    FlipMovement(x);
                 }
                 else
                 {
@@ -75,8 +82,6 @@ namespace PlayerCore
                 animatorScript.ChangeStateRunning();
                 movementState = States.NoMovement;
             }
-
-            rigidInstance.velocity = new Vector2(x, y);
         }
 
         public bool CheckDash(bool keyDown) // Change this to be inherited by the rogue movement class
@@ -128,44 +133,40 @@ namespace PlayerCore
         }
 
         // Flip Movement Logic //////////////////////
-        [Client]
-        private void FlipMovement(float x)
+        public void FlipMovement()
         {
-            //Only go on for the LocalPlayer
-            if (!isLocalPlayer) return;
-
-            // To change where the characater is facing depending on input
-            if (x != 0)
+            float x_Velocity = rigidInstance.velocity.x;
+            if (!animatorScript.CheckHorizontalAnimatorState() || x_Velocity > 0)
             {
-                if (x < 0)
-                {
-                    rendererInstance.flipX = true;
-                    this.transform.GetChild(0).transform.localEulerAngles = new Vector3(0, 180, 0);
-                }
-                else
-                {
-                    rendererInstance.flipX = false;
-                    this.transform.GetChild(0).transform.localEulerAngles = new Vector3(0, 0, 0);
-                }
+                rendererInstance.flipX = false;
+                this.transform.GetChild(0).transform.localEulerAngles = new Vector3(0, 0, 0);
             }
-            FlipMovementCommand(rendererInstance.flipX, this.transform.GetChild(0).transform.localEulerAngles);
+            else if (!animatorScript.CheckHorizontalAnimatorState() || x_Velocity < 0)
+            {
+                rendererInstance.flipX = true;
+                this.transform.GetChild(0).transform.localEulerAngles = new Vector3(0, 180, 0);
+            }
+
+            //Only go on if it's multiplayer
+            //if (isLocalPlayer) return;
+            //FlipMovementCommand(rendererInstance.flipX, this.transform.GetChild(0).transform.localEulerAngles);
         }
 
-        [Command]
-        private void FlipMovementCommand(bool flipState, Vector3 eulerAngles)
-        {
-            // To change where the characater is facing depending on input
+        //[Command]
+        //private void FlipMovementCommand(bool flipState, Vector3 eulerAngles)
+        //{
+        //    // To change where the characater is facing depending on input
             
-            rendererInstance.flipX = flipState;
-            FlipMovementClientRPC(rendererInstance.flipX, this.transform.GetChild(0).transform.localEulerAngles);
-        }
+        //    rendererInstance.flipX = flipState;
+        //    FlipMovementClientRPC(rendererInstance.flipX, this.transform.GetChild(0).transform.localEulerAngles);
+        //}
 
-        [ClientRpc]
-        private void FlipMovementClientRPC(bool flipState, Vector3 eulerAngles)
-        {
-            if(isLocalPlayer) return;
-            rendererInstance.flipX = flipState;
-        }
+        //[ClientRpc]
+        //private void FlipMovementClientRPC(bool flipState, Vector3 eulerAngles)
+        //{
+        //    if(isLocalPlayer) return;
+        //    rendererInstance.flipX = flipState;
+        //}
 
         private void OnCollisionEnter2D(Collision2D collision)
         {

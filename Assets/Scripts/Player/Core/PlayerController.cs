@@ -19,16 +19,18 @@ namespace PlayerCore
         Camera cam;
         GameObject gameOverlay;
 
+        public bool singlePlayer = false;
+
         private void Awake() // Got changed from start to awake due to the swordColl script not finding the PlayerClass script. Awake means it runs earlier than start
         {
             DontDestroyOnLoad(this.gameObject);
 
             characterUI = GetComponentInChildren<CharacterUI>();
-            movementscript = GetComponent<PlayerMovement>();
 
             // TODO: make this dependent on user class choice
-            abilityscript = gameObject.AddComponent<NinjaAbility>();  
-            playerClass = gameObject.AddComponent<Ninja>();
+            abilityscript = GetComponent<WarriorAbility>();  
+            playerClass = GetComponent<Warrior>();
+            movementscript = GetComponent<WarriorMovement>();
 
             abilityscript.initialize(playerClass); // Pass in the data class into the ability class
 
@@ -41,7 +43,7 @@ namespace PlayerCore
         // Update is called once per frame
         void Update()
         {
-            if (!hasAuthority)
+            if (!hasAuthority && !singlePlayer)
             {
                 if (cam.enabled)
                 {
@@ -55,11 +57,17 @@ namespace PlayerCore
             }
             
             abilityscript.CheckAbility();
+            movementscript.ChangeAnimatorAnimation();
         }
 
-        private void FixedUpdate()
+        void LateUpdate()
         {
-            if (!hasAuthority)
+            movementscript.FlipMovement();
+        }
+
+        void FixedUpdate()
+        {
+            if (!hasAuthority && !singlePlayer)
             {
                 return;
             }

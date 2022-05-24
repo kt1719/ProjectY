@@ -78,13 +78,13 @@ namespace PlayerClasses
         ***/
         public void LightAttack() 
         {
-            GetComponentInChildren<swordColl>().setDamage(50);
+            GetComponent<swordColl>().setDamage(50);
             animatorScript.ChangeStateToWarriorLightAttack();
         }
 
         public void HeavyAttack() 
         {   
-            GetComponentInChildren<swordColl>().setDamage(100); // one shot ;)
+            GetComponent<swordColl>().setDamage(100); // one shot ;)
             animatorScript.ChangeStateToWarriorHeavyAttack();
         }
     }
