@@ -78,7 +78,7 @@ namespace PlayerClasses
         ***/
         public void LightAttack() 
         {
-            GetComponent<swordColl>().setDamage(50);
+            GetComponent<swordColl>().setDamage(20);
             animatorScript.ChangeStateToWarriorLightAttack();
         }
 

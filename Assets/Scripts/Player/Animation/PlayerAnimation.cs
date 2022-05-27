@@ -20,20 +20,13 @@ namespace PlayerAnim
         public void ChangeStateToWarriorLightAttack()
         {
             animator.SetFloat("attackSpeed", 1f);
-            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("attack") && !animator.GetCurrentAnimatorStateInfo(0).IsName("attack1"))
-            {
-                animator.SetTrigger("isAttacking"); // sword slash
-            }
+            animator.SetTrigger("isAttacking"); // sword slash
         }
 
         public void ChangeStateToWarriorHeavyAttack()
         {
             animator.SetFloat("attackSpeed", 0.3f);
-            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("attack") && !animator.GetCurrentAnimatorStateInfo(0).IsName("attack1"))
-            {
-                animator.SetTrigger("isAttacking"); // sword slash
-            }
-
+            animator.SetTrigger("isAttacking"); // sword slash
         }
 
         public void ChangeStateToRangedAttack()

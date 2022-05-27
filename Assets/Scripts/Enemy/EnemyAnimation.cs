@@ -3,10 +3,11 @@
  using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
 namespace EnemyUI
 {
-    public class EnemyAnimation : MonoBehaviour
+    public class EnemyAnimation : NetworkBehaviour
     {
         Animator animator;
 

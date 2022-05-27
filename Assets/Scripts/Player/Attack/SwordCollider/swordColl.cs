@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using PlayerClasses;
 using Mirror;
+using EnemyClass;
 
 namespace PlayerAtt
 {
-    public class swordColl : MonoBehaviour
+    public class swordColl : NetworkBehaviour
     {
         private int damage = 50;
         private PlayerClass playerClassScript;
@@ -29,16 +30,24 @@ namespace PlayerAtt
             // Replace with colliders
             if (animator.GetCurrentAnimatorStateInfo(0).IsName("down_light_a"))
             {
-                GameObject lightAttackObj = swordColliderGameObj.transform.GetChild(0).gameObject;
-                GameObject downAttack = lightAttackObj.transform.GetChild(0).gameObject;
-                Debug.Log(lightAttackObj.name);
-                downAttack.SetActive(true);
-                lightAttackObj.SetActive(true);
+                SetLightAttackCollider(0);
             }
             else if (animator.GetCurrentAnimatorStateInfo(0).IsName("horizontal_light_a"))
             {
-                Debug.Log("Here2");
+                SetLightAttackCollider(2);
             }
+            else if (animator.GetCurrentAnimatorStateInfo(0).IsName("up_light_a"))
+            {
+                SetLightAttackCollider(1);
+            }
+        }
+
+        private void SetLightAttackCollider(int index)
+        {
+            GameObject lightAttackObj = swordColliderGameObj.transform.GetChild(0).gameObject;
+            GameObject downAttack = lightAttackObj.transform.GetChild(index).gameObject;
+            downAttack.SetActive(true);
+            lightAttackObj.SetActive(true);
         }
 
         public void HitEventOff()
@@ -65,7 +74,7 @@ namespace PlayerAtt
                 return;
             }
 
-            if (collision.tag == "Enemy")
+            if (collision.tag == "Enemy" && isLocalPlayer)
             {
                 bool killedEnemy = collision.GetComponent<Enemy>().TakeDamage(damage);
                 if (killedEnemy) playerClassScript.gainXP(50);
