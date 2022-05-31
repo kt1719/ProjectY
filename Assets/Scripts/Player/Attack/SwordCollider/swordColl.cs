@@ -9,7 +9,7 @@ namespace PlayerAtt
 {
     public class swordColl : NetworkBehaviour
     {
-        private int damage = 50;
+        private int damage = 0;
         private PlayerClass playerClassScript;
         private Animator animator;
         GameObject swordColliderGameObj;
@@ -50,7 +50,7 @@ namespace PlayerAtt
             lightAttackObj.SetActive(true);
         }
 
-        public void HitEventOff()
+        public void HitEventOff() // Will have to rework. Just get a reference to the gameobject that was turned on setactive to false on that which will change this from O(n^3) to O(1) both with O(1) memory
         {
             for(int i = 0; i < swordColliderGameObj.transform.childCount; i++)
             {
@@ -67,17 +67,19 @@ namespace PlayerAtt
             }
         }
 
-        private void OnTriggerEnter2D(Collider2D collision)
+        private void OnTriggerEnter2D(Collider2D collision) // The only triggers that will happen with this player are the sword colliders
         {
-            if(!this.GetComponent<NetworkBehaviour>().isLocalPlayer)
+            if(!isLocalPlayer)
             {
                 return;
             }
 
             if (collision.tag == "Enemy" && isLocalPlayer)
             {
-                bool killedEnemy = collision.GetComponent<Enemy>().TakeDamage(damage);
-                if (killedEnemy) playerClassScript.gainXP(50);
+                GetComponentInChildren<ScreenShakeController>().StartShake(0.1f, 0.08f);
+                EnemyController enemyScript = collision.GetComponent<EnemyController>();
+                bool killedEnemy = enemyScript.TakeDamage(damage);
+                if (killedEnemy) playerClassScript.gainXP(enemyScript.giveXP());
             }
             // if (collision.tag == "Player" && 1v1area)
         }

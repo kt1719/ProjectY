@@ -69,8 +69,17 @@ namespace PlayerClasses
         {
             int newXP = stats.XP + xp;
             bool hasLeveled = (newXP >= stats.LevelUpXP) ? true : false;
-            stats.XP = (hasLeveled) ? (newXP) % stats.LevelUpXP : newXP;
-            if (hasLeveled) LevelUp();
+            while (hasLeveled)
+            {
+                xp -= (stats.LevelUpXP - stats.XP);
+                LevelUp();
+                stats.XP = 0;
+                if (xp < stats.LevelUpXP)
+                {
+                    hasLeveled = false;
+                }
+            }
+            stats.XP += xp;
         }
     }
 }

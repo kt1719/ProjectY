@@ -263,7 +263,8 @@ GameObject:
   - component: {fileID: 519420030}
   - component: {fileID: 2744899449615457187}
   - component: {fileID: 1077660727851503184}
-  - component: {fileID: 8912473696536408228}
+  - component: {fileID: 1238286300428032806}
+  - component: {fileID: 8735019630788481866}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -438,7 +439,7 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!114 &8912473696536408228
+--- !u!114 &1238286300428032806
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -450,14 +451,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c88f5cead0c0b2a4eb05b5900433f8d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AssetsPPU: 72
+  m_AssetsPPU: 64
   m_RefResolutionX: 1920
   m_RefResolutionY: 1080
-  m_UpscaleRT: 1
+  m_UpscaleRT: 0
   m_PixelSnapping: 0
-  m_CropFrameX: 0
-  m_CropFrameY: 0
+  m_CropFrameX: 1
+  m_CropFrameY: 1
   m_StretchFill: 0
+--- !u!114 &8735019630788481866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 854b1409f69e83c46bcb61df823c6468, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &690113768
 GameObject:
   m_ObjectHideFlags: 0
@@ -1340,7 +1353,6 @@ GameObject:
   - component: {fileID: 8305970210891981769}
   - component: {fileID: 2386751186897673027}
   - component: {fileID: 4650540451151021333}
-  - component: {fileID: 2796042029370950967}
   - component: {fileID: 240612397718520330}
   - component: {fileID: 305514326479235846}
   m_Layer: 0
@@ -1511,6 +1523,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3c8b3894c84ed746ae267f4879255f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
 --- !u!114 &2543583150771516110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1636,22 +1650,6 @@ MonoBehaviour:
   showGizmos: 0
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
---- !u!114 &2796042029370950967
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1979913598963679833}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f6f3bf89aa97405989c802ba270f815, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.01
-  clientAuthority: 1
-  animator: {fileID: 3448653594402881674}
 --- !u!114 &240612397718520330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1746,7 +1744,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1.1841478, y: 0.5430677}
+  m_Offset: {x: 1.1266472, y: 0.5430677}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1757,7 +1755,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.79549515, y: 1.4643407}
+  m_Size: {x: 0.6969228, y: 1.4643407}
   m_EdgeRadius: 0
 --- !u!1 &2042091928446400900
 GameObject:
