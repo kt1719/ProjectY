@@ -78,7 +78,7 @@ namespace PlayerAtt
             {
                 GetComponentInChildren<ScreenShakeController>().StartShake(0.1f, 0.08f);
                 EnemyController enemyScript = collision.GetComponent<EnemyController>();
-                bool killedEnemy = enemyScript.TakeDamage(damage);
+                bool killedEnemy = enemyScript.TakeDamage(damage, this.transform);
                 if (killedEnemy) playerClassScript.gainXP(enemyScript.giveXP());
             }
             // if (collision.tag == "Player" && 1v1area)

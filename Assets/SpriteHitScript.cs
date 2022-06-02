@@ -6,10 +6,10 @@ namespace EnemyClass
 {
     public abstract class SpriteHitScript : MonoBehaviour
     {
-        Sprite sprite;
+        protected SpriteRenderer sprite;
         private void Awake()
         {
-            sprite = GetComponent<Sprite>();
+            sprite = GetComponent<SpriteRenderer>();
         }
 
         public abstract void changeSpriteOrientation(Transform transform);

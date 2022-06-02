@@ -8,14 +8,14 @@ namespace EnemyClass
 {
     public class EnemyController : NetworkBehaviour
     {
-        [SyncVar]
         private int health;
         private EnemyAnimation animatorScript;
         public EnemyScriptableObj stats;
         private EnemyMovement movementScript;
+        private SpriteHitScript spriteHitScript;
         private int xpGiven;
 
-        
+        float attackRadius;
         // Start is called before the first frame update
         void Awake()
         {
@@ -23,36 +23,58 @@ namespace EnemyClass
             xpGiven = stats.xpGiven;
             movementScript = GetComponent<EnemyMovement>();
             animatorScript = GetComponent<EnemyAnimation>();
+            spriteHitScript = GetComponent<SpriteHitScript>();
+
+            attackRadius = stats.attackRadius;
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
-            movementScript.AutoMove();
+            if (!isServer)
+            {
+                return;
+            }
+            movementScript.ChasePlayer();
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            SpriteRenderer sr = GetComponent<SpriteRenderer>();
+            Debug.Log(sr.bounds);
+            Gizmos.DrawWireSphere(sr.bounds.center, attackRadius);
         }
 
         [Client]
-        public bool TakeDamage(int damage)
+        public bool TakeDamage(int damage, Transform transform)
         {
             if (health <= 0) { return false; } // This is to fix the bug of the player killing the enemy multiple times after it's dead and has not despawned
             health -= damage;
-            TakeDamageCommand(health);
+            TakeDamageCommand(health, transform);
             if (health <= 0)
             {
                 animatorScript.ChangeStateToDie();
                 return true;
             }
-            animatorScript.ChangeStateToTakeDamage();
             return false;
         }
 
-        [Command(requiresAuthority = false)] // Currently not working
-        public void TakeDamageCommand(int hp)
+        [Command(requiresAuthority = false)]
+        public void TakeDamageCommand(int hp, Transform transform)
         {
+            TakeDamageRPC(hp, transform);
+        }
+
+        [ClientRpc(includeOwner = true)]
+        public void TakeDamageRPC(int hp, Transform transform)
+        {
+            if (isLocalPlayer) return;
             this.health = hp;
             if (health <= 0)
             {
                 animatorScript.ChangeStateToDie();
             }
+            spriteHitScript.changeSpriteOrientation(transform);
             animatorScript.ChangeStateToTakeDamage();
         }
 

@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   speed: 2
-  attackRadius: 0.5
+  attackRadius: 1.55
   movementRadius: 5
   damage: 20
-  idleTime: 5
+  idleTime: 8
   xpGiven: 20
   enemyClass: 0
