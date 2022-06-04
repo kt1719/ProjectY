@@ -11,6 +11,7 @@ namespace PlayerClasses
     public class WarriorAbility : PlayerAbility
     {
         private PlayerAnimation animatorScript;
+        private WarriorMovement playerMovementScript;
         protected delegate void abilityDelegate(); // Function template for an ability, no parameters, void return
         protected Dictionary<int, abilityDelegate> trueAbilityMapping;
         protected Dictionary<int, int> userMouseMapping;
@@ -19,6 +20,7 @@ namespace PlayerClasses
         public void Awake() 
         {   
             animatorScript = GetComponent<PlayerAnimation>();
+            playerMovementScript = GetComponent<WarriorMovement>();
 
             trueAbilityMapping = new Dictionary<int, abilityDelegate>()
             {
@@ -85,6 +87,7 @@ namespace PlayerClasses
         public void HeavyAttack() 
         {   
             GetComponent<swordColl>().setDamage(100); // one shot ;)
+            playerMovementScript.FreezeMovement();
             animatorScript.ChangeStateToWarriorHeavyAttack();
         }
     }

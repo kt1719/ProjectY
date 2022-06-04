@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 using PlayerAnim;
+using PlayerClasses;
 
 namespace PlayerCore
 {
     public class PlayerMovement : NetworkBehaviour
     {
         // Variables for movement
-        public static float speed = 3f;
+        public static float speed;
         private float dashingspeed = 4.5f;
         private bool frozen = false;
+        private bool pressedMovementKey = false;
 
         // Variables for dashing
         private float dashingTime = 0.2f;
@@ -27,7 +29,7 @@ namespace PlayerCore
 
         private Rigidbody2D rigidInstance;
         private SpriteRenderer rendererInstance;
-
+        private Warrior warriorScript;
         enum States
         {
             NoMovement,
@@ -40,6 +42,7 @@ namespace PlayerCore
             rigidInstance = GetComponent<Rigidbody2D>();
             animatorScript = GetComponent<PlayerAnimation>();
             rendererInstance = GetComponent<SpriteRenderer>();
+            warriorScript = GetComponent<Warrior>();
         }
 
         public void MovePlayer()
@@ -49,8 +52,6 @@ namespace PlayerCore
                 return;
             }
             CalculateSpeeds(out currentSpeedX, out currentSpeedY);
-
-         
 
             rigidInstance.velocity = new Vector2(currentSpeedX, currentSpeedY);
         }
@@ -110,11 +111,8 @@ namespace PlayerCore
 
         public void FreezeMovement()
         {
-            if (movementState == States.Moving)
-            {
-                rigidInstance.velocity = new Vector2(0, 0);
-                animatorScript.ChangeStateRunning();
-            }
+            rigidInstance.velocity = new Vector2(0, 0);
+            animatorScript.ChangeStateRunning();
             frozen = true;
         }
 
@@ -127,46 +125,52 @@ namespace PlayerCore
         {
             x = Input.GetAxisRaw("Horizontal");
             y = Input.GetAxisRaw("Vertical");
+            pressedMovementKey = (x != 0 || y != 0) ? true : false;
             float normaliser = Mathf.Sqrt(x * x + y * y);
-            x = (x != 0) ? x / (normaliser) * speed : 0;
-            y = (y != 0) ? y / (normaliser) * speed : 0;
+            x = (x != 0) ? x / (normaliser) * warriorScript.getSpeed() : 0;
+            y = (y != 0) ? y / (normaliser) * warriorScript.getSpeed() : 0;
         }
 
         // Flip Movement Logic //////////////////////
         public void FlipMovement()
         {
-            float x_Velocity = rigidInstance.velocity.x;
-            if ((!animatorScript.CheckHorizontalAnimatorState() || x_Velocity > 0))
+            float x_Velocity = Input.GetAxisRaw("Horizontal");
+            bool isMoving = rigidInstance.velocity.x != 0;
+            if ((animatorScript.CheckHorizontalAnimatorState() && x_Velocity > 0) && pressedMovementKey && isMoving)
             {
                 rendererInstance.flipX = false;
                 this.transform.GetChild(0).transform.localEulerAngles = new Vector3(0, 0, 0);
             }
-            else if ((!animatorScript.CheckHorizontalAnimatorState() || x_Velocity < 0))
+            else if ((animatorScript.CheckHorizontalAnimatorState() && x_Velocity < 0) && pressedMovementKey && isMoving)
             {
                 rendererInstance.flipX = true;
                 this.transform.GetChild(0).transform.localEulerAngles = new Vector3(0, 180, 0);
             }
+            else if (!animatorScript.CheckHorizontalAnimatorState())
+            {
+                rendererInstance.flipX = false;
+                this.transform.GetChild(0).transform.localEulerAngles = new Vector3(0, 0, 0);
+            }
 
             //Only go on if it's multiplayer
-            //if (!isLocalPlayer) return;
-            //FlipMovementCommand(rendererInstance.flipX, this.transform.GetChild(0).transform.localEulerAngles);
+            if (!isLocalPlayer) return;
+            Debug.Log("localplayer");
+            FlipMovementCommand(rendererInstance.flipX, this.transform.GetChild(0).transform.localEulerAngles);
         }
 
-        //[Command]
-        //private void FlipMovementCommand(bool flipState, Vector3 eulerAngles)
-        //{
-        //    // To change where the characater is facing depending on input
-        //    Debug.Log("Going here");
-        //    rendererInstance.flipX = flipState;
-        //    FlipMovementClientRPC(rendererInstance.flipX, this.transform.GetChild(0).transform.localEulerAngles);
-        //}
+        [Command]
+        private void FlipMovementCommand(bool flipState, Vector3 eulerAngles)
+        {
+            rendererInstance.flipX = flipState;
+            FlipMovementClientRPC(rendererInstance.flipX, this.transform.GetChild(0).transform.localEulerAngles);
+        }
 
-        //[ClientRpc]
-        //private void FlipMovementClientRPC(bool flipState, Vector3 eulerAngles)
-        //{
-        //    if (isLocalPlayer) return;
-        //    rendererInstance.flipX = flipState;
-        //}
+        [ClientRpc(includeOwner = false)]
+        private void FlipMovementClientRPC(bool flipState, Vector3 eulerAngles)
+        {
+            if (isLocalPlayer) return;
+            rendererInstance.flipX = flipState;
+        }
 
         private void OnCollisionEnter2D(Collision2D collision)
         {

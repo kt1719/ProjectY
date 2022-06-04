@@ -62,6 +62,10 @@ namespace PlayerCore
 
         void LateUpdate()
         {
+            if (!hasAuthority && !singlePlayer)
+            {
+                return;
+            }
             movementscript.FlipMovement();
         }
 

@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 2612599189308284360}
   - component: {fileID: 2612599189308284366}
   - component: {fileID: 5818598135405394203}
+  - component: {fileID: -7944374799046293233}
   - component: {fileID: -4522372404443039614}
   - component: {fileID: 9109495179496013945}
   - component: {fileID: 5235752783972486311}
@@ -127,18 +128,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.008537769, y: 0.23406175}
+  m_Offset: {x: 0.0021053143, y: 0.12470946}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.115}
-    oldSize: {x: 1.375, y: 1.125}
+    oldSize: {x: 0.6875, y: 0.5625}
     newSize: {x: 6.4, y: 1.28}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.52402353, y: 0.3617581}
+  m_Size: {x: 0.23915622, y: 0.25332475}
   m_EdgeRadius: 0
 --- !u!95 &2612599189308284367
 Animator:
@@ -186,6 +187,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   stats: {fileID: 11400000, guid: 185af526318b34645bb199268049b5b7, type: 2}
+  centerYOffset: 0
 --- !u!114 &2612599189308284366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,7 +221,21 @@ MonoBehaviour:
   idleTime: 0
   stats: {fileID: 11400000, guid: 185af526318b34645bb199268049b5b7, type: 2}
   targetCoord: {x: 0, y: 0}
-  target: {fileID: 1979913598963679825, guid: 2cffdbf0b45f6f646a39216ab9af9d44, type: 3}
+--- !u!114 &-7944374799046293233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2612599189308284357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cb332d4987050a488b4d2d1ec6495e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  currentState: 0
 --- !u!114 &-4522372404443039614
 MonoBehaviour:
   m_ObjectHideFlags: 0

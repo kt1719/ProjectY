@@ -13,9 +13,13 @@ namespace EnemyClass
         public EnemyScriptableObj stats;
         private EnemyMovement movementScript;
         private SpriteHitScript spriteHitScript;
+        private EnemyState enemyStateScript;
         private int xpGiven;
 
         float attackRadius;
+        float outerRadius;
+
+        public float centerYOffset;
         // Start is called before the first frame update
         void Awake()
         {
@@ -24,8 +28,11 @@ namespace EnemyClass
             movementScript = GetComponent<EnemyMovement>();
             animatorScript = GetComponent<EnemyAnimation>();
             spriteHitScript = GetComponent<SpriteHitScript>();
+            enemyStateScript = GetComponent<EnemyState>();
 
-            attackRadius = stats.attackRadius;
+            attackRadius = stats.aggroRadius;
+            outerRadius = stats.outerRadius;
+            centerYOffset = stats.centerYOffset;
         }
 
         private void FixedUpdate()
@@ -34,15 +41,19 @@ namespace EnemyClass
             {
                 return;
             }
-            movementScript.ChasePlayer();
+            movementScript.Agression(outerRadius, attackRadius);
+            movementScript.AutoMove();
+            movementScript.CalculateNearestPath();
         }
 
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
-            SpriteRenderer sr = GetComponent<SpriteRenderer>();
-            Debug.Log(sr.bounds);
-            Gizmos.DrawWireSphere(sr.bounds.center, attackRadius);
+            Gizmos.DrawWireSphere(this.transform.position + new Vector3(0, centerYOffset, 0), attackRadius);
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(this.transform.position + new Vector3(0, centerYOffset, 0), outerRadius);
+            Gizmos.color = Color.black;
+            Gizmos.DrawWireSphere(this.transform.position + new Vector3(0, centerYOffset, 0), stats.attackRadius);
         }
 
         [Client]

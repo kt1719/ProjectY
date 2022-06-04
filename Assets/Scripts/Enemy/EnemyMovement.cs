@@ -23,14 +23,15 @@ namespace EnemyClass
         Path path;
 
         Seeker seeker;
-        bool reachedEndOfPath = false;
 
-        public Transform target;
+        private GameObject target;
+        bool reachedEndOfPath = true;
+
         /////
         // Start is called before the first frame update
         void Awake()
         {
-            speed = stats.speed;
+            speed = stats.aggroSpeed;
             movementRadius = stats.movementRadius;
             idleTime = Random.Range(0, stats.idleTime); // So every enemy can move at different times
             targetCoord = AsVector2(transform.position);
@@ -38,15 +39,14 @@ namespace EnemyClass
             seeker = GetComponent<Seeker>();
         }
 
-        private void Start()
-        {
-            InvokeRepeating("UpdatePath", 0f, .5f);
-        }
-
         void UpdatePath()
         {
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-            seeker.StartPath(this.transform.position, player.transform.position, OnPathComplete);
+            seeker.StartPath(GetCenterPoint(), target.transform.position, OnPathComplete);
+        }
+
+        void UpdateIdlePath(Vector3 point)
+        {
+            seeker.StartPath(GetCenterPoint(), point, OnPathComplete);
         }
 
         void OnPathComplete(Path p)
@@ -58,49 +58,108 @@ namespace EnemyClass
             }
         }
 
-        public void ChasePlayer()
+        public void Agression(float outerRadius, float attackRadius)
         {
-            if (path == null)
+            if (target != null || IsInvoking("UpdatePath"))
             {
-                Debug.Log("Not following path");
-                AutoMove();
+                float distanceFromPlayer = (AsVector2(target.transform.position) - GetCenterPoint()).magnitude;
+                if (distanceFromPlayer > outerRadius)
+                {
+                    StopAI();
+                }
+                return;
             }
-            else
+
+            bool found = FindNearestPlayer(outerRadius, attackRadius);
+            if (found)
             {
-                if (currentWaypoint >= path.vectorPath.Count)
-                {
-                    // Attack player
-                    reachedEndOfPath = true;
-                    return;
-                }
-                else
-                {
-                    reachedEndOfPath = false;
-                }
+                speed = stats.aggroSpeed;
+                InvokeRepeating("UpdatePath", 0f, .3f);
+            }
+        }
 
-                Vector2 dir = AsVector2(path.vectorPath[currentWaypoint] - transform.position);
-                rgdbody.velocity = speed * dir.normalized;
+        private void StopAI()
+        {
+            target = null;
+            path = null;
+            currentWaypoint = 0;
+            CancelInvoke("UpdatePath");
+            reachedEndOfPath = true;
+        }
 
-                float distance = dir.magnitude;
+        private bool FindNearestPlayer(float outerRadius, float attackRadius)
+        {
+            Collider2D[] colliders;
+            colliders = Physics2D.OverlapCircleAll(GetCenterPoint(), outerRadius);
+            float distanceToPlayer = float.MaxValue;
+            bool foundPlayer = false;
 
-                if (distance < 0.3)
+            foreach (Collider2D collider in colliders)
+            {
+                if (collider.gameObject.tag == "Player")
                 {
-                    currentWaypoint++;
+                    float dist = (GetCenterPoint() - AsVector2(collider.transform.position)).magnitude;
+                    if (dist > attackRadius || dist >= distanceToPlayer)
+                    {
+                        continue;
+                    }
+                    distanceToPlayer = dist;
+                    target = collider.gameObject;
+                    foundPlayer = true;
                 }
             }
+            return foundPlayer;
         }
 
         public void AutoMove()
         {
-            Vector2 distance = targetCoord - AsVector2(transform.position);
-            if (distance.magnitude > 0.1)
+            if (target == null)
             {
-                rgdbody.velocity = distance.normalized * speed;
+                IdleMove();
             }
-            else if (idleTime <= 0)
+        }
+
+        public void CalculateNearestPath()
+        {
+            if (path == null)
+            {
+                return;
+            }
+            else if (currentWaypoint >= path.vectorPath.Count)
+            {
+                // Attack player
+                reachedEndOfPath = true;
+                return;
+            }
+            else
+            {
+                reachedEndOfPath = false;
+            }
+
+            Vector2 dir = AsVector2(path.vectorPath[currentWaypoint]) - GetCenterPoint();
+            rgdbody.velocity = speed * dir.normalized;
+
+            float distance = dir.magnitude;
+
+            if (distance < 0.15)
+            {
+                currentWaypoint++;
+            }
+        }
+
+        public void IdleMove()
+        {
+            if (!reachedEndOfPath && path != null)
+            {
+                return;
+            }
+            if (idleTime <= 0 && reachedEndOfPath)
             {
                 idleTime = Random.Range(0, stats.idleTime);
-                targetCoord = GenerateRandomCoord() + targetCoord;
+                targetCoord = GenerateRandomCoord() + GetCenterPoint();
+                UpdateIdlePath(targetCoord);
+                reachedEndOfPath = false;
+                speed = Random.Range(stats.walkSpeed, stats.aggroSpeed);
             }
             else
             {
@@ -112,6 +171,11 @@ namespace EnemyClass
         Vector2 GenerateRandomCoord()
         {
             return Random.insideUnitCircle * movementRadius;
+        }
+
+        Vector2 GetCenterPoint()
+        {
+            return AsVector2(this.transform.position + new Vector3(0, stats.centerYOffset, 0));
         }
 
         void StopMovement()

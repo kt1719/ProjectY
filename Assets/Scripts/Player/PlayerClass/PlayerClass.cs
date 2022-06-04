@@ -13,19 +13,26 @@ namespace PlayerClasses
             public int Level { get; set; }
             public int XP { get; set; }
             public int LevelUpXP { get; set; } // this is the xp that player has to get to level up. Should increase as the player levels up
+            public float Speed { get; set; }
         }
 
         protected BasicStats stats;
 
         protected HashSet<int> unlockedAbilities;
+        public WarriorBaseStats warriorStats;
         public virtual void Awake()
         {
-            stats = new BasicStats { HP = 100, Attack = 5, Level = 1, XP = 0, LevelUpXP = 100 };
+            stats = new BasicStats { HP = warriorStats.health, Attack = 5, Level = 1, XP = 0, LevelUpXP = 100, Speed = warriorStats.speed };
         }
 
         public string readHP()
         {
             return stats.HP.ToString();
+        }
+
+        public float getSpeed()
+        {
+            return stats.Speed;
         }
 
         public string readLevel()
