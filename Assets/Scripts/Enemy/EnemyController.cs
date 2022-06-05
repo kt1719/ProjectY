@@ -15,10 +15,6 @@ namespace EnemyClass
         private SpriteHitScript spriteHitScript;
         private EnemyState enemyStateScript;
         private int xpGiven;
-
-        float attackRadius;
-        float outerRadius;
-
         public float centerYOffset;
         // Start is called before the first frame update
         void Awake()
@@ -29,9 +25,6 @@ namespace EnemyClass
             animatorScript = GetComponent<EnemyAnimation>();
             spriteHitScript = GetComponent<SpriteHitScript>();
             enemyStateScript = GetComponent<EnemyState>();
-
-            attackRadius = stats.aggroRadius;
-            outerRadius = stats.outerRadius;
             centerYOffset = stats.centerYOffset;
         }
 
@@ -41,7 +34,7 @@ namespace EnemyClass
             {
                 return;
             }
-            movementScript.Agression(outerRadius, attackRadius);
+            movementScript.Agression();
             movementScript.AutoMove();
             movementScript.CalculateNearestPath();
         }
@@ -49,9 +42,9 @@ namespace EnemyClass
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(this.transform.position + new Vector3(0, centerYOffset, 0), attackRadius);
+            Gizmos.DrawWireSphere(this.transform.position + new Vector3(0, centerYOffset, 0), stats.aggroRadius);
             Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(this.transform.position + new Vector3(0, centerYOffset, 0), outerRadius);
+            Gizmos.DrawWireSphere(this.transform.position + new Vector3(0, centerYOffset, 0), stats.outerRadius);
             Gizmos.color = Color.black;
             Gizmos.DrawWireSphere(this.transform.position + new Vector3(0, centerYOffset, 0), stats.attackRadius);
         }

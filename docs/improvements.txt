@@ -1,0 +1,2 @@
+improvements on player:
+top attack does not have the same swooping motion + arm on the right side is not the same as when it's downwards

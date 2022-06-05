@@ -23,7 +23,12 @@ namespace EnemyClass
 
         public void ChangeStateToDie()
         {
-            animator.SetTrigger("die"); // sword slash
+            animator.SetBool("die", true); // sword slash
+        }
+
+        public void ChangeStateToAttack()
+        {
+            animator.SetTrigger("attack");
         }
     }
 }

@@ -22,5 +22,5 @@ MonoBehaviour:
   damage: 20
   idleTime: 8
   xpGiven: 20
-  centerYOffset: 0
+  centerYOffset: 0.17
   enemyClass: 0

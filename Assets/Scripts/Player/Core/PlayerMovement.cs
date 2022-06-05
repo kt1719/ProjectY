@@ -154,7 +154,6 @@ namespace PlayerCore
 
             //Only go on if it's multiplayer
             if (!isLocalPlayer) return;
-            Debug.Log("localplayer");
             FlipMovementCommand(rendererInstance.flipX, this.transform.GetChild(0).transform.localEulerAngles);
         }
 

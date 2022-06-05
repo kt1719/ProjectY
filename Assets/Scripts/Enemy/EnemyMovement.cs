@@ -16,6 +16,14 @@ namespace EnemyClass
 
         public EnemyScriptableObj stats;
         public Vector2 targetCoord;
+        EnemyAnimation animationScript;
+        EnemyAttackScript attackScript;
+
+        float outerRadius;
+        float attackRadius;
+        float aggroRadius;
+        float walkSpeed;
+        float aggroSpeed;
 
         /////
 
@@ -28,7 +36,7 @@ namespace EnemyClass
         bool reachedEndOfPath = true;
 
         /////
-        // Start is called before the first frame update
+
         void Awake()
         {
             speed = stats.aggroSpeed;
@@ -37,11 +45,19 @@ namespace EnemyClass
             targetCoord = AsVector2(transform.position);
             rgdbody = GetComponent<Rigidbody2D>();
             seeker = GetComponent<Seeker>();
+            animationScript = GetComponent<EnemyAnimation>();
+            attackScript = GetComponent<EnemyAttackScript>();
+
+            outerRadius = stats.outerRadius;
+            attackRadius = stats.attackRadius;
+            aggroRadius = stats.aggroRadius;
+            aggroSpeed = stats.aggroSpeed;
+            walkSpeed = stats.walkSpeed;
         }
 
         void UpdatePath()
         {
-            seeker.StartPath(GetCenterPoint(), target.transform.position, OnPathComplete);
+            seeker.StartPath(GetCenterPoint(), GetTargetCenterPoint(), OnPathComplete);
         }
 
         void UpdateIdlePath(Vector3 point)
@@ -58,22 +74,28 @@ namespace EnemyClass
             }
         }
 
-        public void Agression(float outerRadius, float attackRadius)
+        public void Agression()
         {
             if (target != null || IsInvoking("UpdatePath"))
             {
-                float distanceFromPlayer = (AsVector2(target.transform.position) - GetCenterPoint()).magnitude;
-                if (distanceFromPlayer > outerRadius)
+                Vector2 nearestPoint = target.GetComponent<Collider2D>().bounds.ClosestPoint(GetCenterPoint());
+                float distanceFromPlayerBounds = (nearestPoint - GetCenterPoint()).magnitude;
+                Collider2D playerAttackable = attackScript.PlayerAttackable();
+                if (distanceFromPlayerBounds < attackRadius)
+                {
+                    animationScript.ChangeStateToAttack();
+                }
+                if (distanceFromPlayerBounds > outerRadius)
                 {
                     StopAI();
                 }
                 return;
             }
 
-            bool found = FindNearestPlayer(outerRadius, attackRadius);
+            bool found = FindNearestPlayer(outerRadius, aggroRadius);
             if (found)
             {
-                speed = stats.aggroSpeed;
+                speed = aggroSpeed;
                 InvokeRepeating("UpdatePath", 0f, .3f);
             }
         }
@@ -127,7 +149,6 @@ namespace EnemyClass
             }
             else if (currentWaypoint >= path.vectorPath.Count)
             {
-                // Attack player
                 reachedEndOfPath = true;
                 return;
             }
@@ -159,7 +180,7 @@ namespace EnemyClass
                 targetCoord = GenerateRandomCoord() + GetCenterPoint();
                 UpdateIdlePath(targetCoord);
                 reachedEndOfPath = false;
-                speed = Random.Range(stats.walkSpeed, stats.aggroSpeed);
+                speed = Random.Range(walkSpeed, aggroSpeed);
             }
             else
             {
@@ -176,6 +197,11 @@ namespace EnemyClass
         Vector2 GetCenterPoint()
         {
             return AsVector2(this.transform.position + new Vector3(0, stats.centerYOffset, 0));
+        }
+
+        Vector2 GetTargetCenterPoint()
+        {
+            return target.GetComponent<SpriteRenderer>().bounds.center;
         }
 
         void StopMovement()
