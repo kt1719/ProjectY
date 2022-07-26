@@ -18,6 +18,7 @@ namespace EnemyClass
         public Vector2 targetCoord;
         EnemyAnimation animationScript;
         EnemyAttackScript attackScript;
+        EnemyState stateScript;
 
         float outerRadius;
         float attackRadius;
@@ -47,6 +48,7 @@ namespace EnemyClass
             seeker = GetComponent<Seeker>();
             animationScript = GetComponent<EnemyAnimation>();
             attackScript = GetComponent<EnemyAttackScript>();
+            stateScript = GetComponent<EnemyState>();
 
             outerRadius = stats.outerRadius;
             attackRadius = stats.attackRadius;
@@ -83,7 +85,7 @@ namespace EnemyClass
                 Collider2D playerAttackable = attackScript.PlayerAttackable();
                 if (distanceFromPlayerBounds < attackRadius)
                 {
-                    animationScript.ChangeStateToAttack();
+                    attackScript.Attack();
                 }
                 if (distanceFromPlayerBounds > outerRadius)
                 {
@@ -143,8 +145,9 @@ namespace EnemyClass
 
         public void CalculateNearestPath()
         {
-            if (path == null)
+            if (path == null || (stateScript.currentState != EnemyState.States.Idle))
             {
+                rgdbody.velocity = Vector2.zero;
                 return;
             }
             else if (currentWaypoint >= path.vectorPath.Count)

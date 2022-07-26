@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using PlayerAnim;
 using System;
-using PlayerAtt;
+using PlayerAtk;
 
 namespace PlayerClasses
 {
     /* Class to define all the abilities for a warrior */
     public class WarriorAbility : PlayerAbility
     {
-        private PlayerAnimation animatorScript;
-        private WarriorMovement playerMovementScript;
+        private PlayerAnimation animatorScript; // have to change this specifically to warrior only!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+        private PlayerAttack attackScript;
         protected delegate void abilityDelegate(); // Function template for an ability, no parameters, void return
         protected Dictionary<int, abilityDelegate> trueAbilityMapping;
         protected Dictionary<int, int> userMouseMapping;
@@ -20,7 +21,7 @@ namespace PlayerClasses
         public void Awake() 
         {   
             animatorScript = GetComponent<PlayerAnimation>();
-            playerMovementScript = GetComponent<WarriorMovement>();
+            attackScript = GetComponent<PlayerAttack>();
 
             trueAbilityMapping = new Dictionary<int, abilityDelegate>()
             {
@@ -80,15 +81,12 @@ namespace PlayerClasses
         ***/
         public void LightAttack() 
         {
-            GetComponent<swordColl>().setDamage(20);
-            animatorScript.ChangeStateToWarriorLightAttack();
+            attackScript.Attack(20, animatorScript.ChangeStateToWarriorLightAttack);
         }
 
         public void HeavyAttack() 
-        {   
-            GetComponent<swordColl>().setDamage(100); // one shot ;)
-            playerMovementScript.FreezeMovement();
-            animatorScript.ChangeStateToWarriorHeavyAttack();
+        {
+            attackScript.Attack(100, animatorScript.ChangeStateToWarriorHeavyAttack);
         }
     }
 }

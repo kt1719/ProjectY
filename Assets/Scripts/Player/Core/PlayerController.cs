@@ -55,7 +55,6 @@ namespace PlayerCore
                 }
                 return;
             }
-            
             abilityscript.CheckAbility();
             movementscript.ChangeAnimatorAnimation();
         }

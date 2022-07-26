@@ -135,13 +135,12 @@ namespace PlayerCore
         public void FlipMovement()
         {
             float x_Velocity = Input.GetAxisRaw("Horizontal");
-            bool isMoving = rigidInstance.velocity.x != 0;
-            if ((animatorScript.CheckHorizontalAnimatorState() && x_Velocity > 0) && pressedMovementKey && isMoving)
+            if ((animatorScript.CheckHorizontalAnimatorState() && x_Velocity > 0) && pressedMovementKey && !frozen)
             {
                 rendererInstance.flipX = false;
                 this.transform.GetChild(0).transform.localEulerAngles = new Vector3(0, 0, 0);
             }
-            else if ((animatorScript.CheckHorizontalAnimatorState() && x_Velocity < 0) && pressedMovementKey && isMoving)
+            else if ((animatorScript.CheckHorizontalAnimatorState() && x_Velocity < 0) && pressedMovementKey && !frozen)
             {
                 rendererInstance.flipX = true;
                 this.transform.GetChild(0).transform.localEulerAngles = new Vector3(0, 180, 0);
@@ -169,14 +168,6 @@ namespace PlayerCore
         {
             if (isLocalPlayer) return;
             rendererInstance.flipX = flipState;
-        }
-
-        private void OnCollisionEnter2D(Collision2D collision)
-        {
-            if (collision.transform.tag == "Player")
-            {
-                Physics2D.IgnoreCollision(collision.collider, GetComponent<Collider2D>());
-            }
         }
 
         private void OnTriggerEnter2D(Collider2D collision)

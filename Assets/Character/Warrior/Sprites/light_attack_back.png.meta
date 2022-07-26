@@ -1,7 +1,25 @@
 fileFormatVersion: 2
-guid: 808c534b1b81270409c6fee7e51ff051
+guid: a2b3a21e2244f204a8b441dc49466a7a
 TextureImporter:
   internalIDToNameTable:
+  - first:
+      213: 8063967797624363263
+    second: light_attack_front_0
+  - first:
+      213: 6197498553661352204
+    second: light_attack_front_1
+  - first:
+      213: 3452142051542883507
+    second: light_attack_front_2
+  - first:
+      213: 4591526892162312288
+    second: light_attack_front_3
+  - first:
+      213: -3606221992099241956
+    second: light_attack_front_4
+  - first:
+      213: -4170112064957299898
+    second: light_attack_front_5
   - first:
       213: 8028877009118340904
     second: light_attack_back_0
@@ -83,7 +101,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 4096
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -95,7 +113,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 4096
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0

@@ -9,24 +9,28 @@ namespace EnemyClass
 {
     public class EnemyAnimation : NetworkBehaviour
     {
-        Animator animator;
+        protected Animator animator;
+        protected EnemyAttackScript attackScript;
+        protected EnemyState stateScript;
 
         void Awake()
         {
             animator = GetComponent<Animator>();
+            attackScript = GetComponent<EnemyAttackScript>();
+            stateScript = GetComponent<EnemyState>();
         }
 
-        public void ChangeStateToTakeDamage()
+        public virtual void ChangeAnimationTakeDamage()
         {
             animator.SetTrigger("damaged"); // sword slash
         }
 
-        public void ChangeStateToDie()
+        public virtual void ChangeAnimationToDie()
         {
             animator.SetBool("die", true); // sword slash
         }
 
-        public void ChangeStateToAttack()
+        public virtual void ChangeAnimationToAttack()
         {
             animator.SetTrigger("attack");
         }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b379a6cd003381499651bd8f1c67d85, type: 3}
   m_Name: Slime
   m_EditorClassIdentifier: 
-  health: 100
+  health: 10000
   aggroSpeed: 0.8
   walkSpeed: 0.5
   aggroRadius: 1.25
@@ -23,4 +23,5 @@ MonoBehaviour:
   idleTime: 8
   xpGiven: 20
   centerYOffset: 0.17
+  attackCooldown: 0.5
   enemyClass: 0

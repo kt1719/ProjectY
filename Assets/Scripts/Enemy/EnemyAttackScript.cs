@@ -10,17 +10,50 @@ namespace EnemyClass
         protected int damage;
         protected float attackRadius;
         protected float centerYOffset;
+        public float cooldownTimer = 0;
 
-        protected Animator animator;
         public EnemyScriptableObj stats;
+        private EnemyState stateScript;
+        private EnemyAnimation animationScript;
         private void Awake()
         {
             damage = stats.damage;
             attackRadius = stats.attackRadius;
             centerYOffset = stats.centerYOffset;
-            animator = GetComponent<Animator>();
+            stateScript = GetComponent<EnemyState>();
+            animationScript = GetComponent<EnemyAnimation>();
         }
-        public virtual void Attack() { }
+        public virtual void Attack() 
+        {
+            if (cooldownTimer == 0 && stateScript.currentState == EnemyState.States.Idle)
+            {
+                stateScript.changeStateAttacking();
+                animationScript.ChangeAnimationToAttack();
+                ActivateAttackCooldown();
+            }
+        }
+
+        public virtual void CountDownCooldown()
+        {
+            if (stateScript.currentState == EnemyState.States.Attacking)
+            {
+                return;
+            }
+            else if (cooldownTimer <= 0)
+            {
+                cooldownTimer = 0;
+                return;
+            }
+            else
+            {
+                cooldownTimer -= Time.deltaTime;
+            }
+        }
+
+        public virtual void ActivateAttackCooldown()
+        {
+            cooldownTimer = stats.attackCooldown;
+        }
 
         public virtual Collider2D PlayerAttackable()
         {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using PlayerAnim;
 using System;
-using PlayerAtt;
+using PlayerAtk;
 using PlayerCore;
 
 namespace PlayerClasses

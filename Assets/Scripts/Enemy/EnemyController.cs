@@ -13,6 +13,7 @@ namespace EnemyClass
         public EnemyScriptableObj stats;
         private EnemyMovement movementScript;
         private SpriteHitScript spriteHitScript;
+        private EnemyAttackScript attackScript;
         private EnemyState enemyStateScript;
         private int xpGiven;
         public float centerYOffset;
@@ -24,6 +25,7 @@ namespace EnemyClass
             movementScript = GetComponent<EnemyMovement>();
             animatorScript = GetComponent<EnemyAnimation>();
             spriteHitScript = GetComponent<SpriteHitScript>();
+            attackScript = GetComponent<EnemyAttackScript>();
             enemyStateScript = GetComponent<EnemyState>();
             centerYOffset = stats.centerYOffset;
         }
@@ -37,6 +39,15 @@ namespace EnemyClass
             movementScript.Agression();
             movementScript.AutoMove();
             movementScript.CalculateNearestPath();
+        }
+
+        private void Update()
+        {
+            if (!isServer)
+            {
+                return;
+            }
+            attackScript.CountDownCooldown();
         }
 
         private void OnDrawGizmos()
@@ -54,11 +65,17 @@ namespace EnemyClass
         {
             if (health <= 0) { return false; } // This is to fix the bug of the player killing the enemy multiple times after it's dead and has not despawned
             health -= damage;
-            TakeDamageCommand(health, transform);
+            spriteHitScript.changeSpriteOrientation(transform);
             if (health <= 0)
             {
-                animatorScript.ChangeStateToDie();
+                animatorScript.ChangeAnimationToDie();
                 return true;
+            }
+            if (enemyStateScript.currentState == EnemyState.States.Idle)
+            {
+                enemyStateScript.changeStateHit();
+                animatorScript.ChangeAnimationTakeDamage();
+                TakeDamageCommand(health, transform);
             }
             return false;
         }
@@ -69,17 +86,21 @@ namespace EnemyClass
             TakeDamageRPC(hp, transform);
         }
 
-        [ClientRpc(includeOwner = true)]
+        [ClientRpc(includeOwner = false)]
         public void TakeDamageRPC(int hp, Transform transform)
         {
             if (isLocalPlayer) return;
             this.health = hp;
             if (health <= 0)
             {
-                animatorScript.ChangeStateToDie();
+                animatorScript.ChangeAnimationToDie();
             }
             spriteHitScript.changeSpriteOrientation(transform);
-            animatorScript.ChangeStateToTakeDamage();
+            if (enemyStateScript.currentState == EnemyState.States.Idle)
+            {
+                animatorScript.ChangeAnimationTakeDamage();
+                enemyStateScript.changeStateHit();
+            }
         }
 
         // DO NOT CALL, this should be called from the animation timeline and not programmatically

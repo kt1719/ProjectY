@@ -2,32 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using PlayerAnim;
+using System;
 
-namespace PlayerAtt
+namespace PlayerAtk
 {
     public class PlayerAttack : MonoBehaviour
     {
-        // Start is called before the first frame update
-        // private PlayerAnimation animatorScript;
-        // void Start()
-        // {
-        //     animatorScript = GetComponent<PlayerAnimation>();
-        // }
+        private PlayerAnimation animatorScript;
+        protected swordColl swordColl;
+        private void Awake()
+        {
+            animatorScript = GetComponent<PlayerAnimation>();
+            swordColl = GetComponent<swordColl>();
+        }
 
-        // // Update is called once per frame
-        // void Update()
-        // {
-        //     bool attack =  Input.GetKeyDown(KeyCode.M);
-
-        //     if (Input.GetMouseButtonDown(0)) animatorScript.ChangeStateToWarriorAttack();
-        // }
-
-        // private void Attack()
-        // {
-            
-        // }
-
-        
+        public virtual void Attack(int damage, Action animatorScriptFunction)
+        {
+            swordColl.setDamage(damage); // one shot ;)
+            animatorScriptFunction();
+        }
     }
 }
 

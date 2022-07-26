@@ -15,14 +15,13 @@ GameObject:
   - component: {fileID: 2612599189308284367}
   - component: {fileID: -4988350943973426528}
   - component: {fileID: 2612599189308284360}
-  - component: {fileID: 2612599189308284366}
   - component: {fileID: 5818598135405394203}
+  - component: {fileID: 3394281708156883128}
   - component: {fileID: -7944374799046293233}
   - component: {fileID: -4522372404443039614}
   - component: {fileID: 5199615969244562870}
   - component: {fileID: 9109495179496013945}
   - component: {fileID: 5235752783972486311}
-  - component: {fileID: 5903944682462088117}
   m_Layer: 7
   m_Name: Green_Slime
   m_TagString: Enemy
@@ -189,20 +188,6 @@ MonoBehaviour:
   syncInterval: 0.1
   stats: {fileID: 11400000, guid: 185af526318b34645bb199268049b5b7, type: 2}
   centerYOffset: 0
---- !u!114 &2612599189308284366
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2612599189308284357}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07a61ba4921cda941908eb3664ed66b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
 --- !u!114 &5818598135405394203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,6 +207,20 @@ MonoBehaviour:
   idleTime: 0
   stats: {fileID: 11400000, guid: 185af526318b34645bb199268049b5b7, type: 2}
   targetCoord: {x: 0, y: 0}
+--- !u!114 &3394281708156883128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2612599189308284357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9aa7d66f18d03346bc30a6198608f21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
 --- !u!114 &-7944374799046293233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -277,6 +276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 582d6fe6c6a5f2e43af69e81b03a920f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cooldownTimer: 0
   stats: {fileID: 11400000, guid: 185af526318b34645bb199268049b5b7, type: 2}
 --- !u!114 &9109495179496013945
 MonoBehaviour:
@@ -329,19 +329,3 @@ MonoBehaviour:
   showGizmos: 0
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
---- !u!114 &5903944682462088117
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2612599189308284357}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f6f3bf89aa97405989c802ba270f815, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  clientAuthority: 0
-  animator: {fileID: 2612599189308284367}

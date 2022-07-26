@@ -18,13 +18,14 @@ namespace PlayerAnim
             animator = GetComponent<Animator>();
         }
 
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public void ChangeStateToWarriorLightAttack()
         {
             animator.SetFloat("attackSpeed", 1f);
             animator.SetTrigger("isAttacking"); // sword slash
             if (!isLocalPlayer)
             {
-                Debug.Log("Unlucky");
                 return;
             }
             ChangeStateToWarriorLightAttackCommand();

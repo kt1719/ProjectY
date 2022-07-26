@@ -9,7 +9,7 @@ namespace EnemyClass
     {
         public enum States
         {
-            Moving,
+            Idle,
             Attacking,
             Hit
         }
@@ -21,12 +21,12 @@ namespace EnemyClass
             currentState = States.Attacking;
         }
 
-        public virtual void changeStateMoving()
+        public virtual void changeStateIdle()
         {
-            currentState = States.Moving;
+            currentState = States.Idle;
         }
 
-        public virtual void chanceStateHit()
+        public virtual void changeStateHit()
         {
             currentState = States.Hit;
         }

@@ -5,7 +5,7 @@ using PlayerClasses;
 using Mirror;
 using EnemyClass;
 
-namespace PlayerAtt
+namespace PlayerAtk
 {
     public class swordColl : NetworkBehaviour
     {

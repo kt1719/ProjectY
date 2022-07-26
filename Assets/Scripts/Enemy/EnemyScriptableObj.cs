@@ -22,6 +22,7 @@ public class EnemyScriptableObj : ScriptableObject
     public float idleTime;
     public int xpGiven;
     public float centerYOffset; // Used because the center of the sprite is not actually the center
+    public float attackCooldown;
 
     public EnemyClass enemyClass;
 }
