@@ -14,6 +14,7 @@ namespace PlayerCore
         PlayerMovement movementscript;
         PlayerAbility abilityscript;
         PlayerClass playerClass;
+        PlayerAnimation animationScript;
         CharacterUI characterUI;
 
         Camera[] cameras;
@@ -31,6 +32,7 @@ namespace PlayerCore
             abilityscript = GetComponent<WarriorAbility>();  
             playerClass = GetComponent<Warrior>();
             movementscript = GetComponent<WarriorMovement>();
+            animationScript = GetComponent<PlayerAnimation>();
 
             abilityscript.initialize(playerClass); // Pass in the data class into the ability class
 
@@ -81,6 +83,12 @@ namespace PlayerCore
         private void InitializeUI()
         {
             characterUI.playerClass = playerClass;
+        }
+
+        public void SpawnPlayer() 
+        {
+            GetComponent<SpriteRenderer>().enabled = true;
+            animationScript.SpawnPlayer();
         }
 
         public void FreezeCharacter()

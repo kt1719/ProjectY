@@ -4,6 +4,7 @@ using UnityEngine;
 using Mirror;
 using System;
 using UnityEngine.SceneManagement;
+using Spawn;
 
 namespace Network
 {
@@ -24,10 +25,14 @@ namespace Network
         public override void OnServerAddPlayer(NetworkConnectionToClient conn)
         {
             // Implement logic here for custom instantiation
+            SpawnPoint spawnPointScript = GameObject.Find("Spawn_Point").GetComponent<SpawnPoint>();
             GameObject player = Instantiate(playerPrefab);
 
-            player.transform.position = new Vector2(7.45f, 10.475f);
+            player.transform.position = spawnPointScript.ReturnCenterPos();
             player.transform.rotation = Quaternion.identity;
+
+
+            spawnPointScript.SpawnFX(player);
 
             // instantiating a "Player" prefab gives it the name "Player(clone)"
             // => appending the connectionId is WAY more useful for debugging!
