@@ -26,7 +26,7 @@ namespace Network
             // Implement logic here for custom instantiation
             GameObject player = Instantiate(playerPrefab);
 
-            player.transform.position = UnityEngine.Random.insideUnitCircle * 7.5f; 
+            player.transform.position = new Vector2(7.45f, 10.475f);
             player.transform.rotation = Quaternion.identity;
 
             // instantiating a "Player" prefab gives it the name "Player(clone)"

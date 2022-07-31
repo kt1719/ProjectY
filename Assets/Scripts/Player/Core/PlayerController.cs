@@ -16,7 +16,7 @@ namespace PlayerCore
         PlayerClass playerClass;
         CharacterUI characterUI;
 
-        Camera cam;
+        Camera[] cameras;
         GameObject gameOverlay;
 
         public bool singlePlayer = false;
@@ -34,7 +34,7 @@ namespace PlayerCore
 
             abilityscript.initialize(playerClass); // Pass in the data class into the ability class
 
-            cam = GetComponentInChildren<Camera>();
+            cameras = GetComponentsInChildren<Camera>();
 
             gameOverlay = this.transform.GetChild(2).gameObject; // The index of the heirarchy in the prefab matters
 
@@ -45,9 +45,9 @@ namespace PlayerCore
         {
             if (!hasAuthority && !singlePlayer)
             {
-                if (cam.enabled)
+                foreach (Camera cam in cameras)
                 {
-                    cam.gameObject.SetActive(false);
+                    cam.gameObject.SetActive(hasAuthority || singlePlayer);
                 }
                 if (gameOverlay.activeSelf)
                 {

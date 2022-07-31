@@ -50,6 +50,7 @@ SpriteAtlas:
     - {fileID: 2800000, guid: 11d96fdab37e9c44085808dcb8d224dd, type: 3}
     - {fileID: 2800000, guid: 06d71a6f57d743543b8b4c377b1a8ddf, type: 3}
     - {fileID: 2800000, guid: 8e57e026f953bba488e4bd940a7566df, type: 3}
+    - {fileID: 2800000, guid: 06a0055ffb663f843a5e65ee706e1f4c, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -85,6 +86,12 @@ SpriteAtlas:
   - {fileID: -177949182680327253, guid: 11d96fdab37e9c44085808dcb8d224dd, type: 3}
   - {fileID: 51354224520958517, guid: 11d96fdab37e9c44085808dcb8d224dd, type: 3}
   - {fileID: -1791332073885074078, guid: 11d96fdab37e9c44085808dcb8d224dd, type: 3}
+  - {fileID: -358789398689929453, guid: 06a0055ffb663f843a5e65ee706e1f4c, type: 3}
+  - {fileID: 4979424490332385843, guid: 06a0055ffb663f843a5e65ee706e1f4c, type: 3}
+  - {fileID: -771315648302588167, guid: 06a0055ffb663f843a5e65ee706e1f4c, type: 3}
+  - {fileID: -2437559213053698904, guid: 06a0055ffb663f843a5e65ee706e1f4c, type: 3}
+  - {fileID: 6078245504748198941, guid: 06a0055ffb663f843a5e65ee706e1f4c, type: 3}
+  - {fileID: -6457264220967580381, guid: 06a0055ffb663f843a5e65ee706e1f4c, type: 3}
   - {fileID: 4537963225179253909, guid: 06d71a6f57d743543b8b4c377b1a8ddf, type: 3}
   - {fileID: 8690124273265396505, guid: 06d71a6f57d743543b8b4c377b1a8ddf, type: 3}
   - {fileID: -2076504043365110774, guid: 06d71a6f57d743543b8b4c377b1a8ddf, type: 3}
@@ -154,6 +161,12 @@ SpriteAtlas:
   - up_idle_1
   - up_idle_2
   - up_idle_3
+  - player_spawn_5
+  - player_spawn_4
+  - player_spawn_1
+  - player_spawn_0
+  - player_spawn_3
+  - player_spawn_2
   - warrior_spritesheet_29
   - warrior_spritesheet_28
   - warrior_spritesheet_30
