@@ -42,6 +42,12 @@ namespace PlayerCore
 
             InitializeUI();
         }
+
+        private void Start()
+        {
+            FreezeCharacter();
+        }
+
         // Update is called once per frame
         void Update()
         {

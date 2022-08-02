@@ -2701,6 +2701,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1713851807}
     - target: {fileID: 9203576189564759001, guid: 7760b343b0a12fe40ad57edf7f46aae1, type: 3}
+      propertyPath: spawnDelay
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9203576189564759001, guid: 7760b343b0a12fe40ad57edf7f46aae1, type: 3}
       propertyPath: onlineScene
       value: Assets/Scenes/MainOverworld.unity
       objectReference: {fileID: 0}

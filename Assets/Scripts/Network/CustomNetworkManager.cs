@@ -32,7 +32,7 @@ namespace Network
             player.transform.rotation = Quaternion.identity;
 
 
-            spawnPointScript.SpawnFX(player);
+            StartCoroutine(spawnPointScript.SpawnFX(player));
 
             // instantiating a "Player" prefab gives it the name "Player(clone)"
             // => appending the connectionId is WAY more useful for debugging!

@@ -76,7 +76,7 @@ namespace PlayerAtk
 
             if (collision.tag == "Enemy" && isLocalPlayer)
             {
-                GetComponentInChildren<ScreenShakeController>().StartShake(0.1f, 0.08f);
+                //GetComponentInChildren<ScreenShakeController>().StartShake(0.1f, 0.08f);
                 EnemyController enemyScript = collision.GetComponent<EnemyController>();
                 bool killedEnemy = enemyScript.TakeDamage(damage, this.transform);
                 if (killedEnemy) playerClassScript.gainXP(enemyScript.giveXP());

@@ -8,28 +8,29 @@ namespace Spawn
     public class SpawnPoint : MonoBehaviour
     {
         private int playersSpawning;
+        private bool spawning = false;
         public GameObject spawnFXObject;
         public GameObject fxSpawnLocation;
         public GameObject playerSpawnLocation;
+
         public void Update()
         {
-            playersSpawning = transform.childCount;
+            playersSpawning = transform.GetChild(0).GetChild(0).childCount; // Get the FX gameobject and count how many spawns are happening
         }
 
         private void LateUpdate()
         {
-            if (playersSpawning == 0)
+            if (playersSpawning == 0 && spawning)
             {
-                TurnOffSpawn();
-            }
-            else
-            {
-                TurnOnSpawn();
+                StartCoroutine(TurnOffSpawn());
             }
         }
 
-        public void SpawnFX(GameObject player)
+        public IEnumerator SpawnFX(GameObject player)
         {
+            TurnOnSpawn();
+            yield return new WaitForSeconds(0.3f);
+            spawning = true;
             GameObject playerFX = Instantiate(spawnFXObject, transform);
             playerFX.transform.SetParent(fxSpawnLocation.transform);
             playerFX.transform.localPosition = new Vector3(0, 0, 0);
@@ -41,14 +42,15 @@ namespace Spawn
             return playerSpawnLocation.transform.position;
         }
 
-        void TurnOffSpawn()
+        IEnumerator TurnOffSpawn()
         {
-            return;
+            yield return new WaitForSeconds(0.7f);
+            GetComponent<Animator>().SetBool("Spawning", false);
         }
 
         void TurnOnSpawn()
         {
-            return;
+            GetComponent<Animator>().SetBool("Spawning", true);
         }
     }
 }
