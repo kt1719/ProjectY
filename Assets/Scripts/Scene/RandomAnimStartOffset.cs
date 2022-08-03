@@ -9,6 +9,6 @@ public class RandomAnimStartOffset : MonoBehaviour
     void Awake()
     {
         animator = GetComponent<Animator>();
-        animator.SetFloat("offset", Random.Range(0f, 1f));
+        animator.SetFloat("start_offset", Random.Range(0f, 1f));
     }
 }
