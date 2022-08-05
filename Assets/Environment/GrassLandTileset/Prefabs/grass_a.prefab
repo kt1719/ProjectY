@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3814196658550584807}
   - component: {fileID: 6604176224777280539}
   - component: {fileID: 8519841579956293995}
+  - component: {fileID: 6510188873234537591}
   m_Layer: 0
   m_Name: grass_a
   m_TagString: Untagged
@@ -69,9 +70,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -479616131
+  m_SortingLayer: -2
+  m_SortingOrder: 1
   m_Sprite: {fileID: 3470435745906514062, guid: b21243b11dfaec44aae26b54f41de5b2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -102,3 +103,15 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &6510188873234537591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2936176804983069866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 557f96b80b660054692803389639d875, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
