@@ -55,6 +55,8 @@ SpriteAtlas:
     - {fileID: 2800000, guid: 9dd2737426e87f94cac94c7c2fbf8968, type: 3}
     - {fileID: 2800000, guid: c98e7d5de92638e468187deec5765374, type: 3}
     - {fileID: 2800000, guid: 103fb0a8aada0904ab25564258833b5b, type: 3}
+    - {fileID: 2800000, guid: ef22b32f570db8840875f320227ed9be, type: 3}
+    - {fileID: 2800000, guid: 9e300527285d0ec45aeca1343726980f, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -335,6 +337,7 @@ SpriteAtlas:
   - {fileID: 3252244483921502111, guid: 39f3fa4631f2c46438e91d74e95ba377, type: 3}
   - {fileID: 4238397904969611558, guid: 39f3fa4631f2c46438e91d74e95ba377, type: 3}
   - {fileID: -3792517721452930813, guid: 39f3fa4631f2c46438e91d74e95ba377, type: 3}
+  - {fileID: 21300000, guid: 9e300527285d0ec45aeca1343726980f, type: 3}
   - {fileID: 8953261826671470667, guid: 816561e77e91c6048a989dd11a6f1ec5, type: 3}
   - {fileID: -1568073095151021587, guid: 816561e77e91c6048a989dd11a6f1ec5, type: 3}
   - {fileID: -2658299758622122830, guid: 816561e77e91c6048a989dd11a6f1ec5, type: 3}
@@ -793,6 +796,7 @@ SpriteAtlas:
   - {fileID: 394846904900241959, guid: 093af80f8166e2640ba98f759bd73e57, type: 3}
   - {fileID: -2862480893295922305, guid: 093af80f8166e2640ba98f759bd73e57, type: 3}
   - {fileID: 6398270489692691907, guid: 093af80f8166e2640ba98f759bd73e57, type: 3}
+  - {fileID: 21300000, guid: ef22b32f570db8840875f320227ed9be, type: 3}
   m_PackedSpriteNamesToIndex:
   - tiles_81
   - tiles_80
@@ -1069,6 +1073,7 @@ SpriteAtlas:
   - grass_b_2
   - grass_b_5
   - grass_b_4
+  - pillar_b_new
   - water_a_100
   - water_a_101
   - water_a_102
@@ -1527,6 +1532,7 @@ SpriteAtlas:
   - water_b_54
   - water_b_57
   - water_b_56
+  - pillar_a_new
   m_RenderDataMap: {}
   m_Tag: EnvironmentAtlas
   m_IsVariant: 0
