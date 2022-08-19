@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad78e2512645bc546bb8ffceedea8c6f, type: 3}
   m_Name: OverworldMapDetails
   m_EditorClassIdentifier: 
-  topLeft: {x: -0.25, y: 150}
+  topLeft: {x: -0.25, y: 35}
   bottomRight: {x: 15, y: -15.75}
