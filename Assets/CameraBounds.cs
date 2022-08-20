@@ -30,13 +30,7 @@ namespace PlayerCam
             float max_y = sceneDetail.GetTopLeftBound().y - offset2.y;
             float x_val = Mathf.Clamp(player.transform.position.x, min_x, max_x);
             float y_val = Mathf.Clamp(player.transform.position.y, min_y, max_y);
-            Debug.Log("Offset " + offset2);
-            Debug.Log("min x " + min_x);
-            Debug.Log("max x " + max_x);
             this.transform.position = new Vector3(x_val, y_val, this.transform.position.z);
         }
-
-        // Need to subscribe to scenemanager active scene changed and change the component we're trying to find for bounding updates
-
     }
 }
