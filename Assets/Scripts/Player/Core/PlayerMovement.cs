@@ -30,6 +30,8 @@ namespace PlayerCore
         private Rigidbody2D rigidInstance;
         private SpriteRenderer rendererInstance;
         private Warrior warriorScript;
+
+        private int pixelsPerUnit;
         enum States
         {
             NoMovement,
@@ -43,6 +45,7 @@ namespace PlayerCore
             animatorScript = GetComponent<PlayerAnimation>();
             rendererInstance = GetComponent<SpriteRenderer>();
             warriorScript = GetComponent<Warrior>();
+            pixelsPerUnit = (int)GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
         }
 
         public void MovePlayer()
@@ -170,6 +173,7 @@ namespace PlayerCore
             rendererInstance.flipX = flipState;
         }
 
+        // Should not be in the movement script!!!!!!!!!!!!!!!!!!!!!!!!
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.transform.tag == "Player")

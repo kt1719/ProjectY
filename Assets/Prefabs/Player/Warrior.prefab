@@ -456,7 +456,7 @@ MonoBehaviour:
   m_RefResolutionX: 1
   m_RefResolutionY: 1
   m_UpscaleRT: 0
-  m_PixelSnapping: 1
+  m_PixelSnapping: 0
   m_CropFrameX: 0
   m_CropFrameY: 0
   m_StretchFill: 0
@@ -485,8 +485,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PPU: 64
-  refResX: 640
-  refResY: 360
+  refResX: 683
+  refResY: 384
   cropFrameXBool: 1
   cropFrameYBool: 1
 --- !u!1 &690113768
