@@ -236,8 +236,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PPU: 64
-  refResX: 640
-  refResY: 360
+  refResX: 960
+  refResY: 540
   cropFrameXBool: 1
   cropFrameYBool: 1
 --- !u!1 &2141953409

@@ -18,6 +18,9 @@ namespace UI
         GameObject SkillTreePanel;
 
         PlayerController playerController;
+
+        CanvasScaler canvasScaler;
+
         // Start is called before the first frame update
         void Awake()
         {
@@ -26,15 +29,37 @@ namespace UI
             XPText = this.transform.Find("XPText").GetComponent<Text>();
             SkillTreePanel = this.transform.Find("TabMenu").gameObject;
             playerController = this.GetComponentInParent<PlayerController>();
+            canvasScaler = this.GetComponent<CanvasScaler>();
+        }
+
+        /// <summary>
+        /// Subscriber Events for the Character UI Script
+        /// </summary>
+        private void OnEnable()
+        {
+            EventManager.UpdateResolutionEvent += ChangeRes;
+        }
+
+        private void OnDisable()
+        {
+            EventManager.UpdateResolutionEvent -= ChangeRes;
+        }
+
+        void ChangeRes(int x, int y)
+        {
+            canvasScaler.referenceResolution = new Vector2(x, y);
         }
 
         // Update is called once per frame
         void Update()
         {
+            Debug.Log(transform.parent.root.GetChild(1).GetComponent<CustomPixelPerfectScript>().refResX);
+            Debug.Log(transform.parent.root.GetChild(1).GetComponent<CustomPixelPerfectScript>().refResY);
             UpdateUI();
             OpenSkillTree();
         }
 
+        // Should also be a subscriber event
         private void UpdateUI()
         {
             healthText.text = "Health: " + playerClass.readHP();

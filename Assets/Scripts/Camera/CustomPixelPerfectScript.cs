@@ -22,4 +22,20 @@ public class CustomPixelPerfectScript : MonoBehaviour
         pixelPerfectCameraScript.refResolutionY = refResY;
         pixelPerfectCameraScript.assetsPPU = PPU;
     }
+
+    private void OnEnable()
+    {
+        EventManager.UpdateResolutionEvent += ChangeRes;
+    }
+
+    private void OnDisable()
+    {
+        EventManager.UpdateResolutionEvent -= ChangeRes;
+    }
+
+    void ChangeRes(int x, int y)
+    {
+        pixelPerfectCameraScript.refResolutionX = x;
+        pixelPerfectCameraScript.refResolutionY = y;
+    }
 }
