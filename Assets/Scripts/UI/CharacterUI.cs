@@ -16,10 +16,9 @@ namespace UI
         public Text XPText;
 
         GameObject SkillTreePanel;
+        GameObject EscMenu;
 
         PlayerController playerController;
-
-        CanvasScaler canvasScaler;
 
         // Start is called before the first frame update
         void Awake()
@@ -27,27 +26,9 @@ namespace UI
             healthText = this.transform.Find("HealthText").GetComponent<Text>();
             levelText = this.transform.Find("LevelText").GetComponent<Text>();
             XPText = this.transform.Find("XPText").GetComponent<Text>();
-            SkillTreePanel = this.transform.Find("TabMenu").gameObject;
+            SkillTreePanel = this.transform.Find("TabMenu").transform.Find("SkillTree").gameObject;
+            EscMenu = this.transform.Find("EscMenu").gameObject;
             playerController = this.GetComponentInParent<PlayerController>();
-            canvasScaler = this.GetComponent<CanvasScaler>();
-        }
-
-        /// <summary>
-        /// Subscriber Events for the Character UI Script
-        /// </summary>
-        private void OnEnable()
-        {
-            EventManager.UpdateResolutionEvent += ChangeRes;
-        }
-
-        private void OnDisable()
-        {
-            EventManager.UpdateResolutionEvent -= ChangeRes;
-        }
-
-        void ChangeRes(int x, int y)
-        {
-            canvasScaler.referenceResolution = new Vector2(x, y);
         }
 
         // Update is called once per frame
@@ -55,6 +36,7 @@ namespace UI
         {
             UpdateUI();
             OpenSkillTree();
+            OpenEscMenu();
         }
 
         // Should also be a subscriber event
@@ -67,6 +49,10 @@ namespace UI
 
         private void OpenSkillTree()
         {
+            if (EscMenu.gameObject.activeSelf)
+            {
+                return;
+            }
             bool skillTreePressed = Input.GetKeyDown(KeyCode.Tab);
             if (skillTreePressed)
             {
@@ -81,6 +67,25 @@ namespace UI
                     playerController.UnFreezeCharacter();
                 }
                 playerController.enabled = skillTreeEnabled;
+            }
+        }
+
+        private void OpenEscMenu()
+        {
+            bool escapeEnabled = Input.GetKeyDown(KeyCode.Escape);
+            if (escapeEnabled)
+            {
+                bool escActive = EscMenu.gameObject.activeSelf;
+                EscMenu.gameObject.SetActive(!escActive); // Set Skill tree to opposite state
+                if (EscMenu.gameObject.activeSelf)
+                {
+                    playerController.FreezeCharacter();
+                }
+                else
+                {
+                    playerController.UnFreezeCharacter();
+                }
+                playerController.enabled = escActive;
             }
         }
     }

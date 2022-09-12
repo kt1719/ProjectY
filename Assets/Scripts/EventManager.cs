@@ -5,7 +5,7 @@ public class EventManager : MonoBehaviour
     public delegate void ChangeResolution(int x, int y);
     public static event ChangeResolution UpdateResolutionEvent;
 
-    public void UpdateResolution(int x, int y)
+    public static void UpdateResolution(int x, int y)
     {
         if (UpdateResolutionEvent != null)
         {
@@ -15,6 +15,6 @@ public class EventManager : MonoBehaviour
 
     private void Start()
     {
-        UpdateResolution(640, 360);
+        UpdateResolution(960, 540);
     }
 }

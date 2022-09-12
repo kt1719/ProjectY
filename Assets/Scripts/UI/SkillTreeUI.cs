@@ -10,17 +10,17 @@ namespace UI
         RectTransform rectTransform;
         float yScale = 1;
         float xScale = 1;
+
+        float refResX;
+        float refResY;
         private void Awake()
         {
             rectTransform = GetComponent<RectTransform>();
-        }
-
-        private void OnEnable()
-        {
             EventManager.UpdateResolutionEvent += ChangeRes;
+            refResX = rectTransform.sizeDelta.x;
+            refResY = rectTransform.sizeDelta.y;
         }
-
-        private void OnDisable()
+        private void OnDestroy()
         {
             EventManager.UpdateResolutionEvent -= ChangeRes;
         }
@@ -35,7 +35,7 @@ namespace UI
         void UpdateScale()
         {
             float scaleVal = Mathf.Max(xScale, yScale);
-            rectTransform.sizeDelta = new Vector2(540 * scaleVal, 255 * scaleVal);
+            rectTransform.sizeDelta = new Vector2(refResX * scaleVal, refResY * scaleVal);
             rectTransform.ForceUpdateRectTransforms();
         }
     }
