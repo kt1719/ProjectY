@@ -15,6 +15,6 @@ public class EventManager : MonoBehaviour
 
     private void Start()
     {
-        UpdateResolution(960, 540);
+        UpdateResolution(640, 360);
     }
 }

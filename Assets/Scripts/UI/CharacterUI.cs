@@ -53,8 +53,6 @@ namespace UI
         // Update is called once per frame
         void Update()
         {
-            Debug.Log(transform.parent.root.GetChild(1).GetComponent<CustomPixelPerfectScript>().refResX);
-            Debug.Log(transform.parent.root.GetChild(1).GetComponent<CustomPixelPerfectScript>().refResY);
             UpdateUI();
             OpenSkillTree();
         }

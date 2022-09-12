@@ -2418,9 +2418,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Project Y
-
-'
+  m_text: Asuras Peak
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ca5fe251602f3af49bb3f0e8aaad999a, type: 2}
   m_sharedMaterial: {fileID: -69982878588742145, guid: ca5fe251602f3af49bb3f0e8aaad999a, type: 2}
