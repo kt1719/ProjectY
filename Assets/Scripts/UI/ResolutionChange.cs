@@ -11,7 +11,7 @@ public class ResolutionChange : MonoBehaviour
     Dictionary<int, Vector2> hash = new Dictionary<int, Vector2>()
     {
         { 0, new Vector2(960, 540) },
-        { 1, new Vector2(858, 480) },
+        { 1, new Vector2(768, 432) },
         { 2, new Vector2(640, 360) },
     };
 
@@ -34,7 +34,5 @@ public class ResolutionChange : MonoBehaviour
 
         resolutionChoice = change.value;
         EventManager.UpdateResolution((int)hash[resolutionChoice].x, (int)hash[resolutionChoice].y);
-        Debug.Log(change.value);
-        Debug.Log(change.captionText.text);
     }
 }

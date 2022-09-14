@@ -117,6 +117,7 @@ MonoBehaviour:
   downWire: 0
   leftWire: 0
   rightWire: 0
+  col: 0
 --- !u!1 &4216415462422477420
 GameObject:
   m_ObjectHideFlags: 0
