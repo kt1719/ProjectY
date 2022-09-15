@@ -17,8 +17,6 @@ namespace PlayerClasses
 
         public override void Awake() 
         {
-            base.Awake();
-
             ninjaStats = new NinjaStats { Strength = 5 };
             unlockedAbilities = new HashSet<int>() {0, 1, 2};
         }

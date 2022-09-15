@@ -1,3 +1,4 @@
+using PlayerClasses;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,7 +17,7 @@ namespace UI
             Purple
         }
 
-        private enum States
+        public enum States
         {
             Locked,
             SemiUnlocked,
@@ -29,10 +30,12 @@ namespace UI
         public bool rightWire;
         public Colour col;
 
-        States unlockedState = States.Locked;
+        public States unlockedState = States.Locked;
+        PlayerClass playerClassScript;
 
         private void Awake()
         {
+            playerClassScript = transform.root.GetComponent<PlayerClass>();
             animator = GetComponent<Animator>();
             this.transform.Find("WireRight").gameObject.SetActive(rightWire);
             this.transform.Find("WireLeft").gameObject.SetActive(leftWire);
@@ -50,11 +53,18 @@ namespace UI
 
         public void UnlockAbility()
         {
-            unlockedState = States.Unlocked;
-            animator.SetBool("Unlocked", true);
-            foreach (Animator animator in animatorList)
+            if (playerClassScript.unlockAbility(this))
             {
+                unlockedState = States.Unlocked;
                 animator.SetBool("Unlocked", true);
+                foreach (Animator animator in animatorList)
+                {
+                    animator.SetBool("Unlocked", true);
+                }
+            }
+            else
+            {
+                Debug.Log("not allowed");
             }
         }
 
@@ -62,6 +72,14 @@ namespace UI
         {
             unlockedState = States.SemiUnlocked;
             animator.SetBool("UnlockedNext", true);
+        }
+
+        public void InstantAnimatorUnlockState()
+        {
+            foreach (Animator animator in animatorList)
+            {
+                animator.Play("Unlocked");
+            }
         }
 
         // Animator resets state every time it is disabled (when the user presses tab)
@@ -75,10 +93,7 @@ namespace UI
 
             if (unlockedState == States.Unlocked)
             {
-                foreach (Animator animator in animatorList)
-                {
-                    animator.Play("Unlocked");
-                }
+                InstantAnimatorUnlockState();
             }
         }
     }

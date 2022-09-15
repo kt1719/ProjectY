@@ -7,4 +7,5 @@ public class WarriorBaseStats : ScriptableObject
 {
     public int health;
     public float speed;
+    public float strength;
 }

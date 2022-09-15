@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 6431080197377435017}
   - component: {fileID: 6431080197377435016}
   - component: {fileID: 6431080197377435020}
+  - component: {fileID: 4669480508343036740}
   m_Layer: 3
   m_Name: GameOverlay
   m_TagString: Untagged
@@ -201,6 +202,19 @@ MonoBehaviour:
   healthText: {fileID: 0}
   levelText: {fileID: 0}
   XPText: {fileID: 0}
+  PointsAvailable: {fileID: 0}
+--- !u!114 &4669480508343036740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6431080197377435019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd989cd7a0172f746b96ea4b767d13fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6431080197447417805
 GameObject:
   m_ObjectHideFlags: 0
@@ -658,8 +672,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 4625178064339942934, guid: 1887af8448914c74bac33db9c3d1e7cf, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1887af8448914c74bac33db9c3d1e7cf, type: 3}
 --- !u!224 &4825939895155088095 stripped
 RectTransform:

@@ -1,7 +1,5 @@
 using PlayerClasses;
 using PlayerCore;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +12,7 @@ namespace UI
         public Text healthText;
         public Text levelText;
         public Text XPText;
+        public Text PointsAvailable;
 
         GameObject SkillTreePanel;
         GameObject EscMenu;
@@ -27,6 +26,7 @@ namespace UI
             levelText = this.transform.Find("LevelText").GetComponent<Text>();
             XPText = this.transform.Find("XPText").GetComponent<Text>();
             SkillTreePanel = this.transform.Find("TabMenu").transform.Find("SkillTree").gameObject;
+            PointsAvailable = SkillTreePanel.transform.Find("Texts").Find("SkillTreePoints").GetComponent<Text>();
             EscMenu = this.transform.Find("EscMenu").gameObject;
             playerController = this.GetComponentInParent<PlayerController>();
         }
@@ -45,6 +45,7 @@ namespace UI
             healthText.text = "Health: " + playerClass.readHP();
             levelText.text = "Level: " + playerClass.readLevel();
             XPText.text = "XP: " + playerClass.readXP() + "/" + playerClass.readLevelUpXP();
+            PointsAvailable.text = playerClass.readPointsAvailable();
         }
 
         private void OpenSkillTree()

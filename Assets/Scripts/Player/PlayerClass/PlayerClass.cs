@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using UI;
 using UnityEngine;
 
 namespace PlayerClasses
 {
     public abstract class PlayerClass : MonoBehaviour
     {
-        public struct BasicStats
+        public class BasicStats
         {
             public int HP { get; set; }
             public float Attack { get; set; }
@@ -14,16 +15,19 @@ namespace PlayerClasses
             public int XP { get; set; }
             public int LevelUpXP { get; set; } // this is the xp that player has to get to level up. Should increase as the player levels up
             public float Speed { get; set; }
+            public int PointsAvailable { get; set; }
         }
 
         protected BasicStats stats;
 
-        protected HashSet<int> unlockedAbilities;
-        public WarriorBaseStats warriorStats;
-        public virtual void Awake()
-        {
-            stats = new BasicStats { HP = warriorStats.health, Attack = 5, Level = 1, XP = 0, LevelUpXP = 100, Speed = warriorStats.speed };
-        }
+        protected HashSet<int> lockedAbilities = new HashSet<int>();
+        protected HashSet<int> unlockedAbilities = new HashSet<int>();
+        protected HashSet<int> semiUnlockedAbilities = new HashSet<int>();
+        protected Dictionary<int, IconLogic> abilityIdToIconInstance;
+        protected Dictionary<int, HashSet<int>> dependencyMap;
+
+        // To make sure each class is instantiated uniquely
+        public abstract void Awake();
 
         public string readHP()
         {
@@ -50,16 +54,71 @@ namespace PlayerClasses
             return stats.LevelUpXP.ToString();
         }
 
+        public string readPointsAvailable()
+        {
+            return stats.PointsAvailable.ToString();
+        }
+
         public virtual void LevelUp()
         {
             // TODO: fine tune
             stats.Level += 1;
-            stats.LevelUpXP += (int)(stats.LevelUpXP * 0.3); // need to tune
+            stats.PointsAvailable += 1;
         }
 
         public bool hasUnlocked(int abilityId)
         {
             return unlockedAbilities.Contains(abilityId);
+        }
+
+        void generateSemiUnlockedAbilities(int id)
+        {
+            List<int> res = new List<int>();
+            foreach (int abilityId in lockedAbilities)
+            {
+                HashSet<int> dependencies = dependencyMap[abilityId];
+                if (dependencies.IsSubsetOf(unlockedAbilities))
+                {
+                    semiUnlockedAbilities.Add(abilityId);
+                }
+            }
+        }
+
+        public bool unlockAbility(IconLogic icon)
+        {
+            if (stats.PointsAvailable <= 0)
+            {
+                // Not enough skill points
+                return false;
+            }
+            int abilityId = -1;
+            foreach (KeyValuePair<int, IconLogic> hashMapValue in abilityIdToIconInstance)
+            {
+                if (hashMapValue.Value == icon)
+                {
+                    abilityId = hashMapValue.Key;
+                    break;
+                }
+
+            }
+            if (unlockedAbilities.Contains(abilityId))
+            {
+                // Already unlocked
+                return false;
+            }
+            if (!semiUnlockedAbilities.Contains(abilityId))
+            {
+                // Check the semi unlocked array to see if the abilityId is populated
+                return false;
+            }
+
+            stats.PointsAvailable -= 1;
+            unlockedAbilities.Add(abilityId);
+            lockedAbilities.Remove(abilityId);
+            semiUnlockedAbilities.Remove(abilityId);
+            // Add potential abilities into semi unlocked array ***
+            generateSemiUnlockedAbilities(abilityId);
+            return true;
         }
 
         public void damageHP(int dmg)

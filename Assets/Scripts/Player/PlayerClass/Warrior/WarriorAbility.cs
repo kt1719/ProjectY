@@ -13,10 +13,10 @@ namespace PlayerClasses
         private PlayerAnimation animatorScript; // have to change this specifically to warrior only!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
         private PlayerAttack attackScript;
-        protected delegate void abilityDelegate(); // Function template for an ability, no parameters, void return
-        protected Dictionary<int, abilityDelegate> trueAbilityMapping;
-        protected Dictionary<int, int> userMouseMapping;
-        protected Dictionary<KeyCode, int> userKeyMapping;
+        public delegate void abilityDelegate(); // Function template for an ability, no parameters, void return
+        public Dictionary<int, abilityDelegate> trueAbilityMapping;
+        public Dictionary<int, int> userMouseMapping;
+        public Dictionary<KeyCode, int> userKeyMapping;
 
         public void Awake() 
         {   
@@ -27,8 +27,12 @@ namespace PlayerClasses
             {
                 {0, new abilityDelegate(LightAttack)},
                 {1, new abilityDelegate(HeavyAttack)},
+                {2, new abilityDelegate(Blank)},
+                {3, new abilityDelegate(Blank)},
+                {4, new abilityDelegate(Blank)},
+                {5, new abilityDelegate(Blank)},
+                {6, new abilityDelegate(Blank)}
             };
-
 
             /* The following is customisable by the user (settings) */
             userMouseMapping = new Dictionary<int, int>()
@@ -37,14 +41,19 @@ namespace PlayerClasses
                 {1, 1}, // right click maps to heavy attack
             };
 
-            userKeyMapping = new Dictionary<KeyCode, int>() {}; // no ability mappings yet
+            userKeyMapping = new Dictionary<KeyCode, int>()// no ability mappings yet
+            {
+                {KeyCode.U, 0},
+                {KeyCode.I, 1},
+            };
         }
 
         /* Invoke the ability associated with the ability id */
         public void UseAbility(int abilityId) // ability id
         {            
             // check that the ability is unlocked
-            if (!playerClass.hasUnlocked(abilityId)) {
+            if (!playerClass.hasUnlocked(abilityId))
+            {
                 return; 
             }
             
@@ -56,17 +65,13 @@ namespace PlayerClasses
         /* Check for user input each frame */
         public override void CheckAbility()
         {
-            var keycodes = Enum.GetValues(typeof(KeyCode));
             // check for keyboard press
-            foreach (KeyCode key in keycodes)
-            {   
-                //Debug.Log(key);
-                bool keydown = Input.GetKeyDown(key);
-                bool contain = userKeyMapping.ContainsKey(key);
-                if (contain && keydown) {
-                    UseAbility(userKeyMapping[key]);
+            foreach (KeyValuePair<KeyCode, int> keyValue in userKeyMapping)
+            {
+                if (Input.GetKeyDown(keyValue.Key)) {
+                    UseAbility(keyValue.Value);
                 }
-            } 
+            }
             // check for mouse key presses
             for (int i = 0; i < 3; i++)
             {
@@ -87,6 +92,11 @@ namespace PlayerClasses
         public void HeavyAttack() 
         {
             attackScript.Attack(100, animatorScript.ChangeStateToWarriorHeavyAttack);
+        }
+
+        public void Blank()
+        {
+            return;
         }
     }
 }
