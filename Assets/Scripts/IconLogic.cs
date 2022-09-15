@@ -68,7 +68,7 @@ namespace UI
             }
         }
 
-        public void SemiUnlockNext()
+        public void UnlockedNext()
         {
             unlockedState = States.SemiUnlocked;
             animator.SetBool("UnlockedNext", true);

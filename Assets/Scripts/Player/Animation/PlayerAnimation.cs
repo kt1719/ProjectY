@@ -12,7 +12,6 @@ namespace PlayerAnim
 
         // Start is called before the first frame update
         Animator animator;
-        private bool spawned = false;
         void Awake()
         {
             animator = GetComponent<Animator>();

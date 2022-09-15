@@ -79,6 +79,7 @@ namespace PlayerClasses
                 HashSet<int> dependencies = dependencyMap[abilityId];
                 if (dependencies.IsSubsetOf(unlockedAbilities))
                 {
+                    abilityIdToIconInstance[abilityId].UnlockedNext();
                     semiUnlockedAbilities.Add(abilityId);
                 }
             }
