@@ -71,54 +71,100 @@ namespace PlayerClasses
             return unlockedAbilities.Contains(abilityId);
         }
 
-        void generateSemiUnlockedAbilities(int id)
+        protected void generateSemiUnlockedAbilities()
         {
-            List<int> res = new List<int>();
             foreach (int abilityId in lockedAbilities)
             {
                 HashSet<int> dependencies = dependencyMap[abilityId];
                 if (dependencies.IsSubsetOf(unlockedAbilities))
                 {
-                    abilityIdToIconInstance[abilityId].UnlockedNext();
                     semiUnlockedAbilities.Add(abilityId);
                 }
             }
         }
 
+        protected void generateLockedAbilities()
+        {
+            for (int i = 0; i < dependencyMap.Count; i++)
+            {
+                if (!unlockedAbilities.Contains(i))
+                {
+                    lockedAbilities.Add(i);
+                }
+            }
+        }
+
+        protected void updateSemiUnlockedAbilities()
+        {
+            generateSemiUnlockedAbilities();
+            foreach (int abilityId in semiUnlockedAbilities)
+            {
+                abilityIdToIconInstance[abilityId].UnlockedNext();
+            }
+        }
+
         public bool unlockAbility(IconLogic icon)
         {
-            if (stats.PointsAvailable <= 0)
+            // Helper Functions 
+            void UnlockPassiveAbility(int abilityId)
             {
-                // Not enough skill points
-                return false;
+                // if abilityId inside activeAbilities then return
+
+                // Otherwise increase stats
             }
-            int abilityId = -1;
-            foreach (KeyValuePair<int, IconLogic> hashMapValue in abilityIdToIconInstance)
+
+            void UpdateSkillTreeVariables(int abilityId)
             {
-                if (hashMapValue.Value == icon)
+                stats.PointsAvailable -= 1;
+                unlockedAbilities.Add(abilityId);
+                lockedAbilities.Remove(abilityId);
+                semiUnlockedAbilities.Remove(abilityId);
+            }
+
+            bool CheckAbilityUnlockable(int abilityId)
+            {
+                if (stats.PointsAvailable <= 0)
                 {
-                    abilityId = hashMapValue.Key;
-                    break;
+                    // Not enough skill points
+                    return false;
                 }
+                if (unlockedAbilities.Contains(abilityId))
+                {
+                    // Already unlocked
+                    return false;
+                }
+                if (!semiUnlockedAbilities.Contains(abilityId))
+                {
+                    // Check the semi unlocked array to see if the abilityId is populated
+                    return false;
+                }
+                return true;
+            }
 
-            }
-            if (unlockedAbilities.Contains(abilityId))
+            int FindAbilityId(IconLogic icon)
             {
-                // Already unlocked
-                return false;
-            }
-            if (!semiUnlockedAbilities.Contains(abilityId))
-            {
-                // Check the semi unlocked array to see if the abilityId is populated
-                return false;
+                foreach (KeyValuePair<int, IconLogic> hashMapValue in abilityIdToIconInstance)
+                {
+                    if (hashMapValue.Value == icon)
+                    {
+                        return hashMapValue.Key;
+                    }
+
+                }
+                return -1; // Should never be the case
             }
 
-            stats.PointsAvailable -= 1;
-            unlockedAbilities.Add(abilityId);
-            lockedAbilities.Remove(abilityId);
-            semiUnlockedAbilities.Remove(abilityId);
-            // Add potential abilities into semi unlocked array ***
-            generateSemiUnlockedAbilities(abilityId);
+            ////////////
+
+            int abilityId = FindAbilityId(icon);
+
+            if (!CheckAbilityUnlockable(abilityId)) return false;
+
+            // UnlockPassiveAbility(abilityId); // Need to implement
+
+            UpdateSkillTreeVariables(abilityId);
+
+            updateSemiUnlockedAbilities();
             return true;
         }
 

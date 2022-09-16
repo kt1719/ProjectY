@@ -86,6 +86,7 @@ namespace UI
 
         private void OnEnable()
         {
+            animator.SetBool(col.ToString(), true);
             if (unlockedState == States.Locked) return;
 
             string stateName = col.ToString() + "Icons" + unlockedState.ToString();

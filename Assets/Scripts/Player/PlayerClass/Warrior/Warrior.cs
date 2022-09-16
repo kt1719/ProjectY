@@ -33,7 +33,47 @@ namespace PlayerClasses
 
         /* */
 
-        public override void Awake() 
+        public override void Awake()
+        {
+            GenerateAbilityMappings();
+
+            // Attempt to load the stats or instantiate new ones from scratch
+
+
+            // If player is not loading a game already saved
+            InstaniatePlayerStats();
+            InstantiateAbilities();
+        }
+
+        private void Start()
+        {
+            foreach (int abilityId in semiUnlockedAbilities)
+            {
+                if (!unlockedAbilities.Contains(abilityId))
+                {
+                    abilityIdToIconInstance[abilityId].unlockedState = IconLogic.States.SemiUnlocked;
+                }
+            }
+            foreach (int abilityId in unlockedAbilities)
+            {
+                abilityIdToIconInstance[abilityId].unlockedState = IconLogic.States.Unlocked;
+            }
+        }
+
+        private void InstantiateAbilities()
+        {
+            unlockedAbilities = new HashSet<int>() { 0, 3 };
+            generateLockedAbilities();
+            generateSemiUnlockedAbilities();
+        }
+
+        private void InstaniatePlayerStats()
+        {
+            warriorstats = new WarriorStats { Strength = warriorStats.strength };
+            stats = new BasicStats { HP = warriorStats.health, Attack = 5, Level = 1, XP = 0, LevelUpXP = 100, Speed = warriorStats.speed, PointsAvailable = 5 };
+        }
+
+        private void GenerateAbilityMappings()
         {
             abilityIdToIconInstance = new Dictionary<int, IconLogic>()
             {
@@ -62,28 +102,6 @@ namespace PlayerClasses
                 { 8, new HashSet<int>() {7} },
                 { 9, new HashSet<int>() {8} }
             };
-
-            // Attempt to load the stats or instantiate new ones from scratch
-            warriorstats = new WarriorStats { Strength = warriorStats.strength };
-            stats = new BasicStats { HP = warriorStats.health, Attack = 5, Level = 1, XP = 0, LevelUpXP = 100, Speed = warriorStats.speed, PointsAvailable = 9 };
-
-            lockedAbilities = new HashSet<int>() { 2, 3, 4, 5, 6, 7, 8, 9 };
-            unlockedAbilities = new HashSet<int>() { 0 };
-            semiUnlockedAbilities = new HashSet<int>() { 1, 3, 7 };
-        }
-
-        private void Start()
-        {
-            foreach (int abilityId in semiUnlockedAbilities)
-            {
-                if (!unlockedAbilities.Contains(abilityId)) {
-                    abilityIdToIconInstance[abilityId].unlockedState = IconLogic.States.SemiUnlocked;
-                }
-            }
-            foreach (int abilityId in unlockedAbilities)
-            {
-                abilityIdToIconInstance[abilityId].unlockedState = IconLogic.States.Unlocked;
-            }
         }
         public override void LevelUp()
         {
