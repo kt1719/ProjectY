@@ -2625,6 +2625,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 6520476728825999695, guid: 7760b343b0a12fe40ad57edf7f46aae1, type: 3}
+      propertyPath: offsetX
+      value: 1668
+      objectReference: {fileID: 0}
+    - target: {fileID: 6520476728825999695, guid: 7760b343b0a12fe40ad57edf7f46aae1, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}

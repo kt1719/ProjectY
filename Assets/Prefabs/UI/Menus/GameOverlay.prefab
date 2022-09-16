@@ -1,5 +1,13 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!222 &5559021116621761943
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6017535471126442987}
+  m_CullTransparentMesh: 1
 --- !u!1 &6431080197150481432
 GameObject:
   m_ObjectHideFlags: 0
@@ -17,7 +25,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6431080197150481433
 RectTransform:
   m_ObjectHideFlags: 0
@@ -232,7 +240,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6431080197447417794
 RectTransform:
   m_ObjectHideFlags: 0
@@ -311,7 +319,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6431080197824108381
 RectTransform:
   m_ObjectHideFlags: 0
@@ -550,7 +558,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2630427080702965004, guid: 1887af8448914c74bac33db9c3d1e7cf, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2630427080702965005, guid: 1887af8448914c74bac33db9c3d1e7cf, type: 3}
       propertyPath: m_AnchorMax.x
@@ -586,7 +594,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4073215826992783753, guid: 1887af8448914c74bac33db9c3d1e7cf, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.95007324
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4559825249671279969, guid: 1887af8448914c74bac33db9c3d1e7cf, type: 3}
       propertyPath: m_Pivot.x
@@ -672,8 +680,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8933029041885551720, guid: 1887af8448914c74bac33db9c3d1e7cf, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 51.999573
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1887af8448914c74bac33db9c3d1e7cf, type: 3}
+--- !u!1 &6017535471126442987 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3331672527965805653, guid: 1887af8448914c74bac33db9c3d1e7cf, type: 3}
+  m_PrefabInstance: {fileID: 9060941337940570046}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &4825939895155088095 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4559825249671279969, guid: 1887af8448914c74bac33db9c3d1e7cf, type: 3}
