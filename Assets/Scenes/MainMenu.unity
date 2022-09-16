@@ -2239,17 +2239,6 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1713851807 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8118973609848244610, guid: 7760b343b0a12fe40ad57edf7f46aae1, type: 3}
-  m_PrefabInstance: {fileID: 1974976061}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b0fecffa3f624585964b0d0eb21b18e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1779330613
 GameObject:
   m_ObjectHideFlags: 0
@@ -2639,6 +2628,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8118973609848244610, guid: 7760b343b0a12fe40ad57edf7f46aae1, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9203576189564759000, guid: 7760b343b0a12fe40ad57edf7f46aae1, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -2646,7 +2639,7 @@ PrefabInstance:
     - target: {fileID: 9203576189564759001, guid: 7760b343b0a12fe40ad57edf7f46aae1, type: 3}
       propertyPath: transport
       value: 
-      objectReference: {fileID: 1713851807}
+      objectReference: {fileID: 1974976062}
     - target: {fileID: 9203576189564759001, guid: 7760b343b0a12fe40ad57edf7f46aae1, type: 3}
       propertyPath: spawnDelay
       value: 0.3
@@ -2661,12 +2654,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9203576189564759001, guid: 7760b343b0a12fe40ad57edf7f46aae1, type: 3}
       propertyPath: spawnPrefabs.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9203576189564759001, guid: 7760b343b0a12fe40ad57edf7f46aae1, type: 3}
       propertyPath: spawnPrefabs.Array.data[0]
       value: 
       objectReference: {fileID: 2612599189308284357, guid: a4c908b40dd8d8c4d8fd9b1bde73e9d8, type: 3}
+    - target: {fileID: 9203576189564759001, guid: 7760b343b0a12fe40ad57edf7f46aae1, type: 3}
+      propertyPath: spawnPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 6322315417785292087, guid: 55c4993d04bada34097f8011bdda54dc, type: 3}
     - target: {fileID: 9203576189564759004, guid: 7760b343b0a12fe40ad57edf7f46aae1, type: 3}
       propertyPath: m_Name
       value: NetworkManager
@@ -2717,6 +2714,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7760b343b0a12fe40ad57edf7f46aae1, type: 3}
+--- !u!114 &1974976062 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5942119925091160493, guid: 7760b343b0a12fe40ad57edf7f46aae1, type: 3}
+  m_PrefabInstance: {fileID: 1974976061}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b0fecffa3f624585964b0d0eb21b18e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2049674629
 GameObject:
   m_ObjectHideFlags: 0

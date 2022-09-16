@@ -1,8 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using PlayerAnim;
-using System;
+using Mirror;
 using PlayerAtk;
 
 namespace PlayerClasses
@@ -18,8 +17,8 @@ namespace PlayerClasses
         public Dictionary<int, int> userMouseMapping;
         public Dictionary<KeyCode, int> userKeyMapping;
 
-        public void Awake() 
-        {   
+        public void Awake()
+        {
             animatorScript = GetComponent<PlayerAnimation>();
             attackScript = GetComponent<PlayerAttack>();
 
@@ -50,17 +49,33 @@ namespace PlayerClasses
 
         /* Invoke the ability associated with the ability id */
         public void UseAbility(int abilityId) // ability id
-        {            
+        {
             // check that the ability is unlocked
             if (!playerClass.hasUnlocked(abilityId))
             {
-                return; 
+                return;
             }
-            
+
             // call the ability associated with the id
             abilityDelegate ability = trueAbilityMapping[abilityId];
             ability();
+            // Send RPC command to use ability
+            UseAbilityCommand(abilityId);
         }
+
+        [Command]
+        void UseAbilityCommand(int abilityId)
+        {
+            UseAbilityRPC(abilityId);
+        }
+
+        [ClientRpc(includeOwner = false)]
+        void UseAbilityRPC(int abilityId)
+        {
+            abilityDelegate ability = trueAbilityMapping[abilityId];
+            ability();
+        }
+
 
         /* Check for user input each frame */
         public override void CheckAbility()

@@ -22,6 +22,11 @@ namespace PlayerAnim
             animator.SetBool("spawned", true);
         }
 
+        public void SetPlayerNonLocal()
+        {
+            animator.SetBool("notLocal", true);
+        }
+
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         public void ChangeStateToWarriorLightAttack()
@@ -32,21 +37,6 @@ namespace PlayerAnim
             {
                 return;
             }
-            ChangeStateToWarriorLightAttackCommand();
-        }
-
-        [Command]
-        private void ChangeStateToWarriorLightAttackCommand()
-        {
-            ChangeStateToWarriorLightAttackClientRPC();
-        }
-
-        [ClientRpc(includeOwner = false)]
-        private void ChangeStateToWarriorLightAttackClientRPC()
-        {
-            if (isLocalPlayer) return;
-            animator.SetFloat("attackSpeed", 1f);
-            animator.SetTrigger("isAttacking"); // sword slash
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

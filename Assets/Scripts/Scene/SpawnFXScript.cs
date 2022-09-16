@@ -16,7 +16,11 @@ namespace FX
 
         public void SpawnPlayer()
         {
-            player.GetComponent<PlayerController>().SpawnPlayer();
+            if (!player)
+            {
+                return;
+            }
+            player.GetComponent<PlayerController>().SpawnPlayerCommand();
         }
 
         public void Destroy()

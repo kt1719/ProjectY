@@ -2,16 +2,23 @@ using FX;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
 namespace Spawn
 {
-    public class SpawnPoint : MonoBehaviour
+    public class SpawnPoint : NetworkBehaviour
     {
         private int playersSpawning;
         private bool spawning = false;
         public GameObject spawnFXObject;
         public GameObject fxSpawnLocation;
         public GameObject playerSpawnLocation;
+        public GameObject playerFX;
+
+        private void Start()
+        {
+            StartCoroutine(SpawnFX());
+        }
 
         public void Update()
         {
@@ -26,15 +33,40 @@ namespace Spawn
             }
         }
 
-        public IEnumerator SpawnFX(GameObject player)
+        public IEnumerator SpawnFX()
         {
+            GameObject player = NetworkClient.localPlayer.gameObject;
             TurnOnSpawn();
             yield return new WaitForSeconds(0.3f);
             spawning = true;
-            GameObject playerFX = Instantiate(spawnFXObject, transform);
-            playerFX.transform.SetParent(fxSpawnLocation.transform);
-            playerFX.transform.localPosition = new Vector3(0, 0, 0);
+
+            playerFX = InstaniateFX();
             playerFX.GetComponent<SpawnFXScript>().ReferencePlayer(player);
+            InstaniateFxCommand();
+        }
+
+        [Command (requiresAuthority = false)]
+        void InstaniateFxCommand()
+        {
+            InstaniateFxRPC();
+        }
+
+        [ClientRpc]
+        void InstaniateFxRPC()
+        {
+            InstaniateFX();
+        }
+
+        GameObject InstaniateFX()
+        {
+            if (playerFX)
+            {
+                return null;
+            }
+            GameObject res = Instantiate(spawnFXObject, transform);
+            res.transform.SetParent(fxSpawnLocation.transform);
+            res.transform.localPosition = new Vector3(0, 0, 0);
+            return res;
         }
 
         public Vector2 ReturnCenterPos()

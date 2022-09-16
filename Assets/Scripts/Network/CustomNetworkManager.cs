@@ -5,6 +5,7 @@ using Mirror;
 using System;
 using UnityEngine.SceneManagement;
 using Spawn;
+using PlayerCore;
 
 namespace Network
 {
@@ -31,13 +32,11 @@ namespace Network
             player.transform.position = spawnPointScript.ReturnCenterPos();
             player.transform.rotation = Quaternion.identity;
 
-
-            StartCoroutine(spawnPointScript.SpawnFX(player));
-
             // instantiating a "Player" prefab gives it the name "Player(clone)"
             // => appending the connectionId is WAY more useful for debugging!
             player.name = $"{playerPrefab.name} [connId={conn.connectionId}]";
             NetworkServer.AddPlayerForConnection(conn, player);
+            player.GetComponent<PlayerController>().TurnOffRenderer();
         }
     }
 

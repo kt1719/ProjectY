@@ -220,6 +220,7 @@ GameObject:
   - component: {fileID: 6322315417785292088}
   - component: {fileID: 1773684311371647210}
   - component: {fileID: 446964120}
+  - component: {fileID: 6322315419244225474}
   m_Layer: 6
   m_Name: Spawn_Point
   m_TagString: Untagged
@@ -283,7 +284,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 5455203826815307459, guid: 800dba7d720c9a44e8ff2162c88a9c42, type: 3}
+  m_Sprite: {fileID: -3291250850866701205, guid: e7e69c5ad23f0fe429ddb4f09b3173fa, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -344,9 +345,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f6e412058de0c14f9ae876edd2dcd6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   spawnFXObject: {fileID: 1684393947010861222, guid: d4b8cb39d41149040a37ac60062b1193, type: 3}
   fxSpawnLocation: {fileID: 451364396401941197}
   playerSpawnLocation: {fileID: 7847188781475721853}
+--- !u!95 &6322315419244225474
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6322315417785292087}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 640abcedf614c094aafc5d188a9f1118, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7847188781475721853
 GameObject:
   m_ObjectHideFlags: 0

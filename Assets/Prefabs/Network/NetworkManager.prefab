@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9203576189564759005}
   - component: {fileID: 9203576189564759001}
-  - component: {fileID: 8118973609848244610}
+  - component: {fileID: 5942119925091160493}
   - component: {fileID: 9203576189564759000}
   - component: {fileID: 9203576189564759003}
   - component: {fileID: 9203576189564759002}
@@ -54,7 +54,7 @@ MonoBehaviour:
   serverTickRate: 30
   offlineScene: 
   onlineScene: Assets/Scenes/MainOverworld.unity
-  transport: {fileID: 9203576189564759000}
+  transport: {fileID: 5942119925091160493}
   networkAddress: localhost
   maxConnections: 100
   authenticator: {fileID: 0}
@@ -65,7 +65,7 @@ MonoBehaviour:
   - {fileID: 2612599189308284357, guid: a4c908b40dd8d8c4d8fd9b1bde73e9d8, type: 3}
   mainMenuScene: MainMenu
   multiplayerScene: Multiplayer
---- !u!114 &8118973609848244610
+--- !u!114 &5942119925091160493
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

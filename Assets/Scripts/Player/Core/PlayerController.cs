@@ -20,6 +20,8 @@ namespace PlayerCore
         Camera[] cameras;
         GameObject gameOverlay;
 
+        SpriteRenderer spriteRenderer;
+
         public bool singlePlayer = false;
 
         private void Awake() // Got changed from start to awake due to the swordColl script not finding the PlayerClass script. Awake means it runs earlier than start
@@ -33,6 +35,7 @@ namespace PlayerCore
             playerClass = GetComponent<Warrior>();
             movementscript = GetComponent<WarriorMovement>();
             animationScript = GetComponent<PlayerAnimation>();
+            spriteRenderer = GetComponent<SpriteRenderer>();
 
             abilityscript.initialize(playerClass); // Pass in the data class into the ability class
 
@@ -45,7 +48,15 @@ namespace PlayerCore
 
         private void Start()
         {
-            FreezeCharacter();
+            if (hasAuthority || singlePlayer)
+            {
+                spriteRenderer.enabled = false;
+                FreezeCharacter();
+            }
+            else
+            {
+                animationScript.SetPlayerNonLocal();
+            }
         }
 
         // Update is called once per frame
@@ -93,8 +104,26 @@ namespace PlayerCore
 
         public void SpawnPlayer() 
         {
-            GetComponent<SpriteRenderer>().enabled = true;
+            spriteRenderer.enabled = true;
             animationScript.SpawnPlayer();
+        }
+
+        [ClientRpc]
+        public void SpawnPlayerRPC()
+        {
+            SpawnPlayer();
+        }
+
+        [Command]
+        public void SpawnPlayerCommand()
+        {
+            SpawnPlayerRPC();
+        }
+
+        [ClientRpc (includeOwner = false)]
+        public void TurnOffRenderer()
+        {
+            spriteRenderer.enabled = false;
         }
 
         public void FreezeCharacter()
