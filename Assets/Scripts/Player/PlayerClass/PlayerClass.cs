@@ -9,7 +9,8 @@ namespace PlayerClasses
     {
         public class BasicStats
         {
-            public int HP { get; set; }
+            public int totalHP { get; set; }
+            public int currentHP { get; set; }
             public float Attack { get; set; }
             public int Level { get; set; }
             public int XP { get; set; }
@@ -29,9 +30,14 @@ namespace PlayerClasses
         // To make sure each class is instantiated uniquely
         public abstract void Awake();
 
-        public string readHP()
+        public int readCurrentHP()
         {
-            return stats.HP.ToString();
+            return stats.currentHP;
+        }
+
+        public int readTotalHP()
+        {
+            return stats.totalHP;
         }
 
         public float getSpeed()
@@ -170,12 +176,14 @@ namespace PlayerClasses
 
         public void damageHP(int dmg)
         {
-            stats.HP = ((stats.HP - dmg) < 0) ? 0 : stats.HP - dmg;
+            Debug.Log("Damaged hp");
+            stats.currentHP = ((stats.currentHP - dmg) < 0) ? 0 : stats.currentHP - dmg;
+            Debug.Log("New hp now " + stats.currentHP);
         }
 
         public void healHP(int heal)
         {
-            stats.HP = ((stats.HP - heal) < 100) ? 100 : stats.HP + heal;
+            stats.currentHP = ((stats.currentHP - heal) < stats.totalHP) ? stats.totalHP : stats.currentHP + heal;
         }
 
         public void gainXP(int xp)

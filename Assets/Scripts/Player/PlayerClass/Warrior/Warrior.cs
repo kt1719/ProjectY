@@ -70,7 +70,7 @@ namespace PlayerClasses
         private void InstaniatePlayerStats()
         {
             warriorstats = new WarriorStats { Strength = warriorStats.strength };
-            stats = new BasicStats { HP = warriorStats.health, Attack = 5, Level = 1, XP = 0, LevelUpXP = 100, Speed = warriorStats.speed, PointsAvailable = 5 };
+            stats = new BasicStats { currentHP = warriorStats.health, totalHP = warriorStats.health , Attack = 5, Level = 1, XP = 0, LevelUpXP = 100, Speed = warriorStats.speed, PointsAvailable = 5 };
         }
 
         private void GenerateAbilityMappings()
@@ -108,7 +108,8 @@ namespace PlayerClasses
             //TODO: Implement
             base.LevelUp();
             stats.Attack += 1;
-            stats.HP += 30;
+            stats.totalHP += 30;
+            stats.currentHP += 30;
             stats.LevelUpXP += (int)(stats.LevelUpXP * 0.3); // need to tune
             return;
         }

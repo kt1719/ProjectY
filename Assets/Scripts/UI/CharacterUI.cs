@@ -7,13 +7,6 @@ namespace UI
 {
     public class CharacterUI : MonoBehaviour
     {
-        public PlayerClass playerClass;
-
-        public Text healthText;
-        public Text levelText;
-        public Text XPText;
-        public Text PointsAvailable;
-
         GameObject SkillTreePanel;
         GameObject EscMenu;
 
@@ -22,11 +15,7 @@ namespace UI
         // Start is called before the first frame update
         void Awake()
         {
-            healthText = this.transform.Find("HealthText").GetComponent<Text>();
-            levelText = this.transform.Find("LevelText").GetComponent<Text>();
-            XPText = this.transform.Find("XPText").GetComponent<Text>();
             SkillTreePanel = this.transform.Find("TabMenu").transform.Find("SkillTree").gameObject;
-            PointsAvailable = SkillTreePanel.transform.Find("Texts").Find("SkillTreePoints").GetComponent<Text>();
             EscMenu = this.transform.Find("EscMenu").gameObject;
             playerController = this.GetComponentInParent<PlayerController>();
         }
@@ -34,18 +23,8 @@ namespace UI
         // Update is called once per frame
         void Update()
         {
-            UpdateUI();
             OpenSkillTree();
             OpenEscMenu();
-        }
-
-        // Should also be a subscriber event
-        private void UpdateUI()
-        {
-            healthText.text = "Health: " + playerClass.readHP();
-            levelText.text = "Level: " + playerClass.readLevel();
-            XPText.text = "XP: " + playerClass.readXP() + "/" + playerClass.readLevelUpXP();
-            PointsAvailable.text = playerClass.readPointsAvailable();
         }
 
         private void OpenSkillTree()

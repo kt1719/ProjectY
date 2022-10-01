@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using PlayerClasses;
+using PlayerAtk;
 
 namespace EnemyClass
 {
@@ -12,7 +12,7 @@ namespace EnemyClass
             Collider2D player = PlayerAttackable();
             if (player != null)
             {
-                player.GetComponent<PlayerClass>().damageHP(damage);
+                player.GetComponent<PlayerAttack>().DamagePlayer(damage);
             }
         }
     }

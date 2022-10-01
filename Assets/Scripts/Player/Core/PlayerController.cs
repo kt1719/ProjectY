@@ -15,7 +15,6 @@ namespace PlayerCore
         PlayerAbility abilityscript;
         PlayerClass playerClass;
         PlayerAnimation animationScript;
-        CharacterUI characterUI;
 
         Camera[] cameras;
         GameObject gameOverlay;
@@ -27,9 +26,6 @@ namespace PlayerCore
         private void Awake() // Got changed from start to awake due to the swordColl script not finding the PlayerClass script. Awake means it runs earlier than start
         {
             DontDestroyOnLoad(this.gameObject);
-
-            characterUI = GetComponentInChildren<CharacterUI>();
-
             // TODO: make this dependent on user class choice
             abilityscript = GetComponent<WarriorAbility>();  
             playerClass = GetComponent<Warrior>();
@@ -42,8 +38,6 @@ namespace PlayerCore
             cameras = GetComponentsInChildren<Camera>();
 
             gameOverlay = this.transform.GetChild(2).gameObject; // The index of the heirarchy in the prefab matters
-
-            InitializeUI();
         }
 
         private void Start()
@@ -59,6 +53,7 @@ namespace PlayerCore
                 animationScript.SetPlayerNonLocal();
                 foreach (Transform child in transform)
                 {
+                    // Set all child gameobjects of 
                     if (child.name == "SwordColliders" || child.name == "EnvironmentBody")
                     {
                         continue;
@@ -104,11 +99,6 @@ namespace PlayerCore
             }
             // Moved to fixed update. Better for rigidbodies + colliders etc
             movementscript.MovePlayer();
-        }
-
-        private void InitializeUI()
-        {
-            characterUI.playerClass = playerClass;
         }
 
         public void SpawnPlayer() 
