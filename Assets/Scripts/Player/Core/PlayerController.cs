@@ -55,7 +55,16 @@ namespace PlayerCore
             }
             else
             {
+                // Skips the player setup animations
                 animationScript.SetPlayerNonLocal();
+                foreach (Transform child in transform)
+                {
+                    if (child.name == "SwordColliders" || child.name == "EnvironmentBody")
+                    {
+                        continue;
+                    }
+                    child.gameObject.SetActive(false);
+                }
             }
         }
 
@@ -104,6 +113,7 @@ namespace PlayerCore
 
         public void SpawnPlayer() 
         {
+            // This is because sprite renderers can have different behaviours on multiplayer
             spriteRenderer.enabled = true;
             animationScript.SpawnPlayer();
         }

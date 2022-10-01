@@ -19,7 +19,7 @@ TagManager:
   - StaticBackground
   - PlayerEnvColl
   - PlayerUI
-  - 
+  - PlayerUIBack
   - 
   - 
   - 
@@ -40,6 +40,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: PlayerUI
+    uniqueID: 4016743299
+    locked: 0
+  - name: PlayerUIBack
+    uniqueID: 551590047
+    locked: 0
   - name: Background
     uniqueID: 3815351165
     locked: 0

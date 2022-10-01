@@ -78,7 +78,7 @@ namespace UI
             {
                 bool escActive = EscMenu.gameObject.activeSelf;
                 EscMenu.gameObject.SetActive(!escActive); // Set Skill tree to opposite state
-                if (EscMenu.gameObject.activeSelf)
+                if (EscMenu.gameObject.activeSelf || SkillTreePanel.gameObject.activeSelf)
                 {
                     playerController.FreezeCharacter();
                 }
