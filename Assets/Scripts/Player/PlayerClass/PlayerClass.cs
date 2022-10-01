@@ -176,9 +176,7 @@ namespace PlayerClasses
 
         public void damageHP(int dmg)
         {
-            Debug.Log("Damaged hp");
             stats.currentHP = ((stats.currentHP - dmg) < 0) ? 0 : stats.currentHP - dmg;
-            Debug.Log("New hp now " + stats.currentHP);
         }
 
         public void healHP(int heal)

@@ -353,8 +353,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 117a573bd89f6db4786784ce03e9c434, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthPrefab: {fileID: 7739757958321690035, guid: 4053d470296708540a4df2b56d3422d6, type: 3}
-  hpOffset: 3
+  damagedHPBarPrefab: {fileID: 7739757958321690035, guid: f1ad4f785d9ec174993c006d8b3cdd58, type: 3}
+  hpOffset: -3
+  easeType: 0
 --- !u!1 &5011954530241623739
 GameObject:
   m_ObjectHideFlags: 0
@@ -896,6 +897,7 @@ GameObject:
   - component: {fileID: 7134814974951329400}
   - component: {fileID: 1785904535404465904}
   - component: {fileID: 528826949811168403}
+  - component: {fileID: 5144676095744548024}
   m_Layer: 11
   m_Name: PlayerUI
   m_TagString: Untagged
@@ -987,6 +989,19 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 0
+--- !u!114 &5144676095744548024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9149369742225633920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82bb787c1acf1a5448749e644abb363b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  easeType: 1
 --- !u!1001 &8808020092371037572
 PrefabInstance:
   m_ObjectHideFlags: 0

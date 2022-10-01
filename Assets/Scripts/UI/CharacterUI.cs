@@ -12,12 +12,17 @@ namespace UI
 
         PlayerController playerController;
 
+        Text SkillTreePoints;
+        PlayerClass playerClassScript;
+
         // Start is called before the first frame update
         void Awake()
         {
             SkillTreePanel = this.transform.Find("TabMenu").transform.Find("SkillTree").gameObject;
+            SkillTreePoints = SkillTreePanel.transform.Find("Texts").transform.Find("SkillTreePoints").GetComponent<Text>();
             EscMenu = this.transform.Find("EscMenu").gameObject;
             playerController = this.GetComponentInParent<PlayerController>();
+            playerClassScript = this.GetComponentInParent<PlayerClass>();
         }
 
         // Update is called once per frame
@@ -25,6 +30,12 @@ namespace UI
         {
             OpenSkillTree();
             OpenEscMenu();
+            UpdateSkillTreePoints();
+        }
+
+        private void UpdateSkillTreePoints()
+        {
+            SkillTreePoints.text = playerClassScript.readPointsAvailable();
         }
 
         private void OpenSkillTree()
