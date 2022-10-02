@@ -58,19 +58,6 @@ public class HealthBar : MonoBehaviour
         img.color = c;
     }
 
-    void TurnTransparent()
-    {
-        Color toColor = healthBar2.GetComponent<Image>().color;
-        toColor.a = 0;
-        LeanTween.value(healthBar2.gameObject, setColorCallback, healthBar2.GetComponent<Image>().color, toColor, .14f)
-            .setOnComplete(DestroyMe);
-
-        void DestroyMe()
-        {
-            Destroy(healthBar2);
-        }
-    }
-
     private GameObject GenerateNewHealthBars(int n) 
     {
         // Get starting hp
@@ -90,7 +77,6 @@ public class HealthBar : MonoBehaviour
         healthBar2.GetComponent<RectTransform>().sizeDelta = new Vector2(rectTransform.sizeDelta.x - newPos - hpOffset, rectTransform.sizeDelta.y);
 
         // Delete original healthbar and healthbar2 and replace with healthbar1
-        LeanTween.color(healthBar2, new Color(1f, 1f, 1f, 0), 0.64f);
         UpdatePrevVars(healthBar1);
         return healthBar2;
     }

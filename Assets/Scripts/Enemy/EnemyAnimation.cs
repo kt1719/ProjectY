@@ -12,7 +12,8 @@ namespace EnemyClass
         protected Animator animator;
         protected EnemyAttackScript attackScript;
         protected EnemyState stateScript;
-
+        delegate void AnimationDelegate();
+        AnimationDelegate animationFunction;
         void Awake()
         {
             animator = GetComponent<Animator>();
@@ -33,6 +34,30 @@ namespace EnemyClass
         public virtual void ChangeAnimationToAttack()
         {
             animator.SetTrigger("attack");
+        }
+
+        [Command(requiresAuthority = false)]
+        public void UpdateAnimation(string option)
+        {
+            UpdateAnimationRPC(option);
+        }
+
+        [ClientRpc]
+        private void UpdateAnimationRPC(string option)
+        {
+            if (option == "damaged")
+            {
+                animationFunction = ChangeAnimationTakeDamage;
+            }
+            else if (option == "attack")
+            {
+                animationFunction = ChangeAnimationToAttack;
+            }
+            else if (option == "die")
+            {
+                animationFunction = ChangeAnimationToDie;
+            }
+            animationFunction();
         }
     }
 }

@@ -19,7 +19,7 @@ MonoBehaviour:
   attackRadius: 0.25
   outerRadius: 2.5
   movementRadius: 3
-  damage: 15
+  damage: 20
   idleTime: 8
   xpGiven: 20
   centerYOffset: 0.17

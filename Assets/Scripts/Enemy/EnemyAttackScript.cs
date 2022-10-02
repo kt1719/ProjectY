@@ -28,7 +28,7 @@ namespace EnemyClass
             if (cooldownTimer == 0 && stateScript.currentState == EnemyState.States.Idle)
             {
                 stateScript.changeStateAttacking();
-                animationScript.ChangeAnimationToAttack();
+                animationScript.UpdateAnimation("attack");
                 ActivateAttackCooldown();
             }
         }

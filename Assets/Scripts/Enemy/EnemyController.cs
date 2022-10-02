@@ -68,13 +68,13 @@ namespace EnemyClass
             spriteHitScript.changeSpriteOrientation(transform);
             if (health <= 0)
             {
-                animatorScript.ChangeAnimationToDie();
+                animatorScript.UpdateAnimation("die");
                 return true;
             }
             if (enemyStateScript.currentState == EnemyState.States.Idle)
             {
                 enemyStateScript.changeStateHit();
-                animatorScript.ChangeAnimationTakeDamage();
+                animatorScript.UpdateAnimation("damaged");
                 TakeDamageCommand(health, transform);
             }
             return false;
@@ -93,12 +93,12 @@ namespace EnemyClass
             this.health = hp;
             if (health <= 0)
             {
-                animatorScript.ChangeAnimationToDie();
+                animatorScript.UpdateAnimation("die");
             }
             spriteHitScript.changeSpriteOrientation(transform);
             if (enemyStateScript.currentState == EnemyState.States.Idle)
             {
-                animatorScript.ChangeAnimationTakeDamage();
+                animatorScript.UpdateAnimation("damaged");
                 enemyStateScript.changeStateHit();
             }
         }

@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SpawnPoint.unity
     guid: c6023bb247d101a4ea4a488a54448131
+  - enabled: 1
+    path: Assets/Scenes/GrasslandPath.unity
+    guid: da6cc68f4e81a81409bd90010832cd14
   m_configObjects: {}
