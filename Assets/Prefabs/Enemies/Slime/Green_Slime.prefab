@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 5199615969244562870}
   - component: {fileID: 9109495179496013945}
   - component: {fileID: 5235752783972486311}
-  m_Layer: 7
+  m_Layer: 25
   m_Name: Green_Slime
   m_TagString: Enemy
   m_Icon: {fileID: 0}

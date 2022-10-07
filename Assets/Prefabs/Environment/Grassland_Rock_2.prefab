@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3190620084510829859}
   - component: {fileID: 3190620084510829788}
   - component: {fileID: 5530499799809822937}
-  m_Layer: 6
+  m_Layer: 24
   m_Name: Grassland_Rock_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 280184095566858018}
   - component: {fileID: 6059248022122631336}
   - component: {fileID: 1454605752188738185}
-  m_Layer: 11
+  m_Layer: 3
   m_Name: Expbar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 8294090956911337680}
   - component: {fileID: 5701058343995842264}
   - component: {fileID: 1884169733411698071}
-  m_Layer: 11
+  m_Layer: 3
   m_Name: KeyIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -159,7 +159,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1909798475612090509}
-  m_Layer: 11
+  m_Layer: 3
   m_Name: Abilities
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -200,7 +200,7 @@ GameObject:
   - component: {fileID: 701499084317373643}
   - component: {fileID: 2801489404312352525}
   - component: {fileID: 6491694079613706043}
-  m_Layer: 11
+  m_Layer: 3
   m_Name: KeyIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -276,7 +276,7 @@ GameObject:
   - component: {fileID: 2257202753183838175}
   - component: {fileID: 2675945221631607425}
   - component: {fileID: 3803204883947864169}
-  m_Layer: 11
+  m_Layer: 3
   m_Name: Healthbar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -355,7 +355,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damagedHPBarPrefab: {fileID: 7739757958321690035, guid: f1ad4f785d9ec174993c006d8b3cdd58, type: 3}
   hpOffset: -3
-  easeType: 0
+  easeType: 2
 --- !u!1 &5011954530241623739
 GameObject:
   m_ObjectHideFlags: 0
@@ -367,7 +367,7 @@ GameObject:
   - component: {fileID: 4192103887681317275}
   - component: {fileID: 6569635743975812822}
   - component: {fileID: 566524555145943493}
-  m_Layer: 11
+  m_Layer: 3
   m_Name: KeyIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -442,7 +442,7 @@ GameObject:
   - component: {fileID: 8229018983405324304}
   - component: {fileID: 3056113594734607529}
   - component: {fileID: 4573129885030942736}
-  m_Layer: 11
+  m_Layer: 3
   m_Name: AbilityIcon2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -518,7 +518,7 @@ GameObject:
   - component: {fileID: 5021256090552459278}
   - component: {fileID: 8938141306964640031}
   - component: {fileID: 3234709908455579396}
-  m_Layer: 11
+  m_Layer: 3
   m_Name: AbilityIcon3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -594,7 +594,7 @@ GameObject:
   - component: {fileID: 5999535017522777852}
   - component: {fileID: 7534136619096618005}
   - component: {fileID: 2308843936467751424}
-  m_Layer: 11
+  m_Layer: 3
   m_Name: PlayerIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -669,7 +669,7 @@ GameObject:
   - component: {fileID: 8759339805321900558}
   - component: {fileID: 2472719472779412607}
   - component: {fileID: 7949383925389429654}
-  m_Layer: 11
+  m_Layer: 3
   m_Name: KeyIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -744,7 +744,7 @@ GameObject:
   - component: {fileID: 5685751733852551701}
   - component: {fileID: 6991824380043804174}
   - component: {fileID: 5202298935683697488}
-  m_Layer: 11
+  m_Layer: 3
   m_Name: AbilityIcon4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -820,7 +820,7 @@ GameObject:
   - component: {fileID: 3436492129756554881}
   - component: {fileID: 7096534536598771685}
   - component: {fileID: 8583940604520193099}
-  m_Layer: 11
+  m_Layer: 3
   m_Name: AbilityIcon1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -898,7 +898,7 @@ GameObject:
   - component: {fileID: 1785904535404465904}
   - component: {fileID: 528826949811168403}
   - component: {fileID: 5144676095744548024}
-  m_Layer: 11
+  m_Layer: 3
   m_Name: PlayerUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -937,7 +937,7 @@ Canvas:
   m_GameObject: {fileID: 9149369742225633920}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 1
@@ -1039,7 +1039,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5376459809699646563, guid: 4053d470296708540a4df2b56d3422d6, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 86
+      value: 83.6
       objectReference: {fileID: 0}
     - target: {fileID: 5376459809699646563, guid: 4053d470296708540a4df2b56d3422d6, type: 3}
       propertyPath: m_SizeDelta.y
@@ -1075,7 +1075,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5376459809699646563, guid: 4053d470296708540a4df2b56d3422d6, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 5376459809699646563, guid: 4053d470296708540a4df2b56d3422d6, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1096,6 +1096,10 @@ PrefabInstance:
     - target: {fileID: 7739757958321690035, guid: 4053d470296708540a4df2b56d3422d6, type: 3}
       propertyPath: m_Name
       value: Health
+      objectReference: {fileID: 0}
+    - target: {fileID: 7739757958321690035, guid: 4053d470296708540a4df2b56d3422d6, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4053d470296708540a4df2b56d3422d6, type: 3}

@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class SceneDetails : MonoBehaviour
 {
+    private void Awake()
+    {
+        this.name += this.gameObject.scene.name;
+    }
     public MapDetails mapDetails;
 
     public Vector2 GetTopLeftBound()

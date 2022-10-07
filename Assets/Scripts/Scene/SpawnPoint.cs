@@ -41,6 +41,7 @@ namespace Spawn
             spawning = true;
 
             playerFX = InstaniateFX();
+            playerFX.layer = this.gameObject.layer;
             playerFX.GetComponent<SpawnFXScript>().ReferencePlayer(player);
             InstaniateFxCommand();
         }

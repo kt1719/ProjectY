@@ -6,6 +6,7 @@ using PlayerAnim;
 using PlayerClasses;
 using UI;
 using Mirror;
+using System.IO;
 
 namespace PlayerCore
 {
@@ -22,6 +23,7 @@ namespace PlayerCore
         SpriteRenderer spriteRenderer;
 
         public bool singlePlayer = false;
+        public string currScene;
 
         private void Awake() // Got changed from start to awake due to the swordColl script not finding the PlayerClass script. Awake means it runs earlier than start
         {
@@ -42,6 +44,17 @@ namespace PlayerCore
 
         private void Start()
         {
+            SetupVariables();
+        }
+
+        private void SetupVariables()
+        {
+            // Could add in the future to automatically input the scene they've saved at
+            if (hasAuthority)
+            {
+                ChangeSceneCommand("");
+            }
+
             if (hasAuthority || singlePlayer)
             {
                 spriteRenderer.enabled = false;
@@ -101,7 +114,52 @@ namespace PlayerCore
             movementscript.MovePlayer();
         }
 
-        public void SpawnPlayer() 
+        // Ask the server what scene am I meant to be spawned in
+        [Command]
+        public void ChangeSceneCommand(string scene)
+        {
+            if (scene == "")
+            {
+                ChangeSceneRPC(this.currScene);
+            }
+            else
+            {
+                ChangeSceneRPC(scene);
+            }
+        }
+
+        [TargetRpc]
+        public void ChangeSceneRPC(string scene)
+        {
+            if (isServer)
+            {
+                return;
+            }
+            currScene = scene;
+        }
+
+        [TargetRpc]
+        public void ChangePlayerLayer(int layerNum)
+        {
+            // Change actual layer of objects
+            List<string> layers = new List<string> { "Player", "PlayerEnv", "CombatLayer" };
+            this.gameObject.layer = LayerMask.NameToLayer(layers[0] + layerNum.ToString());
+            foreach (Transform obj in this.transform)
+            {
+                if (obj.name == "BackgroundCanvas")
+                {
+                    continue;
+                }
+                string layerName = (obj.name == "SwordColliders") ? layers[2] + layerNum.ToString() : (obj.name == "EnvironmentBody") ? layers[1] + layerNum.ToString() : layers[0] + layerNum.ToString();
+                CustomSceneManager.singleton.MoveToLayer(obj, LayerMask.NameToLayer(layerName));
+            }
+
+            // Change camera masks
+        }
+
+        //////////////////////////////////////////////////////
+
+        public void SpawnPlayerAnimation()
         {
             // This is because sprite renderers can have different behaviours on multiplayer
             spriteRenderer.enabled = true;
@@ -109,16 +167,18 @@ namespace PlayerCore
         }
 
         [ClientRpc]
-        public void SpawnPlayerRPC()
+        public void SpawnPlayerAnimationRPC()
         {
-            SpawnPlayer();
+            SpawnPlayerAnimation();
         }
 
         [Command]
-        public void SpawnPlayerCommand()
+        public void SpawnPlayerAnimationCommand()
         {
-            SpawnPlayerRPC();
+            SpawnPlayerAnimationRPC();
         }
+
+        //////////////////////////////////////////////////////
 
         [ClientRpc (includeOwner = false)]
         public void TurnOffRenderer()

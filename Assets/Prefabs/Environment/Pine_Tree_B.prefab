@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7328396752771153163}
   - component: {fileID: -8861576884740286459}
   - component: {fileID: 60535212093977820}
-  m_Layer: 6
+  m_Layer: 24
   m_Name: Pine_Tree_B
   m_TagString: Untagged
   m_Icon: {fileID: 0}

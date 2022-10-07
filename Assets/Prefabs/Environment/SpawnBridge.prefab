@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4284711168855378990}
   - component: {fileID: 1376270626104528058}
-  m_Layer: 6
+  m_Layer: 24
   m_Name: Section4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69,7 +69,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -479616131
-  m_SortingLayer: -2
+  m_SortingLayer: -6
   m_SortingOrder: 0
   m_Sprite: {fileID: -427282983072032294, guid: 800dba7d720c9a44e8ff2162c88a9c42, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -92,7 +92,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2743791169807699206}
   - component: {fileID: 6031283764434868471}
-  m_Layer: 6
+  m_Layer: 24
   m_Name: LeftPillar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,7 +149,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6043809653836627408}
   - component: {fileID: 5008804895874388473}
-  m_Layer: 6
+  m_Layer: 24
   m_Name: Section3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -208,7 +208,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -479616131
-  m_SortingLayer: -2
+  m_SortingLayer: -6
   m_SortingOrder: 0
   m_Sprite: {fileID: 6247274585842468122, guid: 800dba7d720c9a44e8ff2162c88a9c42, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -230,7 +230,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6806579652544580123}
-  m_Layer: 6
+  m_Layer: 24
   m_Name: Colliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -265,7 +265,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8572065294429952416}
   - component: {fileID: 7530291715387344565}
-  m_Layer: 6
+  m_Layer: 24
   m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -322,7 +322,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4200308600820570361}
   - component: {fileID: 265775539314196533}
-  m_Layer: 6
+  m_Layer: 24
   m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -379,7 +379,7 @@ GameObject:
   m_Component:
   - component: {fileID: 440227414121097957}
   - component: {fileID: 8525336060986533478}
-  m_Layer: 6
+  m_Layer: 24
   m_Name: Section2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -438,7 +438,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -479616131
-  m_SortingLayer: -2
+  m_SortingLayer: -6
   m_SortingOrder: 0
   m_Sprite: {fileID: 6247274585842468122, guid: 800dba7d720c9a44e8ff2162c88a9c42, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -461,7 +461,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6526323076952178619}
   - component: {fileID: 7018985803363494672}
-  m_Layer: 6
+  m_Layer: 24
   m_Name: Section5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -520,7 +520,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -479616131
-  m_SortingLayer: -2
+  m_SortingLayer: -6
   m_SortingOrder: 0
   m_Sprite: {fileID: 6247274585842468122, guid: 800dba7d720c9a44e8ff2162c88a9c42, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -543,7 +543,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4745802130351021407}
   - component: {fileID: 2358521735034769985}
-  m_Layer: 6
+  m_Layer: 24
   m_Name: Section1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -602,7 +602,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -479616131
-  m_SortingLayer: -2
+  m_SortingLayer: -6
   m_SortingOrder: 0
   m_Sprite: {fileID: 5618000101936168721, guid: 800dba7d720c9a44e8ff2162c88a9c42, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -625,7 +625,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8004305204520436505}
   - component: {fileID: 7071188848938098745}
-  m_Layer: 6
+  m_Layer: 24
   m_Name: RightPillar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -681,7 +681,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3146328873031015226}
-  m_Layer: 6
+  m_Layer: 24
   m_Name: SpawnBridge
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3543720297271651087}
   - component: {fileID: 3543720297271651086}
   - component: {fileID: 173158481405022824}
-  m_Layer: 6
+  m_Layer: 24
   m_Name: Spawn_Statue_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}

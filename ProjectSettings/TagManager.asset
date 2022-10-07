@@ -10,35 +10,35 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Player
+  - Player1
   - Water
   - UI
-  - Background
-  - Enemies
-  - WeaponColliders
   - StaticBackground
-  - PlayerEnvColl
   - PlayerUI
-  - PlayerUIBack
-  - SceneTrigger
+  - SceneChanger
   - 
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - Enemies2
+  - PlayerEnv1
+  - PlayerEnv2
+  - PlayerEnv3
+  - PlayerEnv4
+  - PlayerEnv5
+  - Player4
+  - Player3
+  - Player2
+  - Background3
+  - Background4
+  - Background5
+  - Background1
+  - CombatLayer1
+  - CombatLayer2
   - Background2
-  - Layer1
-  - 
-  - 
-  - 
+  - CombatLayer3
+  - CombatLayer4
+  - CombatLayer5
+  - Player5
   m_SortingLayers:
   - name: PlayerUI
     uniqueID: 4016743299
@@ -52,6 +52,21 @@ TagManager:
   - name: Player
     uniqueID: 324829517
     locked: 0
+  - name: Player2
+    uniqueID: 4172702277
+    locked: 0
+  - name: Player3
+    uniqueID: 969028683
+    locked: 0
+  - name: Player4
+    uniqueID: 3697180363
+    locked: 0
+  - name: Player5
+    uniqueID: 2711353657
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: 
+    uniqueID: 3905930635
     locked: 0

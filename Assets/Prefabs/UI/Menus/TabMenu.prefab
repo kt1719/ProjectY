@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.9500122, y: -1}
+  m_AnchoredPosition: {x: 1, y: -1}
   m_SizeDelta: {x: 7.0999975, y: 8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2700708972703819853
@@ -248,7 +248,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2630427080702965005
 RectTransform:
   m_ObjectHideFlags: 0
@@ -381,7 +381,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 52}
+  m_AnchoredPosition: {x: 0, y: 51.999573}
   m_SizeDelta: {x: 929.411, y: 117.150024}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5965680646065049006
@@ -431,6 +431,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4559825249671279969}
+  - component: {fileID: 5559021116621761943}
   m_Layer: 3
   m_Name: TabMenu
   m_TagString: Untagged
@@ -458,6 +459,14 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &5559021116621761943
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3331672527965805653}
+  m_CullTransparentMesh: 1
 --- !u!1 &4034125169425734671
 GameObject:
   m_ObjectHideFlags: 0
@@ -742,6 +751,10 @@ PrefabInstance:
       propertyPath: rightWire
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8545691454920498994, guid: 4fdb4b2872c112a4f8910e1dfd879ae4, type: 3}
+      propertyPath: m_Colors.m_FadeDuration
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4fdb4b2872c112a4f8910e1dfd879ae4, type: 3}
 --- !u!224 &543284247099839540 stripped
@@ -856,6 +869,10 @@ PrefabInstance:
       propertyPath: downWire
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8545691454920498994, guid: 4fdb4b2872c112a4f8910e1dfd879ae4, type: 3}
+      propertyPath: m_Colors.m_FadeDuration
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4fdb4b2872c112a4f8910e1dfd879ae4, type: 3}
 --- !u!224 &2713657074271515025 stripped
@@ -965,6 +982,10 @@ PrefabInstance:
     - target: {fileID: 6776983940056360217, guid: 4fdb4b2872c112a4f8910e1dfd879ae4, type: 3}
       propertyPath: upWire
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8545691454920498994, guid: 4fdb4b2872c112a4f8910e1dfd879ae4, type: 3}
+      propertyPath: m_Colors.m_FadeDuration
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4fdb4b2872c112a4f8910e1dfd879ae4, type: 3}
@@ -1084,6 +1105,10 @@ PrefabInstance:
       propertyPath: leftWire
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8545691454920498994, guid: 4fdb4b2872c112a4f8910e1dfd879ae4, type: 3}
+      propertyPath: m_Colors.m_FadeDuration
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4fdb4b2872c112a4f8910e1dfd879ae4, type: 3}
 --- !u!224 &4347195271357097144 stripped
@@ -1193,6 +1218,10 @@ PrefabInstance:
     - target: {fileID: 6776983940056360217, guid: 4fdb4b2872c112a4f8910e1dfd879ae4, type: 3}
       propertyPath: rightWire
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8545691454920498994, guid: 4fdb4b2872c112a4f8910e1dfd879ae4, type: 3}
+      propertyPath: m_Colors.m_FadeDuration
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4fdb4b2872c112a4f8910e1dfd879ae4, type: 3}
@@ -1410,6 +1439,10 @@ PrefabInstance:
       propertyPath: downWire
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8545691454920498994, guid: 4fdb4b2872c112a4f8910e1dfd879ae4, type: 3}
+      propertyPath: m_Colors.m_FadeDuration
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4fdb4b2872c112a4f8910e1dfd879ae4, type: 3}
 --- !u!224 &7496784052309681107 stripped
@@ -1519,6 +1552,10 @@ PrefabInstance:
     - target: {fileID: 6776983940056360217, guid: 4fdb4b2872c112a4f8910e1dfd879ae4, type: 3}
       propertyPath: upWire
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8545691454920498994, guid: 4fdb4b2872c112a4f8910e1dfd879ae4, type: 3}
+      propertyPath: m_Colors.m_FadeDuration
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4fdb4b2872c112a4f8910e1dfd879ae4, type: 3}
@@ -1638,6 +1675,10 @@ PrefabInstance:
       propertyPath: rightWire
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8545691454920498994, guid: 4fdb4b2872c112a4f8910e1dfd879ae4, type: 3}
+      propertyPath: m_Colors.m_FadeDuration
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4fdb4b2872c112a4f8910e1dfd879ae4, type: 3}
 --- !u!224 &8506478107575233076 stripped
@@ -1748,6 +1789,10 @@ PrefabInstance:
       propertyPath: leftWire
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8545691454920498994, guid: 4fdb4b2872c112a4f8910e1dfd879ae4, type: 3}
+      propertyPath: m_Colors.m_FadeDuration
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4fdb4b2872c112a4f8910e1dfd879ae4, type: 3}
 --- !u!224 &8176932344981544198 stripped
@@ -1857,6 +1902,10 @@ PrefabInstance:
     - target: {fileID: 6776983940056360217, guid: 4fdb4b2872c112a4f8910e1dfd879ae4, type: 3}
       propertyPath: leftWire
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8545691454920498994, guid: 4fdb4b2872c112a4f8910e1dfd879ae4, type: 3}
+      propertyPath: m_Colors.m_FadeDuration
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4fdb4b2872c112a4f8910e1dfd879ae4, type: 3}
