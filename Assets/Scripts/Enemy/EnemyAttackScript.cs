@@ -57,7 +57,8 @@ namespace EnemyClass
 
         public virtual Collider2D PlayerAttackable()
         {
-            LayerMask mask = LayerMask.GetMask("Player");
+            string layerName = LayerMask.LayerToName(this.transform.root.gameObject.layer);
+            LayerMask mask = LayerMask.GetMask("Player" + layerName[layerName.Length-1]);
             Collider2D player = Physics2D.OverlapCircle(this.transform.position + new Vector3(0, centerYOffset, 0), attackRadius, mask.value);
             return player;
         }

@@ -18,6 +18,7 @@ namespace PlayerCore
         PlayerAnimation animationScript;
 
         Camera[] cameras;
+        Camera mainCam;
         GameObject gameOverlay;
 
         SpriteRenderer spriteRenderer;
@@ -38,6 +39,7 @@ namespace PlayerCore
             abilityscript.initialize(playerClass); // Pass in the data class into the ability class
 
             cameras = GetComponentsInChildren<Camera>();
+            mainCam = this.transform.Find("Main Camera").GetComponent<Camera>();
 
             gameOverlay = this.transform.GetChild(2).gameObject; // The index of the heirarchy in the prefab matters
         }
@@ -131,18 +133,21 @@ namespace PlayerCore
         [TargetRpc]
         public void ChangeSceneRPC(string scene)
         {
-            if (isServer)
-            {
-                return;
-            }
             currScene = scene;
         }
 
-        [TargetRpc]
+        [Command]
         public void ChangePlayerLayer(int layerNum)
+        {
+            ChangePlayerLayerRPC(layerNum);
+        }
+
+        [ClientRpc]
+        public void ChangePlayerLayerRPC(int layerNum)
         {
             // Change actual layer of objects
             List<string> layers = new List<string> { "Player", "PlayerEnv", "CombatLayer" };
+            List<string> cameraMaskLayers = new List<string> { "Player", "CombatLayer", "Background" };
             this.gameObject.layer = LayerMask.NameToLayer(layers[0] + layerNum.ToString());
             foreach (Transform obj in this.transform)
             {
@@ -154,7 +159,17 @@ namespace PlayerCore
                 CustomSceneManager.singleton.MoveToLayer(obj, LayerMask.NameToLayer(layerName));
             }
 
-            // Change camera masks
+            if (!this.hasAuthority) { return; }
+
+            // Reset camera culling mask
+            mainCam.cullingMask = 0;
+            // Change camera culling mask
+            foreach (string s in cameraMaskLayers)
+            {
+                string maskName = s + layerNum.ToString();
+                // https://answers.unity.com/questions/348974/edit-camera-culling-mask.html
+                mainCam.cullingMask |= (1 << LayerMask.NameToLayer(maskName));
+            }
         }
 
         //////////////////////////////////////////////////////

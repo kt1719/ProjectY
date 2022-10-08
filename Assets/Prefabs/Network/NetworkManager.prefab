@@ -51,7 +51,7 @@ MonoBehaviour:
   dontDestroyOnLoad: 1
   runInBackground: 1
   autoStartServerBuild: 1
-  serverTickRate: 30
+  serverTickRate: 60
   offlineScene: 
   onlineScene: Assets/Scenes/MainOverworld.unity
   transport: {fileID: 5942119925091160493}
@@ -62,7 +62,9 @@ MonoBehaviour:
   autoCreatePlayer: 1
   playerSpawnMethod: 0
   spawnPrefabs:
+  - {fileID: 1684419025678379193, guid: ed10733e0e5cf44429d1229360886eb4, type: 3}
   - {fileID: 2612599189308284357, guid: a4c908b40dd8d8c4d8fd9b1bde73e9d8, type: 3}
+  - {fileID: 6322315417785292087, guid: 55c4993d04bada34097f8011bdda54dc, type: 3}
   mainMenuScene: MainMenu
   multiplayerScene: Multiplayer
 --- !u!114 &5942119925091160493
@@ -152,5 +154,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6442dc8070ceb41f094e44de0bf87274, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offsetX: 0
+  offsetX: 1668
   offsetY: 0

@@ -66,7 +66,7 @@ namespace Spawn
             }
             GameObject res = Instantiate(spawnFXObject, transform);
             res.transform.SetParent(fxSpawnLocation.transform);
-            res.layer = 6;
+            res.layer = this.transform.root.gameObject.layer;
             res.transform.localPosition = new Vector3(0, 0, 0);
             return res;
         }

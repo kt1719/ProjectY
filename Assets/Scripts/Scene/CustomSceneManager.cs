@@ -18,7 +18,7 @@ public class CustomSceneManager : NetworkBehaviour
 
     public int GetAvailableLayers()
     {
-        return 3;
+        return 2;
     }
 
     public void MoveToLayer(Transform root, int layer)

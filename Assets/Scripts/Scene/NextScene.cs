@@ -9,15 +9,16 @@ using System.IO;
 public class NextScene : NetworkBehaviour
 {
     public int nextScene;
+    int intCurrentAvailableLayer;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject player = collision.transform.root.gameObject;
         NetworkBehaviour playerNetworkBehaviour = player.GetComponent<NetworkBehaviour>();
         PlayerController playerController = player.GetComponent<PlayerController>();
-        int layerNumber = CustomSceneManager.singleton.GetAvailableLayers();
+        intCurrentAvailableLayer = CustomSceneManager.singleton.GetAvailableLayers();
         // Check if they are on the same scene as this layer can interact with all Player layers
-        if (playerController.currScene != this.gameObject.scene.name || layerNumber == -1)
+        if (playerController.currScene != this.gameObject.scene.name || intCurrentAvailableLayer == -1)
         {
             return;
         }
@@ -25,21 +26,23 @@ public class NextScene : NetworkBehaviour
         {
             if (playerNetworkBehaviour.isClient)
             {
-                Debug.Log("command rpc");
-                // This is to update the current scene the player controller is in as a reference for the player
                 string sceneName = Path.GetFileNameWithoutExtension(SceneUtility.GetScenePathByBuildIndex(nextScene));
-                playerController.ChangeSceneCommand(sceneName);
-                Debug.Log("curr scene is now " + playerController.currScene);
                 // This is to actually load the scene
-                ChangeScene(nextScene);
+                ChangeScene(nextScene, intCurrentAvailableLayer);
 
                 //////////////////////////////////////
+                playerController.ChangeSceneCommand(sceneName);
                 // Change Player Layer
-                List<string> layers = new List<string> { "Player", "PlayerEnv", "Background", "CombatLayer" };
-                playerController.ChangePlayerLayer(layerNumber);
-                ChangeObjectLayer(layerNumber, sceneName);
+                playerController.ChangePlayerLayer(intCurrentAvailableLayer);
             }
         }
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        string sceneName = Path.GetFileNameWithoutExtension(scene.name);
+        ChangeObjectLayer(intCurrentAvailableLayer, sceneName);
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private static void ChangeObjectLayer(int layerNumber, string sceneName)
@@ -50,33 +53,38 @@ public class NextScene : NetworkBehaviour
         List<string> layers = new List<string> { "Background", "CombatLayer" };
         foreach (GameObject obj in gameObjects)
         {
-            string layerName = (obj.name == "Enemies") ? layers[0] + layerNumber.ToString() : layers[1] + layerNumber.ToString();
+            string layerName = (obj.name != "Enemies") ? layers[0] + layerNumber.ToString() : layers[1] + layerNumber.ToString();
             CustomSceneManager.singleton.MoveToLayer(obj.transform, LayerMask.NameToLayer(layerName));
         }
     }
 
     [Command(requiresAuthority = false)]
-    void ChangeScene(int n)
+    void ChangeScene(int n, int currAvailableLayer)
     {
+        intCurrentAvailableLayer = currAvailableLayer;
         SceneManager.LoadScene(n, LoadSceneMode.Additive);
-        NetworkServer.SpawnObjects();
+        string sceneName = Path.GetFileNameWithoutExtension(SceneUtility.GetScenePathByBuildIndex(n));
+        ChangeObjectLayer(intCurrentAvailableLayer, sceneName);
+        // NetworkServer.SpawnObjects();
 
         // Check what layer could be used (should never be none)
         // Loop through all the gameobjects of the scene (and it's children) and change the layers of the gameobjects to use the layer mappings
         // Send TargetRPC connection to change the camera mask to only see new layer
         // Change player layer so it can only interact with new gameobject
 
-        ChangeSceneRPC(n);
+        ChangeSceneRPC(n, currAvailableLayer);
     }
 
     [ClientRpc]
-    void ChangeSceneRPC(int n)
+    void ChangeSceneRPC(int n, int currAvailableLayer)
     {
+        Debug.Log("RPC sent");
         if (isServer)
         {
             return;
         }
+        intCurrentAvailableLayer = currAvailableLayer;
+        SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.LoadScene(n, LoadSceneMode.Additive);
-        Destroy(this.gameObject);
     }
 }
