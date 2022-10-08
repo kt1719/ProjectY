@@ -9,16 +9,13 @@ public class PlayerUI : MonoBehaviour
     public LeanTweenType easeType;
     private void Awake()
     {
-        healthBar = this.transform.Find("Healthbar").GetComponent<HealthBar>();
+        healthBar = this.transform.GetChild(0).Find("Healthbar").GetComponent<HealthBar>();
     }
 
     public void DamageHPUI (int n)
     {
+        LeanTween.moveX(this.transform.GetChild(0).gameObject, this.transform.GetChild(0).transform.position.x + 10f, duration).setLoopPingPong(2).setEase(easeType);
         healthBar.DamageHP(n);
         // Animate shake
-        foreach (Transform child in transform)
-        {
-            LeanTween.moveX(child.gameObject, child.transform.position.x + 10f, duration).setLoopPingPong(2).setEase(easeType);
-        }
     }
 }

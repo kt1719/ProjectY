@@ -49,35 +49,6 @@ namespace PlayerCore
             SetupVariables();
         }
 
-        private void SetupVariables()
-        {
-            // Could add in the future to automatically input the scene they've saved at
-            if (hasAuthority)
-            {
-                ChangeSceneCommand("");
-            }
-
-            if (hasAuthority || singlePlayer)
-            {
-                spriteRenderer.enabled = false;
-                FreezeCharacter();
-            }
-            else
-            {
-                // Skips the player setup animations
-                animationScript.SetPlayerNonLocal();
-                foreach (Transform child in transform)
-                {
-                    // Set all child gameobjects of 
-                    if (child.name == "SwordColliders" || child.name == "EnvironmentBody")
-                    {
-                        continue;
-                    }
-                    child.gameObject.SetActive(false);
-                }
-            }
-        }
-
         // Update is called once per frame
         void Update()
         {
@@ -114,6 +85,35 @@ namespace PlayerCore
             }
             // Moved to fixed update. Better for rigidbodies + colliders etc
             movementscript.MovePlayer();
+        }
+
+        private void SetupVariables()
+        {
+            // Could add in the future to automatically input the scene they've saved at
+            if (hasAuthority)
+            {
+                ChangeSceneCommand("");
+            }
+
+            if (hasAuthority || singlePlayer)
+            {
+                spriteRenderer.enabled = false;
+                FreezeCharacter();
+            }
+            else
+            {
+                // Skips the player setup animations
+                animationScript.SetPlayerNonLocal();
+                foreach (Transform child in transform)
+                {
+                    // Set all child gameobjects of 
+                    if (child.name == "SwordColliders" || child.name == "EnvironmentBody")
+                    {
+                        continue;
+                    }
+                    child.gameObject.SetActive(false);
+                }
+            }
         }
 
         // Ask the server what scene am I meant to be spawned in

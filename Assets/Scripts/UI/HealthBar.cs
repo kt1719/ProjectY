@@ -1,6 +1,7 @@
 using PlayerClasses;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -34,21 +35,22 @@ public class HealthBar : MonoBehaviour
         // Create two healthbars from the previous one
         healthBar2 = GenerateNewHealthBars(n);
         // Animate second healthbar using code
-        SecondHPBarAnimation();
+        SecondHPBarAnimation(healthBar2);
+        //SecondHPBarAnimation();
     }
 
-    private void SecondHPBarAnimation()
+    private void SecondHPBarAnimation(GameObject healthBar)
     {
-        LeanTween.move(healthBar2, healthBar2.transform.position + new Vector3(-5f, 20f), 0.56f).setEase(easeType);
-        Color toColor = healthBar2.GetComponent<Image>().color;
+        LeanTween.move(healthBar, healthBar.transform.position + new Vector3(-5f, 20f), 0.56f).setEase(easeType);
+        Color toColor = healthBar.GetComponent<Image>().color;
         toColor.a = 0;
-        LeanTween.value(healthBar2.gameObject, setColorCallback, healthBar2.GetComponent<Image>().color, toColor, .28f)
+        LeanTween.value(healthBar.gameObject, setColorCallback, healthBar.GetComponent<Image>().color, toColor, .28f)
             .setDelay(0.32f)
             .setOnComplete(DestroyMe);
 
         void DestroyMe()
         {
-            Destroy(healthBar2);
+            Destroy(healthBar);
         }
     }
 
@@ -75,7 +77,6 @@ public class HealthBar : MonoBehaviour
         healthBar2.transform.SetParent(this.transform);
         healthBar2.GetComponent<RectTransform>().anchoredPosition = new Vector2(newPos + hpOffset, rectTransform.anchoredPosition.y);
         healthBar2.GetComponent<RectTransform>().sizeDelta = new Vector2(rectTransform.sizeDelta.x - newPos - hpOffset, rectTransform.sizeDelta.y);
-
         // Delete original healthbar and healthbar2 and replace with healthbar1
         UpdatePrevVars(healthBar1);
         return healthBar2;

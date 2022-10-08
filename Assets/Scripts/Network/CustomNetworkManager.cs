@@ -46,9 +46,8 @@ namespace Network
 
         public override void OnStartServer()
         {
+            // Most likely add the scene thing here?
             base.OnStartServer();
-
-
         }
     }
 
