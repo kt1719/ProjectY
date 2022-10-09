@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 using Spawn;
 using PlayerCore;
 using System.IO;
+using System.Linq;
 
 namespace Network
 {
@@ -28,7 +29,7 @@ namespace Network
         public override void OnServerAddPlayer(NetworkConnectionToClient conn)
         {
             // Implement logic here for custom instantiation
-            SpawnPoint spawnPointScript = GameObject.Find("Spawn_Point").GetComponent<SpawnPoint>();
+            SpawnPoint spawnPointScript = SceneManager.GetActiveScene().GetRootGameObjects().Where(x => x.name == "Spawn_Point").ToArray()[0].GetComponent<SpawnPoint>();
             GameObject player = Instantiate(playerPrefab);
 
             player.transform.position = spawnPointScript.ReturnCenterPos();
@@ -41,13 +42,13 @@ namespace Network
             // => appending the connectionId is WAY more useful for debugging!
             player.name = $"{playerPrefab.name} [connId={conn.connectionId}]";
             NetworkServer.AddPlayerForConnection(conn, player);
-            player.GetComponent<PlayerController>().TurnOffRenderer();
         }
 
         public override void OnStartServer()
         {
             // Most likely add the scene thing here?
             base.OnStartServer();
+            Debug.Log("Start server");
         }
     }
 

@@ -704,6 +704,7 @@ MonoBehaviour:
   syncInterval: 0.1
   singlePlayer: 0
   currScene: 
+  spawned: 0
 --- !u!114 &1979913598963679832
 MonoBehaviour:
   m_ObjectHideFlags: 0

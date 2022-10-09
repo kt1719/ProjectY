@@ -7,6 +7,9 @@ using PlayerClasses;
 using UI;
 using Mirror;
 using System.IO;
+using Spawn;
+using UnityEngine.SceneManagement;
+using System.Linq;
 
 namespace PlayerCore
 {
@@ -25,6 +28,8 @@ namespace PlayerCore
 
         public bool singlePlayer = false;
         public string currScene;
+        [SyncVar]
+        public bool spawned = false;
 
         private void Awake() // Got changed from start to awake due to the swordColl script not finding the PlayerClass script. Awake means it runs earlier than start
         {
@@ -90,15 +95,14 @@ namespace PlayerCore
         private void SetupVariables()
         {
             // Could add in the future to automatically input the scene they've saved at
-            if (hasAuthority)
-            {
-                ChangeSceneCommand("");
-            }
-
-            if (hasAuthority || singlePlayer)
+            if (!spawned)
             {
                 spriteRenderer.enabled = false;
                 FreezeCharacter();
+            }
+            if (hasAuthority)
+            {
+                ChangeSceneCommand("");
             }
             else
             {
@@ -113,6 +117,13 @@ namespace PlayerCore
                     }
                     child.gameObject.SetActive(false);
                 }
+            }
+
+            if (NetworkClient.localPlayer.netId != this.netId)
+            {
+                GameObject spawnPoint = SceneManager.GetActiveScene().GetRootGameObjects().Where(x => x.name == "Spawn_Point").ToArray()[0]; // Find spawnpoint gameobject
+                SpawnPoint spawnPointScript = spawnPoint.GetComponent<SpawnPoint>();
+                spawnPointScript.playerSpawnQueue.Enqueue(this.gameObject);
             }
         }
 
@@ -179,6 +190,16 @@ namespace PlayerCore
             // This is because sprite renderers can have different behaviours on multiplayer
             spriteRenderer.enabled = true;
             animationScript.SpawnPlayer();
+            if (hasAuthority)
+            {
+                UpdateSpawnedServer();
+            }
+        }
+
+        [Command]
+        public void UpdateSpawnedServer()
+        {
+            spawned = true;
         }
 
         [ClientRpc]
@@ -194,12 +215,6 @@ namespace PlayerCore
         }
 
         //////////////////////////////////////////////////////
-
-        [ClientRpc (includeOwner = false)]
-        public void TurnOffRenderer()
-        {
-            spriteRenderer.enabled = false;
-        }
 
         public void FreezeCharacter()
         {

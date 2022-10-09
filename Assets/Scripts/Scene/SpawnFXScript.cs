@@ -20,7 +20,7 @@ namespace FX
             {
                 return;
             }
-            player.GetComponent<PlayerController>().SpawnPlayerAnimationCommand();
+            player.GetComponent<PlayerController>().SpawnPlayerAnimation();
         }
 
         public void Destroy()
