@@ -18,7 +18,7 @@ public class NextScene : NetworkBehaviour
         PlayerController playerController = player.GetComponent<PlayerController>();
         currentAvailableLayer = CustomSceneManager.singleton.GetAvailableLayers();
         // Check if they are on the same scene as this layer can interact with all Player layers
-        if (playerController.currScene != this.gameObject.scene.name || currentAvailableLayer == -1)
+        if (playerController.currScene != this.gameObject.scene.buildIndex || currentAvailableLayer == -1)
         {
             return;
         }
@@ -28,7 +28,8 @@ public class NextScene : NetworkBehaviour
             // This is to actually load the scene
             CustomSceneManager.singleton.ServerChangeSceneV2(sceneName, currentAvailableLayer);
             //////////////////////////////////////
-            playerController.ChangeSceneCommand(sceneName);
+            playerController.ChangeSceneCommand(nextScene);
+            playerController.UpdateScenePosition(nextScene);
             playerController.ChangePlayerLayer(currentAvailableLayer);
         }
     }

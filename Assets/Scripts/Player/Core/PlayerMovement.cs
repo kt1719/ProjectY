@@ -4,6 +4,8 @@ using UnityEngine;
 using Mirror;
 using PlayerAnim;
 using PlayerClasses;
+using UnityEngine.SceneManagement;
+using System;
 
 namespace PlayerCore
 {
@@ -30,8 +32,8 @@ namespace PlayerCore
         private Rigidbody2D rigidInstance;
         private SpriteRenderer rendererInstance;
         private Warrior warriorScript;
+        private bool transitioningScene;
 
-        private int pixelsPerUnit;
         enum States
         {
             NoMovement,
@@ -45,7 +47,29 @@ namespace PlayerCore
             animatorScript = GetComponent<PlayerAnimation>();
             rendererInstance = GetComponent<SpriteRenderer>();
             warriorScript = GetComponent<Warrior>();
-            pixelsPerUnit = (int)GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
+        }
+
+        private void Start()
+        {
+            SceneManager.sceneLoaded += SceneTransitionChange;
+        }
+
+        private void SceneTransitionChange(Scene arg0, LoadSceneMode arg1)
+        {
+            if (transitioningScene)
+            {
+                PlayerController playerControllerScript = this.transform.root.GetComponent<PlayerController>();
+                SceneDetails sceneDetail = GameObject.Find("SceneDetails" + playerControllerScript.currScene.ToString()).GetComponent<SceneDetails>();
+                Vector2 pos = sceneDetail.FindSceneTransitionPosition(playerControllerScript.prevScene);
+                Debug.Log("Changing position");
+                this.transform.position = pos;
+                transitioningScene = false;
+            }
+        }
+
+        public void SetSceneTransitioning()
+        {
+            transitioningScene = true;
         }
 
         public void MovePlayer()

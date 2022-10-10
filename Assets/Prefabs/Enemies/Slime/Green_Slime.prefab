@@ -187,7 +187,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   stats: {fileID: 11400000, guid: 185af526318b34645bb199268049b5b7, type: 2}
-  centerYOffset: 0
+  centerYOffset: 0.14
 --- !u!114 &5818598135405394203
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -24,12 +24,14 @@ namespace PlayerCam
 
         private void KeepCameraInBounds()
         {
-            if (player.GetComponent<PlayerController>().currScene == "")
+            if (player.GetComponent<PlayerController>().currScene == 0)
             {
+                // For non local player gameobjects
                 return;
             }
             else if (sceneDetail == null)
             {
+                // Should be changed
                 UpdateCameraBounds();
             }
             Vector3 offset1 = this.cam.ScreenToWorldPoint(new Vector2(0, 0));
@@ -45,7 +47,7 @@ namespace PlayerCam
 
         public void UpdateCameraBounds()
         {
-            sceneDetail = GameObject.Find("/SceneDetails" + player.GetComponent<PlayerController>().currScene).GetComponent<SceneDetails>();
+            sceneDetail = GameObject.Find("SceneDetails" + player.GetComponent<PlayerController>().currScene.ToString()).GetComponent<SceneDetails>();
         }
     }
 }

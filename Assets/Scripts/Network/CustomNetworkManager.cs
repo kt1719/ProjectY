@@ -36,7 +36,7 @@ namespace Network
             player.transform.rotation = Quaternion.identity;
 
             // Could add in the future to automatically input the scene they've saved at
-            player.GetComponent<PlayerController>().currScene = Path.GetFileNameWithoutExtension(this.onlineScene);
+            player.GetComponent<PlayerController>().currScene = SceneUtility.GetBuildIndexByScenePath(this.onlineScene);
 
             // instantiating a "Player" prefab gives it the name "Player(clone)"
             // => appending the connectionId is WAY more useful for debugging!

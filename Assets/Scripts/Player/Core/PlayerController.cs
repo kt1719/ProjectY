@@ -27,7 +27,8 @@ namespace PlayerCore
         SpriteRenderer spriteRenderer;
 
         public bool singlePlayer = false;
-        public string currScene;
+        public int currScene = -1;
+        public int prevScene = -1;
         [SyncVar]
         public bool spawned = false;
 
@@ -92,6 +93,11 @@ namespace PlayerCore
             movementscript.MovePlayer();
         }
 
+        public void UpdateScenePosition(int nextScene)
+        {
+            movementscript.SetSceneTransitioning();
+        }
+
         private void SetupVariables()
         {
             // Could add in the future to automatically input the scene they've saved at
@@ -102,7 +108,7 @@ namespace PlayerCore
             }
             if (hasAuthority)
             {
-                ChangeSceneCommand("");
+                ChangeSceneCommand(-1);
             }
             else
             {
@@ -129,9 +135,9 @@ namespace PlayerCore
 
         // Ask the server what scene am I meant to be spawned in
         [Command]
-        public void ChangeSceneCommand(string scene)
+        public void ChangeSceneCommand(int scene)
         {
-            if (scene == "")
+            if (scene == -1)
             {
                 ChangeSceneRPC(this.currScene);
             }
@@ -142,8 +148,9 @@ namespace PlayerCore
         }
 
         [TargetRpc]
-        public void ChangeSceneRPC(string scene)
+        public void ChangeSceneRPC(int scene)
         {
+            prevScene = currScene;
             currScene = scene;
         }
 

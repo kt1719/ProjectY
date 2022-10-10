@@ -78,7 +78,13 @@ namespace EnemyClass
 
         public void Agression()
         {
-            if (target != null || IsInvoking("UpdatePath"))
+            if (target == null && IsInvoking("UpdatePath"))
+            {
+                // If the player disconnects
+                StopAI();
+                return;
+            }
+            else if (target != null)
             {
                 Vector2 nearestPoint = target.GetComponent<Collider2D>().bounds.ClosestPoint(GetCenterPoint());
                 float distanceFromPlayerBounds = (nearestPoint - GetCenterPoint()).magnitude;
@@ -120,7 +126,9 @@ namespace EnemyClass
 
             foreach (Collider2D collider in colliders)
             {
-                if (collider.gameObject.tag == "Player")
+                string playerLayer = LayerMask.LayerToName(collider.gameObject.layer);
+                string enemyLayer = LayerMask.LayerToName(this.gameObject.layer);
+                if (collider.gameObject.tag == "Player" && playerLayer[playerLayer.Length-1] == enemyLayer[enemyLayer.Length-1])
                 {
                     float dist = (GetCenterPoint() - AsVector2(collider.transform.position)).magnitude;
                     if (dist > attackRadius || dist >= distanceToPlayer)

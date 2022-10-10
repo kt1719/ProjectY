@@ -15,7 +15,6 @@ namespace Spawn
         public bool localPlayerSpawned = false;
         private int playersSpawning;
         private bool spawning = false;
-        private bool startSpawn = false;
         public bool sendSpawnMessage = false;
         public GameObject spawnFXObject;
         public GameObject fxSpawnLocation;
@@ -40,7 +39,6 @@ namespace Spawn
             if (playerSpawnQueue.Count != 0 || !localPlayerSpawned)
             {
                 StartCoroutine(SpawnFX());
-                startSpawn = false;
             }
         }
 
