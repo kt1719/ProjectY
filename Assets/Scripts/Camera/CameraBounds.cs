@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using PlayerCore;
+using UnityEngine.SceneManagement;
+using System;
 
 namespace PlayerCam
 {
@@ -15,6 +17,7 @@ namespace PlayerCam
         {
             player = this.transform.root.gameObject;
             cam = this.GetComponent<Camera>();
+            UpdateCameraBounds(new Scene(), LoadSceneMode.Single);
         }
 
         private void Update()
@@ -29,11 +32,6 @@ namespace PlayerCam
                 // For non local player gameobjects
                 return;
             }
-            else if (sceneDetail == null)
-            {
-                // Should be changed
-                UpdateCameraBounds();
-            }
             Vector3 offset1 = this.cam.ScreenToWorldPoint(new Vector2(0, 0));
             Vector3 offset2 = this.cam.ScreenToWorldPoint(new Vector2((this.cam.pixelWidth / 2), (this.cam.pixelHeight / 2))) - offset1;
             float min_x = sceneDetail.GetTopLeftBound().x + offset2.x;
@@ -45,9 +43,20 @@ namespace PlayerCam
             this.transform.position = new Vector3(x_val, y_val, this.transform.position.z);
         }
 
-        public void UpdateCameraBounds()
+        public void QueueUpdateCameraBounds()
         {
-            sceneDetail = GameObject.Find("SceneDetails" + player.GetComponent<PlayerController>().currScene.ToString()).GetComponent<SceneDetails>();
+            SceneManager.sceneLoaded += UpdateCameraBounds;
+        }
+
+        public void UpdateCameraBounds(Scene arg0, LoadSceneMode arg1)
+        {
+            int currentScene = player.GetComponent<PlayerController>().currScene;
+            if (currentScene == 0)
+            {
+                currentScene = 1;
+            }
+            sceneDetail = GameObject.Find("SceneDetails" + currentScene.ToString()).GetComponent<SceneDetails>();
+            SceneManager.sceneLoaded -= UpdateCameraBounds;
         }
     }
 }

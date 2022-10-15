@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ad78e2512645bc546bb8ffceedea8c6f, type: 3}
-  m_Name: SpawnPoint
+  m_Name: Test
   m_EditorClassIdentifier: 
-  topLeft: {x: -0.25, y: 35}
-  bottomRight: {x: 15, y: -15.75}
+  topLeft: {x: -30, y: 30}
+  bottomRight: {x: 30, y: -30}
   sceneTransitionMapping:
   - sceneId: 1
     position: {x: 0.5, y: -7}

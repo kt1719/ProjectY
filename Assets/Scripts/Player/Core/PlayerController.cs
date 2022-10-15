@@ -10,6 +10,8 @@ using System.IO;
 using Spawn;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using Network;
+using PlayerCam;
 
 namespace PlayerCore
 {
@@ -29,6 +31,8 @@ namespace PlayerCore
         public bool singlePlayer = false;
         public int currScene = -1;
         public int prevScene = -1;
+        [SyncVar]
+        public int currentLayerNumber = 1;
         [SyncVar]
         public bool spawned = false;
 
@@ -104,6 +108,9 @@ namespace PlayerCore
             if (hasAuthority)
             {
                 ChangeSceneCommand(-1);
+
+                // TODO: Have to check what layer the scene is
+                currentLayerNumber = CustomNetworkManager.singleton.GetComponent<CustomNetworkManager>().defaultLayerIndex;
             }
             else
             {
@@ -118,6 +125,7 @@ namespace PlayerCore
                     }
                     child.gameObject.SetActive(false);
                 }
+                ChangePlayerLayerLocal(currentLayerNumber);
             }
 
             if (NetworkClient.localPlayer.netId != this.netId)
@@ -160,6 +168,7 @@ namespace PlayerCore
         public void ChangePlayerLayerCommand(int layerNum, bool includeOwner)
         {
             ChangePlayerLayerRPC(layerNum, includeOwner);
+            currentLayerNumber = layerNum;
         }
 
         [ClientRpc]
@@ -206,7 +215,7 @@ namespace PlayerCore
                         continue;
                     }
                     string layerName = (obj.name == "SwordColliders") ? layers[2] + layerNum.ToString() : (obj.name == "EnvironmentBody") ? layers[1] + layerNum.ToString() : layers[0] + layerNum.ToString();
-                    CustomSceneManager.singleton.MoveToLayer(obj, LayerMask.NameToLayer(layerName));
+                    CustomSceneManager.MoveToLayer(obj, LayerMask.NameToLayer(layerName));
                 }
 
                 return cameraMaskLayers;
@@ -222,6 +231,19 @@ namespace PlayerCore
             else
             {
                 movementscript.UpdateScenePosition();
+            }
+        }
+
+        public void UpdateCameraBounds(bool sceneLoaded)
+        {
+            if (sceneLoaded)
+            {
+                mainCam.GetComponent<CameraBounds>().UpdateCameraBounds(new Scene(), LoadSceneMode.Single);
+            }
+            else
+            {
+                // For cases in which the scene has not yet been loaded
+                mainCam.GetComponent<CameraBounds>().QueueUpdateCameraBounds();
             }
         }
 

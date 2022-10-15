@@ -46,12 +46,14 @@ public class NextScene : NetworkBehaviour
 
                 playerController.ChangePlayerLayerCommand(currentAvailableLayer, true);
                 playerController.UpdatePlayerScenePosition(true);
+                playerController.UpdateCameraBounds(false);
             }
             else
             {
                 playerController.ChangePlayerLayerLocal(currentAvailableLayer);
                 playerController.ChangePlayerLayerCommand(currentAvailableLayer, false);
                 playerController.UpdatePlayerScenePosition(false);
+                playerController.UpdateCameraBounds(true);
                 // Increment scene player count and move on
             }
         }

@@ -23,6 +23,7 @@ namespace Network
         public string multiplayerScene;
 
         public int defaultSceneIndex = 1;
+        public int defaultLayerIndex = 1;
 
         public void StartGame(string SceneName)
         {

@@ -100,7 +100,7 @@ public class CustomSceneManager : NetworkBehaviour
         }
     }
 
-    public void MoveToLayer(Transform root, int layer)
+    public static void MoveToLayer(Transform root, int layer)
     {
         root.gameObject.layer = layer;
         foreach (Transform child in root)
