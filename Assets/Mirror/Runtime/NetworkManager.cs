@@ -5,6 +5,7 @@ using kcp2k;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
+using System.IO;
 
 namespace Mirror
 {
@@ -120,7 +121,7 @@ namespace Mirror
         //    connected yet (no need to connect it before server was fully set up).
         //    in other words, we need this to know which mode we are running in
         //    during FinishLoadScene.
-        public NetworkManagerMode mode { get; private set; }
+        public NetworkManagerMode mode { get; protected set; }
 
         // virtual so that inheriting classes' OnValidate() can call base.OnValidate() too
         public virtual void OnValidate()
@@ -220,7 +221,7 @@ namespace Mirror
         }
 
         // keep the online scene change check in a separate function
-        bool IsServerOnlineSceneChangeNeeded()
+        protected bool IsServerOnlineSceneChangeNeeded()
         {
             // Only change scene if the requested online scene is not blank, and is not already loaded
             return !string.IsNullOrWhiteSpace(onlineScene) && !IsSceneActive(onlineScene) && onlineScene != offlineScene;
@@ -436,7 +437,7 @@ namespace Mirror
         }
 
         // This may be set true in StartHost and is evaluated in FinishStartHost
-        bool finishStartHostPending;
+        protected bool finishStartHostPending;
 
         // FinishStartHost is guaranteed to be called after the host server was
         // fully started and all the asynchronous StartHost magic is finished
@@ -444,8 +445,9 @@ namespace Mirror
         //
         // note: we don't really need FinishStartClient/FinishStartServer. the
         //       host version is enough.
-        void FinishStartHost()
+        protected void FinishStartHost()
         {
+            Debug.Log("Finish start host");
             // ConnectHost needs to be called BEFORE SpawnObjects:
             // https://github.com/vis2k/Mirror/pull/1249/
             // -> this sets NetworkServer.localConnection.
@@ -647,7 +649,7 @@ namespace Mirror
 #endif
         }
 
-        bool InitializeSingleton()
+        protected bool InitializeSingleton()
         {
             if (singleton != null && singleton == this)
                 return true;
@@ -1125,13 +1127,13 @@ namespace Mirror
             OnServerConnect(conn);
         }
 
-        void OnServerReadyMessageInternal(NetworkConnectionToClient conn, ReadyMessage msg)
+        protected void OnServerReadyMessageInternal(NetworkConnectionToClient conn, ReadyMessage msg)
         {
             //Debug.Log("NetworkManager.OnServerReadyMessageInternal");
             OnServerReady(conn);
         }
 
-        void OnServerAddPlayerInternal(NetworkConnectionToClient conn, AddPlayerMessage msg)
+        protected void OnServerAddPlayerInternal(NetworkConnectionToClient conn, AddPlayerMessage msg)
         {
             //Debug.Log("NetworkManager.OnServerAddPlayer");
 

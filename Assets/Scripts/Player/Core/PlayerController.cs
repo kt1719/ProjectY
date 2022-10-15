@@ -93,11 +93,6 @@ namespace PlayerCore
             movementscript.MovePlayer();
         }
 
-        public void UpdateScenePosition(int nextScene)
-        {
-            movementscript.SetSceneTransitioning();
-        }
-
         private void SetupVariables()
         {
             // Could add in the future to automatically input the scene they've saved at
@@ -143,52 +138,93 @@ namespace PlayerCore
             }
             else
             {
-                ChangeSceneRPC(scene);
+                // When scene change is provided by client, change it on server
+                ChangeScene(scene);
             }
+            CustomSceneManager.singleton.GetComponent<CustomSceneManager>().IncrementScenePlayerCount(prevScene, currScene);
         }
 
         [TargetRpc]
         public void ChangeSceneRPC(int scene)
+        {
+            ChangeScene(scene);
+        }
+
+        public void ChangeScene(int scene)
         {
             prevScene = currScene;
             currScene = scene;
         }
 
         [Command]
-        public void ChangePlayerLayer(int layerNum)
+        public void ChangePlayerLayerCommand(int layerNum, bool includeOwner)
         {
-            ChangePlayerLayerRPC(layerNum);
+            ChangePlayerLayerRPC(layerNum, includeOwner);
         }
 
         [ClientRpc]
-        public void ChangePlayerLayerRPC(int layerNum)
+        public void ChangePlayerLayerRPC(int layerNum, bool includeOwner)
         {
-            // Change actual layer of objects
-            List<string> layers = new List<string> { "Player", "PlayerEnv", "CombatLayer" };
-            List<string> cameraMaskLayers = new List<string> { "Player", "CombatLayer", "Background" };
-            this.gameObject.layer = LayerMask.NameToLayer(layers[0] + layerNum.ToString());
-            foreach (Transform obj in this.transform)
+            if (!includeOwner && hasAuthority)
             {
-                if (obj.name == "BackgroundCanvas")
-                {
-                    continue;
-                }
-                string layerName = (obj.name == "SwordColliders") ? layers[2] + layerNum.ToString() : (obj.name == "EnvironmentBody") ? layers[1] + layerNum.ToString() : layers[0] + layerNum.ToString();
-                CustomSceneManager.singleton.MoveToLayer(obj, LayerMask.NameToLayer(layerName));
+                return;
             }
+            ChangePlayerLayerLocal(layerNum);
+        }
+
+        public void ChangePlayerLayerLocal(int layerNum)
+        {
+            List<string> cameraMaskLayers = ChangeChildObjectLayers(layerNum);
 
             if (!this.hasAuthority) { return; }
 
-            // Reset camera culling mask
-            mainCam.cullingMask = 0;
-            // Change camera culling mask
-            foreach (string s in cameraMaskLayers)
+            ChangeCameraLayer(layerNum, cameraMaskLayers);
+
+            void ChangeCameraLayer(int layerNum, List<string> cameraMaskLayers)
             {
-                string maskName = s + layerNum.ToString();
-                // https://answers.unity.com/questions/348974/edit-camera-culling-mask.html
-                mainCam.cullingMask |= (1 << LayerMask.NameToLayer(maskName));
+                // Reset camera culling mask
+                mainCam.cullingMask = 0;
+                // Change camera culling mask
+                foreach (string s in cameraMaskLayers)
+                {
+                    string maskName = s + layerNum.ToString();
+                    // https://answers.unity.com/questions/348974/edit-camera-culling-mask.html
+                    mainCam.cullingMask |= (1 << LayerMask.NameToLayer(maskName));
+                }
+            }
+
+            List<string> ChangeChildObjectLayers(int layerNum)
+            {
+                // Change actual layer of objects
+                List<string> layers = new List<string> { "Player", "PlayerEnv", "CombatLayer" };
+                List<string> cameraMaskLayers = new List<string> { "Player", "CombatLayer", "Background" };
+                this.gameObject.layer = LayerMask.NameToLayer(layers[0] + layerNum.ToString());
+                foreach (Transform obj in this.transform)
+                {
+                    if (obj.name == "BackgroundCanvas")
+                    {
+                        continue;
+                    }
+                    string layerName = (obj.name == "SwordColliders") ? layers[2] + layerNum.ToString() : (obj.name == "EnvironmentBody") ? layers[1] + layerNum.ToString() : layers[0] + layerNum.ToString();
+                    CustomSceneManager.singleton.MoveToLayer(obj, LayerMask.NameToLayer(layerName));
+                }
+
+                return cameraMaskLayers;
             }
         }
+
+        public void UpdatePlayerScenePosition(bool queueCallback = false)
+        {
+            if (queueCallback)
+            {
+                movementscript.QueueUpdatePlayerPosition();
+            }
+            else
+            {
+                movementscript.UpdateScenePosition();
+            }
+        }
+
 
         //////////////////////////////////////////////////////
 

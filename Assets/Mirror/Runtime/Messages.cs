@@ -17,6 +17,11 @@ namespace Mirror
         public bool customHandling;
     }
 
+    public struct SceneAddition : NetworkMessage
+    {
+        public string sceneName;
+    }
+
     public enum SceneOperation : byte
     {
         Normal,

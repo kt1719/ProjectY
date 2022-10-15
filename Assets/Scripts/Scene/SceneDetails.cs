@@ -23,7 +23,6 @@ public class SceneDetails : MonoBehaviour
 
     public Vector2 FindSceneTransitionPosition(int sceneId)
     {
-        Debug.Log(sceneId);
         return mapDetails.sceneTransitionMapping.Where(x => x.sceneId == sceneId).ToArray()[0].position;
     }
 }

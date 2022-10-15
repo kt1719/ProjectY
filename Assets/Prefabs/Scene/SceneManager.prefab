@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1684419025678379192}
   - component: {fileID: 1684419025678379199}
   - component: {fileID: 1684419025678379198}
-  m_Layer: 0
+  m_Layer: 24
   m_Name: SceneManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,5 +61,5 @@ MonoBehaviour:
   sceneId: 0
   serverOnly: 0
   visible: 0
-  m_AssetId: 
+  m_AssetId: ed10733e0e5cf44429d1229360886eb4
   hasSpawned: 0

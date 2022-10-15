@@ -49,27 +49,23 @@ namespace PlayerCore
             warriorScript = GetComponent<Warrior>();
         }
 
-        private void Start()
+        public void UpdateScenePosition()
         {
-            SceneManager.sceneLoaded += SceneTransitionChange;
+            PlayerController playerControllerScript = this.transform.root.GetComponent<PlayerController>();
+            SceneDetails sceneDetail = GameObject.Find("SceneDetails" + playerControllerScript.currScene.ToString()).GetComponent<SceneDetails>();
+            Vector2 pos = sceneDetail.FindSceneTransitionPosition(playerControllerScript.prevScene);
+            this.transform.position = pos;
         }
 
-        private void SceneTransitionChange(Scene arg0, LoadSceneMode arg1)
+        public void QueueUpdatePlayerPosition()
         {
-            if (transitioningScene)
-            {
-                PlayerController playerControllerScript = this.transform.root.GetComponent<PlayerController>();
-                SceneDetails sceneDetail = GameObject.Find("SceneDetails" + playerControllerScript.currScene.ToString()).GetComponent<SceneDetails>();
-                Vector2 pos = sceneDetail.FindSceneTransitionPosition(playerControllerScript.prevScene);
-                Debug.Log("Changing position");
-                this.transform.position = pos;
-                transitioningScene = false;
-            }
+            SceneManager.sceneLoaded += UpdateScenePositionCallback;
         }
 
-        public void SetSceneTransitioning()
+        private void UpdateScenePositionCallback(Scene arg0, LoadSceneMode arg1)
         {
-            transitioningScene = true;
+            UpdateScenePosition();
+            SceneManager.sceneLoaded -= UpdateScenePositionCallback;
         }
 
         public void MovePlayer()
