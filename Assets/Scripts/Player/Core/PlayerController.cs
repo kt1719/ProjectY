@@ -168,6 +168,7 @@ namespace PlayerCore
         public void ChangePlayerLayerCommand(int layerNum)
         {
             ChangePlayerLayerRPC(layerNum);
+            SetReadySceneTransition(layerNum);
             currentLayerNumber = layerNum;
         }
 
@@ -175,6 +176,13 @@ namespace PlayerCore
         public void ChangePlayerLayerRPC(int layerNum)
         {
             ChangePlayerLayerLocal(layerNum);
+        }
+
+        [TargetRpc]
+        public void SetReadySceneTransition(int layerNum)
+        {
+            currentLayerNumber = layerNum;
+            CharacterUI.instance.SetReadyForTransition();
         }
 
         public void ChangePlayerLayerLocal(int layerNum = -1)

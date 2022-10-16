@@ -74,7 +74,7 @@ namespace Network
 
             Debug.Log("Lobby created successfully");
 
-            manager.StartHost();
+            CustomNetworkManager.singleton.GetComponent<CustomNetworkManager>().StartServerV2();
             serverOn = true;
 
             SteamMatchmaking.SetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), HostAddressKey, SteamUser.GetSteamID().ToString());

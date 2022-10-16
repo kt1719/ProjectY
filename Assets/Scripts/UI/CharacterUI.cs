@@ -17,7 +17,7 @@ namespace UI
         PlayerClass playerClassScript;
         SceneTransition sceneTransitionAnimator;
 
-        public bool sceneTransitionReady = false;
+        private int sceneTransitionReady = 0;
         // Start is called before the first frame update
         void Awake()
         {
@@ -96,25 +96,25 @@ namespace UI
 
         public void EndTransitionAnimation()
         {
-            sceneTransitionReady = false;
+            sceneTransitionReady = 0;
             sceneTransitionAnimator.EndTransitionAnimation();
         }
 
         public void SetReadyForTransition()
         {
-            if (sceneTransitionReady)
+            if (sceneTransitionReady >= 2)
             {
                 TransitionScene();
             }
             else
             {
-                sceneTransitionReady = true;
+                sceneTransitionReady += 1;
             }
         }
 
         private void TransitionScene()
         {
-            sceneTransitionReady = false;
+            sceneTransitionReady = 0;
             playerController.UpdateCameraLayer();
             playerController.UpdatePlayerScenePosition();
             playerController.ChangePlayerLayerLocal();

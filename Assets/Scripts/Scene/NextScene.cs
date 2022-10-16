@@ -6,6 +6,7 @@ using Mirror;
 using PlayerCore;
 using System.IO;
 using UI;
+using System;
 
 public class NextScene : NetworkBehaviour
 {
@@ -45,6 +46,7 @@ public class NextScene : NetworkBehaviour
                     return;
                 }
                 // This is to actually load the scene
+                SceneManager.sceneLoaded += SceneLoadedCallback;
                 CustomSceneManager.singleton.ServerChangeSceneV2(nextScene, currentAvailableLayer);
             }
             else
@@ -53,5 +55,11 @@ public class NextScene : NetworkBehaviour
             }
             playerController.ChangePlayerLayerCommand(currentAvailableLayer);
         }
+    }
+
+    private void SceneLoadedCallback(Scene arg0, LoadSceneMode arg1)
+    {
+        CharacterUI.instance.SetReadyForTransition();
+        SceneManager.sceneLoaded -= SceneLoadedCallback;
     }
 }

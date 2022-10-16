@@ -193,7 +193,6 @@ public class CustomSceneManager : NetworkBehaviour
     public void ServerLevelLoaded(Scene scene, LoadSceneMode arg1)
     {
         ChangeSceneGameobjectsLayer(scene);
-        CharacterUI.instance.SetReadyForTransition();
         SceneManager.sceneLoaded -= ServerLevelLoaded;
     }
 
