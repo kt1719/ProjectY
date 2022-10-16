@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using Mirror;
 using PlayerCore;
 using System.IO;
+using UI;
 
 public class NextScene : NetworkBehaviour
 {
@@ -22,6 +23,8 @@ public class NextScene : NetworkBehaviour
         }
         if (playerNetworkBehaviour.hasAuthority)
         {
+            CharacterUI.instance.StartTransitionAnimation();
+            playerController.FreezeCharacter();
             //////////////////////////////////////
             playerController.ChangeScene(nextScene);
             if (NetworkClient.active && !isServer)
@@ -43,19 +46,12 @@ public class NextScene : NetworkBehaviour
                 }
                 // This is to actually load the scene
                 CustomSceneManager.singleton.ServerChangeSceneV2(nextScene, currentAvailableLayer);
-
-                playerController.ChangePlayerLayerCommand(currentAvailableLayer, true);
-                playerController.UpdatePlayerScenePosition(true);
-                playerController.UpdateCameraBounds(false);
             }
             else
             {
-                playerController.ChangePlayerLayerLocal(currentAvailableLayer);
-                playerController.ChangePlayerLayerCommand(currentAvailableLayer, false);
-                playerController.UpdatePlayerScenePosition(false);
-                playerController.UpdateCameraBounds(true);
-                // Increment scene player count and move on
+                CharacterUI.instance.SetReadyForTransition();
             }
+            playerController.ChangePlayerLayerCommand(currentAvailableLayer);
         }
     }
 }

@@ -165,29 +165,47 @@ namespace PlayerCore
         }
 
         [Command]
-        public void ChangePlayerLayerCommand(int layerNum, bool includeOwner)
+        public void ChangePlayerLayerCommand(int layerNum)
         {
-            ChangePlayerLayerRPC(layerNum, includeOwner);
+            ChangePlayerLayerRPC(layerNum);
             currentLayerNumber = layerNum;
         }
 
-        [ClientRpc]
-        public void ChangePlayerLayerRPC(int layerNum, bool includeOwner)
+        [ClientRpc(includeOwner = false)]
+        public void ChangePlayerLayerRPC(int layerNum)
         {
-            if (!includeOwner && hasAuthority)
-            {
-                return;
-            }
             ChangePlayerLayerLocal(layerNum);
         }
 
-        public void ChangePlayerLayerLocal(int layerNum)
+        public void ChangePlayerLayerLocal(int layerNum = -1)
         {
-            List<string> cameraMaskLayers = ChangeChildObjectLayers(layerNum);
+            layerNum = (layerNum == -1) ? currentLayerNumber : layerNum;
+            ChangeChildObjectLayers(layerNum);
 
+            void ChangeChildObjectLayers(int layerNum)
+            {
+                // Change actual layer of objects
+                List<string> layers = new List<string> { "Player", "PlayerEnv", "CombatLayer" };
+                this.gameObject.layer = LayerMask.NameToLayer(layers[0] + layerNum.ToString());
+                foreach (Transform obj in this.transform)
+                {
+                    if (obj.name == "BackgroundCanvas")
+                    {
+                        continue;
+                    }
+                    string layerName = (obj.name == "SwordColliders") ? layers[2] + layerNum.ToString() : (obj.name == "EnvironmentBody") ? layers[1] + layerNum.ToString() : layers[0] + layerNum.ToString();
+                    CustomSceneManager.MoveToLayer(obj, LayerMask.NameToLayer(layerName));
+                }
+            }
+        }
+
+        public void UpdateCameraLayer()
+        {
             if (!this.hasAuthority) { return; }
 
-            ChangeCameraLayer(layerNum, cameraMaskLayers);
+            List<string> cameraMaskLayers = new List<string> { "Player", "CombatLayer", "Background" };
+
+            ChangeCameraLayer(currentLayerNumber, cameraMaskLayers);
 
             void ChangeCameraLayer(int layerNum, List<string> cameraMaskLayers)
             {
@@ -201,52 +219,17 @@ namespace PlayerCore
                     mainCam.cullingMask |= (1 << LayerMask.NameToLayer(maskName));
                 }
             }
-
-            List<string> ChangeChildObjectLayers(int layerNum)
-            {
-                // Change actual layer of objects
-                List<string> layers = new List<string> { "Player", "PlayerEnv", "CombatLayer" };
-                List<string> cameraMaskLayers = new List<string> { "Player", "CombatLayer", "Background" };
-                this.gameObject.layer = LayerMask.NameToLayer(layers[0] + layerNum.ToString());
-                foreach (Transform obj in this.transform)
-                {
-                    if (obj.name == "BackgroundCanvas")
-                    {
-                        continue;
-                    }
-                    string layerName = (obj.name == "SwordColliders") ? layers[2] + layerNum.ToString() : (obj.name == "EnvironmentBody") ? layers[1] + layerNum.ToString() : layers[0] + layerNum.ToString();
-                    CustomSceneManager.MoveToLayer(obj, LayerMask.NameToLayer(layerName));
-                }
-
-                return cameraMaskLayers;
-            }
         }
 
-        public void UpdatePlayerScenePosition(bool queueCallback = false)
+        public void UpdatePlayerScenePosition()
         {
-            if (queueCallback)
-            {
-                movementscript.QueueUpdatePlayerPosition();
-            }
-            else
-            {
-                movementscript.UpdateScenePosition();
-            }
+            movementscript.UpdateScenePosition();
         }
 
-        public void UpdateCameraBounds(bool sceneLoaded)
+        public void UpdateCameraBounds()
         {
-            if (sceneLoaded)
-            {
-                mainCam.GetComponent<CameraBounds>().UpdateCameraBounds(new Scene(), LoadSceneMode.Single);
-            }
-            else
-            {
-                // For cases in which the scene has not yet been loaded
-                mainCam.GetComponent<CameraBounds>().QueueUpdateCameraBounds();
-            }
+            mainCam.GetComponent<CameraBounds>().UpdateCameraBounds();
         }
-
 
         //////////////////////////////////////////////////////
 

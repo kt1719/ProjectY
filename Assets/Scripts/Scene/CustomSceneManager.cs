@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using System.IO;
 using System.Linq;
 using Network;
+using UI;
 
 public struct LayerMessage : NetworkMessage
 {
@@ -20,7 +21,6 @@ public class CustomSceneManager : NetworkBehaviour
     SyncDictionary<int, int> scenePlayerCount = new SyncDictionary<int, int>(); // Mapping of scene id to player count
     SyncHashSet<int> layersAvailable = new SyncHashSet<int> { 1, 2, 3, 4, 5 };
     Queue<int> loadedUnusedScenes = new Queue<int>();
-    int availableServerLayer;
 
     private void Awake()
     {
@@ -30,6 +30,13 @@ public class CustomSceneManager : NetworkBehaviour
     public void Start()
     {
         InitiateSceneManager();
+        if (isClient)
+        {
+            foreach (var item in sceneToLayerMapping.Keys)
+            {
+                ChangeSceneGameobjectsLayer(SceneManager.GetSceneByBuildIndex(item));
+            }
+        }
     }
 
     public void InitiateSceneManager()
@@ -83,7 +90,7 @@ public class CustomSceneManager : NetworkBehaviour
 
 
     // A function used to recursively change all the gameobject layers upon loading the scene
-    private void ChangeObjectLayer(int layerNumber, string sceneName)
+    private static void ChangeObjectLayer(int layerNumber, string sceneName)
     {
         // Change all layers for gameobjects of that scene
         Scene s = SceneManager.GetSceneByName(sceneName);
@@ -139,7 +146,6 @@ public class CustomSceneManager : NetworkBehaviour
         NetworkServer.isLoadingScene = true;
 
         SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-        availableServerLayer = layerNumber;
         SceneManager.sceneLoaded += ServerLevelLoaded;
 
         // ServerChangeScene can be called when stopping the server
@@ -184,10 +190,17 @@ public class CustomSceneManager : NetworkBehaviour
         return sceneToLayerMapping.Keys.ToList();
     }
 
-    private void ServerLevelLoaded(Scene scene, LoadSceneMode arg1)
+    public void ServerLevelLoaded(Scene scene, LoadSceneMode arg1)
+    {
+        ChangeSceneGameobjectsLayer(scene);
+        CharacterUI.instance.SetReadyForTransition();
+        SceneManager.sceneLoaded -= ServerLevelLoaded;
+    }
+
+    private void ChangeSceneGameobjectsLayer(Scene scene)
     {
         // Used to set all objects of that layer to appropriate layer
+        int availableServerLayer = sceneToLayerMapping[SceneUtility.GetBuildIndexByScenePath(scene.path)];
         ChangeObjectLayer(availableServerLayer, Path.GetFileNameWithoutExtension(scene.name));
-        SceneManager.sceneLoaded -= ServerLevelLoaded;
     }
 }

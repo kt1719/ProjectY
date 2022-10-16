@@ -7,6 +7,7 @@ namespace UI
 {
     public class CharacterUI : MonoBehaviour
     {
+        public static CharacterUI instance;
         GameObject SkillTreePanel;
         GameObject EscMenu;
 
@@ -14,15 +15,23 @@ namespace UI
 
         Text SkillTreePoints;
         PlayerClass playerClassScript;
+        SceneTransition sceneTransitionAnimator;
 
+        public bool sceneTransitionReady = false;
         // Start is called before the first frame update
         void Awake()
         {
             SkillTreePanel = this.transform.Find("TabMenu").transform.Find("SkillTree").gameObject;
             SkillTreePoints = SkillTreePanel.transform.Find("Texts").transform.Find("SkillTreePoints").GetComponent<Text>();
             EscMenu = this.transform.Find("EscMenu").gameObject;
+            sceneTransitionAnimator = this.transform.Find("SceneTransition").GetComponent<SceneTransition>();
             playerController = this.GetComponentInParent<PlayerController>();
             playerClassScript = this.GetComponentInParent<PlayerClass>();
+        }
+
+        private void Start()
+        {
+            instance = this;
         }
 
         // Update is called once per frame
@@ -78,6 +87,40 @@ namespace UI
                 }
                 playerController.enabled = escActive;
             }
+        }
+
+        public void StartTransitionAnimation()
+        {
+            sceneTransitionAnimator.StartTransitionAnimation();
+        }
+
+        public void EndTransitionAnimation()
+        {
+            sceneTransitionReady = false;
+            sceneTransitionAnimator.EndTransitionAnimation();
+        }
+
+        public void SetReadyForTransition()
+        {
+            if (sceneTransitionReady)
+            {
+                TransitionScene();
+            }
+            else
+            {
+                sceneTransitionReady = true;
+            }
+        }
+
+        private void TransitionScene()
+        {
+            sceneTransitionReady = false;
+            playerController.UpdateCameraLayer();
+            playerController.UpdatePlayerScenePosition();
+            playerController.ChangePlayerLayerLocal();
+            playerController.UpdateCameraBounds();
+            sceneTransitionAnimator.EndTransitionAnimation();
+            playerController.UnFreezeCharacter();
         }
     }
 }

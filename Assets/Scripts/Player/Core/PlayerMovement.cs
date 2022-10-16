@@ -6,6 +6,7 @@ using PlayerAnim;
 using PlayerClasses;
 using UnityEngine.SceneManagement;
 using System;
+using UI;
 
 namespace PlayerCore
 {
@@ -32,7 +33,7 @@ namespace PlayerCore
         private Rigidbody2D rigidInstance;
         private SpriteRenderer rendererInstance;
         private Warrior warriorScript;
-        private bool transitioningScene;
+        PlayerController playerControllerScript;
 
         enum States
         {
@@ -47,25 +48,14 @@ namespace PlayerCore
             animatorScript = GetComponent<PlayerAnimation>();
             rendererInstance = GetComponent<SpriteRenderer>();
             warriorScript = GetComponent<Warrior>();
+            playerControllerScript = this.transform.root.GetComponent<PlayerController>();
         }
 
         public void UpdateScenePosition()
         {
-            PlayerController playerControllerScript = this.transform.root.GetComponent<PlayerController>();
             SceneDetails sceneDetail = GameObject.Find("SceneDetails" + playerControllerScript.currScene.ToString()).GetComponent<SceneDetails>();
             Vector2 pos = sceneDetail.FindSceneTransitionPosition(playerControllerScript.prevScene);
             this.transform.position = pos;
-        }
-
-        public void QueueUpdatePlayerPosition()
-        {
-            SceneManager.sceneLoaded += UpdateScenePositionCallback;
-        }
-
-        private void UpdateScenePositionCallback(Scene arg0, LoadSceneMode arg1)
-        {
-            UpdateScenePosition();
-            SceneManager.sceneLoaded -= UpdateScenePositionCallback;
         }
 
         public void MovePlayer()
@@ -134,9 +124,17 @@ namespace PlayerCore
 
         public void FreezeMovement()
         {
-            rigidInstance.velocity = new Vector2(0, 0);
+            UpdateVelocity(new Vector2(0, 0));
+            // Used to get rid of any animator state of running
             animatorScript.ChangeStateRunning();
             frozen = true;
+        }
+
+        private void UpdateVelocity(Vector2 vec)
+        {
+            rigidInstance.velocity = vec;
+            currentSpeedY = vec.y;
+            currentSpeedX = vec.x;
         }
 
         public void UnFreezeMovement()

@@ -703,7 +703,9 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   singlePlayer: 0
-  currScene: 
+  currScene: 0
+  prevScene: -1
+  currentLayerNumber: 1
   spawned: 0
 --- !u!114 &1979913598963679832
 MonoBehaviour:

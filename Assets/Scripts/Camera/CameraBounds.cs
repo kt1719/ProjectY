@@ -17,7 +17,7 @@ namespace PlayerCam
         {
             player = this.transform.root.gameObject;
             cam = this.GetComponent<Camera>();
-            UpdateCameraBounds(new Scene(), LoadSceneMode.Single);
+            UpdateCameraBounds();
         }
 
         private void Update()
@@ -43,12 +43,7 @@ namespace PlayerCam
             this.transform.position = new Vector3(x_val, y_val, this.transform.position.z);
         }
 
-        public void QueueUpdateCameraBounds()
-        {
-            SceneManager.sceneLoaded += UpdateCameraBounds;
-        }
-
-        public void UpdateCameraBounds(Scene arg0, LoadSceneMode arg1)
+        public void UpdateCameraBounds()
         {
             int currentScene = player.GetComponent<PlayerController>().currScene;
             if (currentScene == 0)
@@ -56,7 +51,6 @@ namespace PlayerCam
                 currentScene = 1;
             }
             sceneDetail = GameObject.Find("SceneDetails" + currentScene.ToString()).GetComponent<SceneDetails>();
-            SceneManager.sceneLoaded -= UpdateCameraBounds;
         }
     }
 }
